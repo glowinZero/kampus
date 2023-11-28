@@ -1,46 +1,58 @@
-import { useState, useContext } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import {useContext, useState} from 'react';
+import { AuthContext } from '../../Context/auth.context';
+import axios from 'axios';
 
+import {useNavigate} from 'react-router-dom';
 
 const API_URL = "http://localhost:5005";
 
 function LoginPage(){
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const [errorMessage, setErrorMessage] = useState(undefined);
-    const user = localStorage.getItem("type_user");
-    //const { storeToken, authenticateUser } = useContext(AuthContext);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
     const navigate = useNavigate();
 
-    const handleLogin = (e) =>{
+    // use shared functions provided by AuthContext 
+    const {storeToken, authenticateUser} = useContext(AuthContext);
+
+    const handleLoginSubmit = (e) =>{
         e.preventDefault();
-        const requestBody = { email, password };
 
-        axios.post(`${API_URL}/auth/login`, requestBody).then((response) => {
+        const requestBody = {email, password};
 
-        console.log("JWT token", response.data.authToken);
-        //storeToken(response.data.authToken);
-        //authenticateUser();
-        navigate("/");
-      })
-      .catch((error) => {
-        const errorDescription = error.response.data.message;
-        setErrorMessage(errorDescription);
-      });
+        axios.post(`${API_URL}/auth/login`, requestBody)
+            .then((response)=>{
+                storeToken(response.data.authToken);
+                localStorage.setItem("Logged In", response.data.authToken)
+                authenticateUser();
+                navigate('/');
+            })
+            .catch((error)=>{
+                const errorDescription = error.response.data.message; 
+                setError(errorDescription);
+            })
+
     }
-
-    return(
-        <div>
-            <h1>Hi {user}</h1>
-            <form onSubmit={handleLogin}>
-                <label>Email <input type="email" name="email" value={email} onChange={(e)=>{setEmail(e.target.value)}}></input></label>
-                <label>Password <input type="email" name="email" value={password} onChange={(e)=>{setPassword(e.target.value)}}></input></label>
+    
+    return(<div>
+        <h1>Login Page</h1>
+        <form onSubmit = {handleLoginSubmit}>
+            <div> 
+                <label>Email:</label>
+                <input type="email" name="email" value={email} onChange={(e)=> setEmail(e.target.value)}/>
+            </div>
+            <div> 
+                <label>Password:</label>
+                <input type="password" name="password" value={password} onChange={(e)=> setPassword(e.target.value)}/>
+            </div>
+            <div>
                 <button type="submit">Login</button>
-            </form>
-            {errorMessage && <p className="error-message">{errorMessage}</p>}
-        </div>
-    )
+            </div>
+            {error && <p>{error}</p>}
+        </form>
+    </div>)
+
 }
 
 export default LoginPage
