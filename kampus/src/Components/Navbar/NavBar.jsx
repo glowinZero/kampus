@@ -11,6 +11,10 @@ function NavBar() {
       <div>
         <Link to="/ViewList"> View List</Link>
       </div>
+
+      <div>
+        <Link to="/Todolist"> To Do list</Link>
+      </div>
       
     </nav>
   );
