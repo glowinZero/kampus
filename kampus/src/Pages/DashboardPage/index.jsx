@@ -1,4 +1,5 @@
-import NavBar from '../../Components/NavBar';
+import NavBar from '../../Components/Navbar/NavBar';
+import Pommodoro from '../../Components/Pommodoro';
 
 function DashboardPage(){
     return(
@@ -9,6 +10,7 @@ function DashboardPage(){
                 <p>To put Todo List component</p>
                 <p>To put Todo NotePad component</p>
                 <p>To put Todo Pommodoro component</p>
+                <Pommodoro/>
             </div>
         </div>
     )
