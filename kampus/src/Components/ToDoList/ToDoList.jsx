@@ -1,61 +1,64 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, Link } from "react-router-dom";
+import {  Link, useNavigate } from "react-router-dom";
 import AddTask from "./AddTask";
 
-const BACKEND_TODO_URL = "http://localhost:3000/api/tasks"; 
+const BACKEND_TODO_URL = "http://localhost:5005"; 
 
 function ToDoList() {
-  const { id } = useParams();
   const [tasks, setTasks] = useState([]);
+  const navigate = useNavigate();
+  const [tasksId, setTasksId] = useState();
 
   useEffect(() => {
+    localStorage.removeItem("taskId");
     axios
-      .get(BACKEND_TODO_URL) // Confirm the correct backend URL
+      .get(`${BACKEND_TODO_URL}/api/tasks`) // Confirm the correct backend URL
       .then((response) => {
         setTasks(response.data);
       })
       .catch((error) => {
         console.error("Error fetching tasks details:", error);
       });
-  }, [id]);
+  }, []);
+
+  const addButton = () =>{
+    navigate("/Todolist/AddTask")
+  }
+
+  const editTask = (taskId) =>{
+    localStorage.setItem("taskId", taskId)
+    navigate(`/Todolist/${taskId}`)
+  }
 
   function deleteTask(taskId) {
-    axios.delete(`${BACKEND_TODO_URL}/${taskId}`).then(() => {
-      console.log("Task deleted!");
-
-      axios.get(BACKEND_TODO_URL).then((response) => {
-        setTasks(response.data);
+    axios.delete(`${BACKEND_TODO_URL}/api/task/${taskId}`)
+      .then(() => {
+        console.log("Task deleted!");
+        navigate(`/Todolist`);
+      })
+      .catch((error) => {
+        console.error("Error deleting task:", error);
       });
-    });
   }
+  
+  
+
+
 
   return (
     <div>
       <h1>My To-do List</h1>
-
-      <div>
-             <Link to="/Todolist/AddTask">
-             <button> Add New Task </button>
-             </Link>
-      </div>
-      
-      <div>
-        {tasks.length > 0 ? (
-        tasks.map((task) => (
-        <div key={task.id} >
-        <Link to={`/Todolist/${task.id}`}>
-        <h2>Task: {task.title}</h2>
-        </Link>
-        <button onClick={() => deleteTask(task.id)}>Delete Task</button>
-      </div>
-       ))
-       ) : (   
-  <p>You have no tasks </p>
-       )}
-
-      </div>
-
+      {tasks && tasks.map((task) => (
+        <div key={task._id}>
+            <h2 onClick={() =>editTask(task._id)}>
+              Task: {task.title}
+            </h2>
+            <h2>Body: {task.body}</h2>
+          <button onClick={() => deleteTask(task._id)}>Delete Task</button>
+        </div>
+      ))}
+      <button onClick={addButton}> Add New Task </button>
     </div>
   );
 }

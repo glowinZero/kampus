@@ -8,6 +8,8 @@ import ToDoList from './Components/ToDoList/ToDoList';
 import ProfilePage from './Pages/ProfilePage';
 import DashboardPage from './Pages/DashboardPage';
 import ContactsPage from './Pages/ContactsPage';
+import TaskDetails from './Components/ToDoList/TaskDetails';
+import EditTask from './Components/ToDoList/EditTask';
 
 function App() {
   return (
@@ -20,6 +22,10 @@ function App() {
         <Route path="/dashboard" element={<DashboardPage/>}/>
         <Route path="/profile" element={<ProfilePage/>}/>
         <Route path="/contacts" element={<ContactsPage/>}/>
+        <Route path="/Todolist/:_id" element={<TaskDetails />} /> {/* TEMPORARIO */}
+        <Route path="/Todolist/edit" element={<EditTask />} /> {/* TEMPORARIO */}
+
+
 
       </Routes>
     </div>
