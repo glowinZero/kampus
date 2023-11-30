@@ -36,7 +36,6 @@ function LoginPage(){
     }
 
     return(<div>
-        {/*
         <h1>Login</h1>
         <form onSubmit = {handleLoginSubmit}>
             <div>
@@ -52,8 +51,7 @@ function LoginPage(){
             </div>
             {error && <p>{error}</p>}
         </form>
-        */}
-        <section class="grid grid-cols-1 gap-0 lg:grid-cols-12">
+        {/*<section class="grid grid-cols-1 gap-0 lg:grid-cols-12">
             <div class="w-full col-span-1 p-4 mx-auto mt-6 lg:col-span-8 xl:p-12 md:w-2/4">
                 <a href="/" title="Kutty Home Page" class="flex items-center justify-start">
                 <svg class="w-auto h-6" width="86" height="24" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 335 93">
@@ -105,9 +103,9 @@ function LoginPage(){
                 alt="3 women looking at a laptop"
                 class="object-cover w-full h-64 min-h-full bg-gray-100"
                 loading="lazy"
-                />
+                /> 
             </div>
-            </section>
+            </section>*/}
 
     </div>)
 

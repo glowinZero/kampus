@@ -77,10 +77,9 @@ function LandingPage(){
                             label="Password"
                             placeholder="Enter your password"
                             type="password"
-                            variant="underlined"
+                            variant="flat"
                             value={password} 
                             onChange={(e)=> setPassword(e.target.value)}
-                            variant="flat"
                             />
                             <div className="flex py-2 px-1 justify-between">
                             <Checkbox
