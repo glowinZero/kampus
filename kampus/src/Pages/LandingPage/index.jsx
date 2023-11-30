@@ -1,8 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Checkbox, Input, Link} from "@nextui-org/react";
-import {MailIcon} from '../../Components/MailIcon';
-import {LockIcon} from '../../Components/LockIcon';
-import React from "react";
+
 function LandingPage(){
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const navigate = useNavigate();
