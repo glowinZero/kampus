@@ -44,7 +44,7 @@ function LandingPage(){
             <h1 className="[word-spacing:-100px] text-7xl font-thin">Welcome!</h1>
             <Spacer y={10} />
             <div>
-            <Button onPress={onOpen} size="lg" className="bg-[#1f2d91] text-white w-64 h-12 font-medium shadow-lg">STUDENT</Button>
+            <Button onPress={onOpen} size="lg" className="bg-[#D3D3D3] text-[#00072D] w-64 h-12 font-semibold shadow-lg">STUDENT</Button>
                 <Modal
                     classNames={{
                         size: "4xl",
@@ -69,7 +69,7 @@ function LandingPage(){
                             autoFocus
                             label="Email"
                             placeholder="Enter your email"
-                            variant="underlined"
+                            variant="flat"
                             value={email} 
                             onChange={(e)=> setEmail(e.target.value)}
                             />
@@ -80,6 +80,7 @@ function LandingPage(){
                             variant="underlined"
                             value={password} 
                             onChange={(e)=> setPassword(e.target.value)}
+                            variant="flat"
                             />
                             <div className="flex py-2 px-1 justify-between">
                             <Checkbox
@@ -107,7 +108,7 @@ function LandingPage(){
                 </Modal>
             </div>
             <Spacer y={4} />
-                <Button onClick={isStaff} size="lg" className="w-64 bg-[#1f2d91] text-white shadow-lg">STAFF</Button>
+                <Button onClick={isStaff} size="lg" className="w-64 bg-[#D3D3D3] text-[#00072D] font-semibold shadow-lg">STAFF</Button>
                 {error && <p>{error}</p>}
         </div>
     )
