@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 const API_URL = "http://localhost:5005";
 

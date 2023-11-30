@@ -1,23 +1,43 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate} from "react-router-dom"
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Checkbox, Input, Link} from "@nextui-org/react";
 import {Spacer} from "@nextui-org/react";
-import React from "react";
+import { AuthContext } from '../../Context/auth.context';
+import axios from "axios"
+import {useContext, useState} from 'react';
+
+const API_URL = "http://localhost:5005";
+
 function LandingPage(){
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
 
-    /*
-    const isStudent = () => {
-        localStorage.setItem("type_user", "student")
-        navigate("/login")
+    const {storeToken, authenticateUser} = useContext(AuthContext);
+    
+    const handleLoginSubmit = (e) =>{
+        e.preventDefault();
+
+        const requestBody = {email, password};
+
+        axios.post(`${API_URL}/auth/login`, requestBody)
+            .then((response)=>{
+                storeToken(response.data.authToken);
+                localStorage.setItem("LoggedIn", response.data.authToken)
+                authenticateUser();
+                navigate('/dashboard');
+            })
+            .catch((error)=>{
+                const errorDescription = error.response.data.message; 
+                setError(errorDescription);
+            })
     }
-    */
 
     const isStaff = () => {
         localStorage.setItem("type_user", "staff")
         navigate("/login")
     }
-
 
     return(
         <div id="landing-page" className="scale-200">
@@ -50,12 +70,16 @@ function LandingPage(){
                             label="Email"
                             placeholder="Enter your email"
                             variant="underlined"
+                            value={email} 
+                            onChange={(e)=> setEmail(e.target.value)}
                             />
                             <Input
                             label="Password"
                             placeholder="Enter your password"
                             type="password"
                             variant="underlined"
+                            value={password} 
+                            onChange={(e)=> setPassword(e.target.value)}
                             />
                             <div className="flex py-2 px-1 justify-between">
                             <Checkbox
@@ -70,10 +94,10 @@ function LandingPage(){
                             </div>
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="danger" variant="flat" onPress={onClose}>
-                            Close
+                            <Button color="danger" variant="flat" onPress={() => onClose()}>
+                                Close
                             </Button>
-                            <Button color="primary" onPress={onClose} >
+                            <Button color="primary" onClick={handleLoginSubmit} >
                             Sign in
                             </Button>
                         </ModalFooter>
@@ -83,8 +107,8 @@ function LandingPage(){
                 </Modal>
             </div>
             <Spacer y={4} />
-
                 <Button onClick={isStaff} size="lg" className="w-64 bg-[#1f2d91] text-white shadow-lg">STAFF</Button>
+                {error && <p>{error}</p>}
         </div>
     )
 }

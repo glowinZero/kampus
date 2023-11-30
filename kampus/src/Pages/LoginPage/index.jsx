@@ -24,9 +24,9 @@ function LoginPage(){
         axios.post(`${API_URL}/auth/login`, requestBody)
             .then((response)=>{
                 storeToken(response.data.authToken);
-                localStorage.setItem("Logged In", response.data.authToken)
+                localStorage.setItem("LoggedIn", response.data.authToken)
                 authenticateUser();
-                navigate('/');
+                navigate('/dashboard');
             })
             .catch((error)=>{
                 const errorDescription = error.response.data.message; 
@@ -40,11 +40,11 @@ function LoginPage(){
         <form onSubmit = {handleLoginSubmit}>
             <div> 
                 <label>Email:</label>
-                <input type="email" name="email" value={email} onChange={(e)=> setEmail(e.target.value)}/>
+                <input type="email" name="email" style={{color:"black"}} value={email} onChange={(e)=> setEmail(e.target.value)}/>
             </div>
             <div> 
                 <label>Password:</label>
-                <input type="password" name="password" value={password} onChange={(e)=> setPassword(e.target.value)}/>
+                <input type="password" name="password" style={{color:"black"}} value={password} onChange={(e)=> setPassword(e.target.value)}/>
             </div>
             <div>
                 <button type="submit">Login</button>
