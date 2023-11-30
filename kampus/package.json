@@ -11,10 +11,15 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.23.4",
+    "@nextui-org/button": "^2.0.26",
+    "@nextui-org/react": "^2.2.9",
+    "@nextui-org/system": "^2.0.15",
+    "@nextui-org/theme": "^2.1.17",
     "axios": "^1.6.2",
-    "cors": "^2.8.5",
+    "framer-motion": "^10.16.5",
     "react": "^18.2.0",
     "react-circular-progressbar": "^2.1.0",
+    "cors": "^2.8.5",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.0",
     "react-slider": "^2.0.6"
@@ -23,10 +28,13 @@
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@vitejs/plugin-react": "^4.2.0",
+    "autoprefixer": "^10.4.16",
     "eslint": "^8.53.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.4",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.5",
     "vite": "^5.0.0"
   }
 }
