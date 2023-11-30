@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {  Link, useNavigate } from "react-router-dom";
-import AddTask from "./AddTask";
+import { useNavigate } from "react-router-dom";
+import NavBar from "../Navbar/NavBar";
 
 const BACKEND_TODO_URL = "http://localhost:5005"; 
 
 function ToDoList() {
   const [tasks, setTasks] = useState([]);
   const navigate = useNavigate();
-  const [tasksId, setTasksId] = useState();
 
   useEffect(() => {
     localStorage.removeItem("taskId");
@@ -16,6 +15,7 @@ function ToDoList() {
       .get(`${BACKEND_TODO_URL}/api/tasks`) // Confirm the correct backend URL
       .then((response) => {
         setTasks(response.data);
+        console.log(response)
       })
       .catch((error) => {
         console.error("Error fetching tasks details:", error);
@@ -36,18 +36,17 @@ function ToDoList() {
       .then(() => {
         console.log("Task deleted!");
         navigate(`/Todolist`);
+        window.location.reload();
+
       })
       .catch((error) => {
         console.error("Error deleting task:", error);
       });
   }
   
-  
-
-
-
   return (
     <div>
+      <NavBar/>
       <h1>My To-do List</h1>
       {tasks && tasks.map((task) => (
         <div key={task._id}>

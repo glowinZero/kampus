@@ -10,6 +10,7 @@ import DashboardPage from './Pages/DashboardPage';
 import ContactsPage from './Pages/ContactsPage';
 import TaskDetails from './Components/ToDoList/TaskDetails';
 import EditTask from './Components/ToDoList/EditTask';
+import NotePad from './Components/Notepad';
 
 function App() {
   return (
@@ -23,10 +24,8 @@ function App() {
         <Route path="/profile" element={<ProfilePage/>}/>
         <Route path="/contacts" element={<ContactsPage/>}/>
         <Route path="/Todolist/:_id" element={<TaskDetails />} /> {/* TEMPORARIO */}
-        <Route path="/Todolist/edit" element={<EditTask />} /> {/* TEMPORARIO */}
-
-
-
+        <Route path="/Todolist/:_id/edit" element={<EditTask />} /> {/* TEMPORARIO */}
+        <Route path="/notepad" element={<NotePad/>}/>
       </Routes>
     </div>
   );
