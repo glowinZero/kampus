@@ -8,7 +8,11 @@ export default {
     './node_modules/@nextui-org/theme/dist/components/(button|snippet|code|input).js'
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        button: "#1f2d91"
+      }
+    },
   },
   darkMode: "class",
   plugins: [nextui()],
