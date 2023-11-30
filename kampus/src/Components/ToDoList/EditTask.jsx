@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const BACKEND_TODO_URL = "http://localhost:5005";
 
@@ -17,12 +18,11 @@ const EditTask = () => {
     axios.get(`${BACKEND_TODO_URL}/api/tasks/${taskId}`)
       .then((response) => {
         const taskDetails = response.data;
-          setTaskIdFromParams(taskDetails._id || ''); // set _id in state
-          setTitle(taskDetails.title || '');
-          setBody(taskDetails.body);
-          setDeadline(taskDetails.deadline || '');
-          setStatus(taskDetails.status || '');
-        
+        setTaskIdFromParams(taskDetails._id || '');
+        setTitle(taskDetails.title || '');
+        setBody(taskDetails.body || '');
+        setDeadline(taskDetails.deadline || '');
+        setStatus(taskDetails.status || '');
       })
       .catch((error) => {
         console.error("Error fetching Task details:", error);
@@ -33,8 +33,8 @@ const EditTask = () => {
     e.preventDefault();
 
     const requestBody = {
-      _id: taskIdFromParams, // use _id from state
-      title:title,
+      _id: taskIdFromParams,
+      title,
       body,
       deadline,
       status,
@@ -55,23 +55,13 @@ const EditTask = () => {
     <div>
       <form onSubmit={handleSubmit}>
         <label>
-          Title:
-          <input
-            type="text"
-            name="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value !== title ? e.target.value : title)}
-          />
-        </label>
-
-        <label>
           Description:
           <input
             type="text"
             name="description"
-            placeholder={body}
+            placeholder={body || "Enter description..."}
             value={body}
-            onChange={(e) => setBody(e.target.value !== body ? e.target.value : body)}
+            onChange={(e) => setBody(e.target.value)}
           />
         </label>
 
@@ -90,7 +80,7 @@ const EditTask = () => {
           <select
             name="status"
             value={status}
-            onChange={(e) => setStatus(e.target.value !== status ? e.target.value : status)}
+            onChange={(e) => setStatus(e.target.value)}
           >
             <option value="To do">To do</option>
             <option value="Done">Done</option>
@@ -99,8 +89,15 @@ const EditTask = () => {
 
         <button type="submit">Save</button>
       </form>
+
+      <div>
+        <Link to={`/Todolist/${taskId}`}>
+          <button>Back to To Do List</button>
+        </Link>
+      </div>
     </div>
   );
 };
 
 export default EditTask;
+

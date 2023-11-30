@@ -1,6 +1,10 @@
 import { useNavigate } from "react-router-dom"
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Checkbox, Input, Link} from "@nextui-org/react";
+<<<<<<< HEAD
+
+=======
 import {Spacer} from "@nextui-org/react";
+>>>>>>> 083033b57edb512bab996f3f58f8bee4d58e8dd7
 import React from "react";
 function LandingPage(){
     const {isOpen, onOpen, onOpenChange} = useDisclosure();

@@ -50,6 +50,12 @@ function TaskDetails() {
   <button>Edit Task</button>
 </Link>
 
+<div>
+<Link to={`/Todolist`}>
+  <button>Back to To Do List</button>
+</Link>
+</div>
+
 
       
     </div>
