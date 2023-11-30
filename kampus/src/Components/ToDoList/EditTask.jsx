@@ -2,26 +2,27 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
-const BACKEND_TODO_URL = "http://localhost:5005"; // Update with your backend URL
+const BACKEND_TODO_URL = "http://localhost:5005";
 
 const EditTask = () => {
   const { taskId } = useParams();
-
+  const [taskIdFromParams, setTaskIdFromParams] = useState('');
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [deadline, setDeadline] = useState('');
   const [status, setStatus] = useState('');
-
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`${BACKEND_TODO_URL}/${taskId}`)
+    axios.get(`${BACKEND_TODO_URL}/api/tasks/${taskId}`)
       .then((response) => {
         const taskDetails = response.data;
-        setTitle(taskDetails.title);
-        setBody(taskDetails.body);
-        setDeadline(taskDetails.deadline);
-        setStatus(taskDetails.status);
+          setTaskIdFromParams(taskDetails._id || ''); // set _id in state
+          setTitle(taskDetails.title || '');
+          setBody(taskDetails.body);
+          setDeadline(taskDetails.deadline || '');
+          setStatus(taskDetails.status || '');
+        
       })
       .catch((error) => {
         console.error("Error fetching Task details:", error);
@@ -32,15 +33,18 @@ const EditTask = () => {
     e.preventDefault();
 
     const requestBody = {
-      title,
+      _id: taskIdFromParams, // use _id from state
+      title:title,
       body,
       deadline,
       status,
     };
 
-    axios.put(`${BACKEND_TODO_URL}/${taskId}`, requestBody)
+    const newTaskId = localStorage.getItem("taskId");
+    axios.put(`${BACKEND_TODO_URL}/api/tasks/${newTaskId}`, requestBody)
       .then(() => {
-        navigate(`/Todolist/${taskId}`);
+        console.log("TASK EDITED!", newTaskId);
+        navigate(`/Todolist/${newTaskId}`);
       })
       .catch((error) => {
         console.error("Error updating task details:", error);
@@ -56,7 +60,7 @@ const EditTask = () => {
             type="text"
             name="title"
             value={title}
-            readOnly
+            onChange={(e) => setTitle(e.target.value !== title ? e.target.value : title)}
           />
         </label>
 
@@ -65,8 +69,9 @@ const EditTask = () => {
           <input
             type="text"
             name="description"
+            placeholder={body}
             value={body}
-            onChange={(e) => setBody(e.target.value)}
+            onChange={(e) => setBody(e.target.value !== body ? e.target.value : body)}
           />
         </label>
 
@@ -82,12 +87,14 @@ const EditTask = () => {
 
         <label>
           Status:
-          <input
-            type="text"
+          <select
             name="status"
             value={status}
-            onChange={(e) => setStatus(e.target.value)}
-          />
+            onChange={(e) => setStatus(e.target.value !== status ? e.target.value : status)}
+          >
+            <option value="To do">To do</option>
+            <option value="Done">Done</option>
+          </select>
         </label>
 
         <button type="submit">Save</button>

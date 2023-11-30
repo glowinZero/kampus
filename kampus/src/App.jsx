@@ -24,7 +24,7 @@ function App() {
         <Route path="/profile" element={<ProfilePage/>}/>
         <Route path="/contacts" element={<ContactsPage/>}/>
         <Route path="/Todolist/:_id" element={<TaskDetails />} /> {/* TEMPORARIO */}
-        <Route path="/Todolist/edit" element={<EditTask />} /> {/* TEMPORARIO */}
+        <Route path="/Todolist/:_id/edit" element={<EditTask />} /> {/* TEMPORARIO */}
         <Route path="/notepad" element={<NotePad/>}/>
       </Routes>
     </div>
