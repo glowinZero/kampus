@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import NavBar from "../Navbar/NavBar";
 
 const BACKEND_TODO_URL = "http://localhost:5005"; 
 
@@ -46,7 +45,6 @@ function ToDoList() {
   
   return (
     <div>
-      <NavBar/>
       <h1>My To-do List</h1>
       {tasks && tasks.map((task) => (
         <div key={task._id}>
