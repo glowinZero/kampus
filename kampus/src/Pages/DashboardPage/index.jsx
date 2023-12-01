@@ -131,6 +131,7 @@ function DashboardPage(){
 
         axios.delete(`${API_URL}/auth/users/${elem._id}`)
         .then(() => {
+            console.log(userDelete)
       })
       .catch((error) => {
         console.error('Error deleting Student:', error);

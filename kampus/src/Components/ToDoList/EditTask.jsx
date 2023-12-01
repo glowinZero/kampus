@@ -32,13 +32,11 @@ const EditTask = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const requestBody = {
-      _id: taskIdFromParams,
-      title,
-      body,
-      deadline,
-      status,
-    };
+    const requestBody = {};
+    if (title !== '') {requestBody.title = title;}
+    if (body !== '') {requestBody.body = body;}
+    if (deadline !== '') {requestBody.deadline = deadline;}
+    if (status !== '') {requestBody.status = status;}
 
     const newTaskId = localStorage.getItem("taskId");
     axios.put(`${BACKEND_TODO_URL}/api/tasks/${newTaskId}`, requestBody)
@@ -82,8 +80,10 @@ const EditTask = () => {
             value={status}
             onChange={(e) => setStatus(e.target.value)}
           >
-            <option value="To do">To do</option>
-            <option value="Done">Done</option>
+            <option value="Choose the status of the task" style={{color:"black"}}>Choose the status of the task</option>
+            <option value="To do" style={{color:"black"}}>To do</option>
+            <option value="In Progress" style={{color:"black"}}>In Progress</option>
+            <option value="Done" style={{color:"black"}}>Done</option>
           </select>
         </label>
 
