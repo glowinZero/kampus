@@ -11,6 +11,7 @@ import ContactsPage from './Pages/ContactsPage';
 import TaskDetails from './Components/ToDoList/TaskDetails';
 import EditTask from './Components/ToDoList/EditTask';
 import NotePad from './Components/Notepad';
+import VirtualTour from './Pages/VirtualTour';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/Todolist/:_id" element={<TaskDetails />} /> {/* TEMPORARIO */}
         <Route path="/Todolist/:_id/edit" element={<EditTask />} /> {/* TEMPORARIO */}
         <Route path="/notepad" element={<NotePad/>}/>
+        <Route path="/virtualtour" element={<VirtualTour/>}/>
       </Routes>
     </div>
   );

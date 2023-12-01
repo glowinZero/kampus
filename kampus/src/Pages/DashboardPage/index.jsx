@@ -33,6 +33,16 @@ function DashboardPage(){
     const navigate = useNavigate();
 
     useEffect(() => {
+      const token = localStorage.getItem("authToken")
+
+      if(!token){
+          onOpen()
+          
+          setTimeout(() => {
+            navigate("/")
+          }, 3000);    
+        }
+
         const fetchData = async () => {
           const getToken = localStorage.getItem("authToken");
       
@@ -240,6 +250,40 @@ function DashboardPage(){
 
     return (
         <div>
+        {!loggedUser ? (
+        <Modal
+          classNames={{
+            size: "4xl",
+            body: "py-6",
+            backdrop: "bg-[#292f46]/50 backdrop-opacity-40 blur",
+            base: "border-[#292f46] bg-white text-[#71717a]",
+            header: "border-b-[1px] border-[#292f46]",
+            footer: "border-t-[1px] border-[#292f46]",
+            closeButton: "active:bg-white/10",
+          }}
+          size="2xl"
+          backdrop="blur"
+          isOpen={isOpen}
+          onOpenChange={onOpenChange}
+          placement="center"
+        >
+          <ModalContent>
+            {(onClose) => (
+              <div>
+                <ModalHeader className="flex flex-col gap-1">Log in</ModalHeader>
+                <ModalBody>
+                  <p>User not Logged in</p>
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="danger" variant="flat" onPress={() => onClose()}>
+                    Close
+                  </Button>
+                </ModalFooter>
+              </div>
+            )}
+          </ModalContent>
+        </Modal>
+      ) : ( <div>
             {isStudents === true ? (
                 <div>
                     <NavBar />
@@ -355,6 +399,8 @@ function DashboardPage(){
         </div>
       )}
       <button onClick={logout}>Logout</button>
+    </div>
+    )}
     </div>
     );
 }

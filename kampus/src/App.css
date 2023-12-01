@@ -1,8 +1,14 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0;
   text-align: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+#app{
+  width: 100%;
+  height: 100%;
 }
 
 .slider{
@@ -28,5 +34,44 @@
 }
 
 #landing-page{
-  margin-top: -50px;
+  margin-top: 30vh;
+}
+
+#background-img{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  object-fit: cover;
+}
+
+#virtual-tour{
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+#virtual-tour h1{
+  font-size: 15px;
+  position:absolute;
+  width: 60vw;
+  margin-top: 80vh;
+  margin-left: 20vw;
+  height: fit-content;
+  z-index: 0;
+  color: black;
+  background-color: white;
+}
+
+#tour-button{
+  position:absolute;
+  width: fit-content;
+  margin-top: 90vh;
+  margin-left: 40vw;
+  height: fit-content;
+  z-index: 0;
+  color: black;
+  background-color: white;
 }
