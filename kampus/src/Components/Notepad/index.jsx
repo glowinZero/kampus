@@ -96,7 +96,6 @@ function NotePad() {
   
     return (
       <div>
-        <h1>Hi notepad</h1>
         {notes.map((note, index) => (
           <div key={note._id}>
             <Input

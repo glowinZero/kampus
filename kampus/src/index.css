@@ -10,8 +10,11 @@
   font-weight: 400;
 
   color: rgba(255, 255, 255, 0.87);
-  background: rgb(31, 45, 145);
-  background: linear-gradient(45deg, rgba(31, 45, 145, 1) 0%, rgba(45, 197, 250, 1) 100%);
+  background: rgb(10, 36, 114);
+    background: -moz-linear-gradient(45deg, rgba(10, 36, 114, 1) 0%, rgba(14, 107, 168, 1) 100%);
+    background: -webkit-linear-gradient(45deg, rgba(10, 36, 114, 1) 0%, rgba(14, 107, 168, 1) 100%);
+    background: linear-gradient(45deg, rgba(10, 36, 114, 1) 0%, rgba(14, 107, 168, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0a2472", endColorstr="#0e6ba8", GradientType=1);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;

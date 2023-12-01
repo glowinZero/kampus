@@ -8,12 +8,12 @@ import {NextUIProvider} from "@nextui-org/react";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <NextUIProvider>
-    <Router>
-      <AuthProviderWrapper>
-        <App/>
-      </AuthProviderWrapper>
-    </Router>
-  </NextUIProvider>
+      <Router>
+        <AuthProviderWrapper>
+          <NextUIProvider>
+            <App/>
+          </NextUIProvider>
+        </AuthProviderWrapper>
+      </Router>
   </React.StrictMode>,
 )
