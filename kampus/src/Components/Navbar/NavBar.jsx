@@ -15,6 +15,10 @@ function NavBar() {
       <div>
         <Link to="/Todolist"> To Do list</Link>
       </div>
+
+      <div>
+        <Link to="/chat/:id"> Chat </Link>
+      </div>
       
     </nav>
   );
