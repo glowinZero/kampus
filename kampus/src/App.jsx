@@ -18,6 +18,7 @@ import socketIO from "socket.io-client"
 const socket = socketIO.connect("http://localhost:5005")
 
 
+import VirtualTour from './Pages/VirtualTour';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route path="/chat/:id" element={<ChatPage socket={socket}/>}></Route>{/* TEMPORARIO */}
 
 
+        <Route path="/virtualtour" element={<VirtualTour/>}/>
       </Routes>
     </div>
   );

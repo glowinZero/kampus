@@ -26,7 +26,7 @@ function LandingPage(){
                 storeToken(response.data.authToken);
                 localStorage.setItem("LoggedIn", response.data.authToken)
                 authenticateUser();
-                navigate('/dashboard');
+                navigate('/virtualtour');
             })
             .catch((error)=>{
                 const errorDescription = error.response.data.message; 

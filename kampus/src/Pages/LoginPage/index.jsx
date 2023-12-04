@@ -13,7 +13,6 @@ function LoginPage(){
 
     const navigate = useNavigate();
 
-    // use shared functions provided by AuthContext
     const {storeToken, authenticateUser} = useContext(AuthContext);
 
     const handleLoginSubmit = (e) =>{
@@ -26,7 +25,7 @@ function LoginPage(){
                 storeToken(response.data.authToken);
                 localStorage.setItem("LoggedIn", response.data.authToken)
                 authenticateUser();
-                navigate('/dashboard');
+                navigate('/virtualtour');
             })
             .catch((error)=>{
                 const errorDescription = error.response.data.message;

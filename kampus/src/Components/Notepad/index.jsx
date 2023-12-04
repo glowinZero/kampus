@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input } from "@nextui-org/react";
+import { AuthContext } from '../../Context/auth.context';
 
 const API_URL = "http://localhost:5005";
 
@@ -11,10 +12,13 @@ function NotePad() {
     const [body, setBody] = useState("");
     const [editedNotesTitle, setEditedNotesTitle] = useState([]);
     const [editedNotesBody, setEditedNotesBody] = useState([]);
+
+    const { user, storeToken } = useContext(AuthContext);
   
     useEffect(() => {
+      console.log("ver user id", user._id, storeToken);
       axios
-        .get(`${API_URL}/api/notes`)
+        .get(`${API_URL}/api/notes?userId=${user._id}`)
         .then((response) => {
           setNotes(response.data);
           setEditedNotesTitle(response.data.map(() => false));
@@ -23,7 +27,7 @@ function NotePad() {
         .catch((error) => {
           console.error("Error fetching tasks details:", error);
         });
-    }, []);
+    }, [user._id]); 
   
     const addNote = async () => {
       try {
@@ -32,14 +36,14 @@ function NotePad() {
           title,
           body,
           date: generateDate,
-          user: "65673c1ea14ae7ca1e429156",
+          user: user._id,
         };
   
         const response = await axios.post(`${API_URL}/api/note`, requestBody);
   
         console.log("Note Created Successfully:", response.data);
   
-        const updatedResponse = await axios.get(`${API_URL}/api/notes`);
+        const updatedResponse = await axios.get(`${API_URL}/api/notes?userId=${user._id}`);
         setNotes(updatedResponse.data);
         setEditedNotesTitle(updatedResponse.data.map(() => false));
         setEditedNotesBody(updatedResponse.data.map(() => false));
@@ -56,7 +60,7 @@ function NotePad() {
   
         await axios.put(`${API_URL}/api/notes/${noteId}`, updatedNote);
   
-        const updatedResponse = await axios.get(`${API_URL}/api/notes`);
+        const updatedResponse = await axios.get(`${API_URL}/api/notes?userId=${user._id}`);
         setNotes(updatedResponse.data);
   
         setEditedNotesTitle((prevEditedNotes) => {
@@ -79,7 +83,7 @@ function NotePad() {
   
         await axios.put(`${API_URL}/api/notes/${noteId}`, updatedNoteBody);
   
-        const updatedResponse = await axios.get(`${API_URL}/api/notes`);
+        const updatedResponse = await axios.get(`${API_URL}/api/notes?userId=${user._id}`);
         setNotes(updatedResponse.data);
   
         setEditedNotesBody((prevEditedNotes) => {
