@@ -30,8 +30,6 @@ function NotePad() {
       .get(`${API_URL}/api/notes?userId=${user._id}`)
       .then((response) => {
         setNotes(response.data);
-        // setEditedNotesTitle(response.data.map(() => false));
-        // setEditedNotesBody(response.data.map(() => false));
       })
       .catch((error) => {
         console.error("Error fetching tasks details:", error);
@@ -113,10 +111,35 @@ function NotePad() {
     }
   };
 
+  const deleteNote = (note) => {
+    axios
+      .delete(`${API_URL}/api/notes/${note._id}`)
+      .then(() => {
+        console.log("Note deleted");
+        fetchData(); 
+      })
+      .catch((error) => {
+        console.error("Error deleting Student:", error);
+      });
+  };
+  
+  const fetchData = async () => {
+    try {
+      const responseNotes = await axios.get(`${API_URL}/api/notes/`);
+      console.log("users", responseNotes.data);
+      setNotes(responseNotes.data);
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+    }
+  };
+
+    
+
   return (
     <div>
       {notes.map((note, index) => (
         <div key={note._id}>
+          {note.date && <p>{note.date.substring(0, 10)}</p>}
           <Input
             color="grey"
             placeholder={note.title}
@@ -152,7 +175,9 @@ function NotePad() {
               })
             }
           />
-          {note.date && <p>{note.date.substring(0, 10)}</p>}
+          <Button color="danger" variant="flat" onClick={() => deleteNote(note)} >
+                  delete
+          </Button>
         </div>
       ))}
       <Button onPress={onOpen} color="secondary">
