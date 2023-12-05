@@ -6,14 +6,13 @@ import axios from "axios"
 import { useNavigate } from 'react-router-dom';
 import ToDoList from '../../Components/ToDoList/ToDoList';
 import NotePad from '../../Components/Notepad';
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input} from "@nextui-org/react";
-
+import {Spacer, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input, Card, CardBody} from "@nextui-org/react";
 
 const API_URL = "http://localhost:5005";
 
 function DashboardPage(){
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
-    const {isLoggedIn, user, logOut } = useContext(AuthContext);
+    const {isLoggedIn, user } = useContext(AuthContext);
     const [loggedUser, setLoggedUser] = useState()
     const [isStudents, setIsStudents] = useState(true)
     const [users, setUsers] = useState([])
@@ -66,14 +65,6 @@ function DashboardPage(){
       
         fetchData();
     }, [user, isLoggedIn]);
-      
-
-    const logout = () =>{
-        logOut();
-        setLoggedUser("")
-        setUsers([])
-        navigate("/")
-    }
 
     const addStudent = () =>{
         setType(true)
@@ -291,36 +282,39 @@ function DashboardPage(){
                     <NotePad/>
                     <ToDoList/>
                     <Pommodoro />
-                    <button onClick={logout}>Logout</button>
                 </div>
             ) : (
-                <div>
+                <div id="dashboard-staff">
           <NavBar />
-          <h1>Students</h1>
+          <h1 id="heading-staff-dashboard">Students</h1>
           {users.map((elem) => (
-            <div key={elem._id}>
-            {elem.firstName}
-            {elem.lastName}
-            {elem.cohort}
-            {elem.campus}
-            <Button onPress={()=>{deleteStudent(elem); setUserDelete(elem)}} size="lg" className="bg-[#D3D3D3] text-[#00072D] w-64 h-12 font-semibold shadow-lg">
-                delete
-            </Button>
-            <Button onPress={() => {resetInputs();openEditModal(elem); setUserEdit(elem) }} size="lg" className="bg-[#D3D3D3] text-[#00072D] w-64 h-12 font-semibold shadow-lg">
-                edit student 
-            </Button>
+            <div key={elem._id} id="students-list">
+            <Spacer y={8} />
+            <Card style={{ width: "80vw"}}>
+              <CardBody  style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: "2vw", paddingRight: "2vw"}}>
+                <div id="students-card">
+                <p id="name">{elem.firstName} {elem.lastName}</p>
+                <Spacer x={16} />
+                <p id="students-card-p">{elem.cohort}</p>
+                <Spacer x={8} />
+                <p id="students-card-p">{elem.campus}</p>
+                <Spacer x={8} />
+                <p id="email">{elem.email}</p>
+                </div>
+                <div id="buttons-students-list">
+                  <Button onPress={()=>{deleteStudent(elem); setUserDelete(elem)}} size="lg" className="bg-[#D3D3D3] text-[#00072D] w-20 h-12 font-semibold shadow-lg flex items-center">
+                    delete
+                  </Button>
+                  <Button onPress={() => {resetInputs();openEditModal(elem); setUserEdit(elem) }} size="lg" className="bg-[#D3D3D3] text-[#00072D] w-20 h-12 font-semibold shadow-lg">
+                    edit
+                  </Button>
+                </div>
+              </CardBody>
+            </Card>
             </div>
           ))}
           <Modal
-            classNames={{
-              size: "4xl",
-              body: "py-6",
-              backdrop: "bg-[#292f46]/50 backdrop-opacity-40 blur",
-              base: "border-[#292f46] bg-white text-[#71717a]",
-              header: "border-b-[1px] border-[#292f46]",
-              footer: "border-t-[1px] border-[#292f46]",
-              closeButton: "active:bg-white/10",
-            }}
+            classNames={{ size: "4xl", body: "py-6", backdrop: "bg-[#292f46]/50 backdrop-opacity-40 blur", base: "border-[#292f46] bg-white text-[#71717a]", header: "border-b-[1px] border-[#292f46]", footer: "border-t-[1px] border-[#292f46]", closeButton: "active:bg-white/10"}}
             size="2xl"
             backdrop="blur"
             isOpen={isOpen}
@@ -352,9 +346,12 @@ function DashboardPage(){
                     />
                     <Input
                         label="Password"
+                        type='password'
+                        disabled={editingUser ? true : false}
                         variant="flat"
                         value={editingUser ? editingUser.password : password}
                         onChange={(e) =>editingUser ? setEditingUser({ ...editingUser, password: e.target.value }) : setPassword(e.target.value)}
+                        style={{ opacity: 0.1 }}
                     />
                     <Input
                         label="Cohort"
@@ -393,12 +390,12 @@ function DashboardPage(){
               )}
             </ModalContent>
           </Modal>
-            <Button onPress={onOpen} size="lg" className="bg-[#D3D3D3] text-[#00072D] w-64 h-12 font-semibold shadow-lg">
-                add student
-            </Button>
+          <Spacer y={8} />
+          <Button onPress={onOpen} size="lg" className="bg-[#D3D3D3] text-[#00072D] w-64 h-12 font-semibold shadow-lg">
+            add student
+          </Button>
         </div>
       )}
-      <button onClick={logout}>Logout</button>
     </div>
     )}
     </div>

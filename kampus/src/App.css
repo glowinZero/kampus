@@ -34,7 +34,7 @@
 }
 
 #landing-page{
-  margin-top: -50px;
+  margin-top: 30vh;
 }
 
 
@@ -233,4 +233,72 @@ font-size: 15px;
   z-index: 0;
   color: black;
   background-color: white;
+}
+
+
+#students-card{
+  display: flex;
+  flex-direction: row;
+}
+
+#email{
+  width: 20vw;
+}
+
+#name{
+  width: 10vw;
+}
+
+#students-card-p{
+  width: 5vw;
+  display: flex;
+}
+
+#students-lists{
+  position: center;
+}
+
+#dashboard-staff{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#buttons-students-list{
+  display: flex;
+  flex-direction: row;
+  gap: 2vw;
+}
+
+#navbar{
+  position: absolute;
+  z-index: 3;
+  margin-left: -90vw;
+  margin-top: 25vh;
+  width: 5vw;
+  height: 90vh;
+}
+
+#list-navbar{
+  background-color: transparent;
+}
+
+#button-navbar{
+  background-color: transparent;
+}
+
+#heading-staff-dashboard{
+  margin-top: 10vh;
+}
+
+#profile-page{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#heading-profile-page{
+  margin-top: 10vh;
 }

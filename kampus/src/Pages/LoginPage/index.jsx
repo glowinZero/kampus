@@ -30,8 +30,7 @@ function LoginPage(){
             .catch((error)=>{
                 const errorDescription = error.response.data.message;
                 setError(errorDescription);
-            })
-
+        })
     }
 
     return(<div>
