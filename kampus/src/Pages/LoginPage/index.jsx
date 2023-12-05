@@ -4,7 +4,6 @@ import axios from "axios";
 import { Input } from "@nextui-org/react";
 import { Spacer } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
-import { Image } from "@nextui-org/react";
 import { Link } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
@@ -12,14 +11,16 @@ import { useNavigate } from "react-router-dom";
 const API_URL = "http://localhost:5005";
 
 function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [isStudent, setIsStudent] = useState(false);
+  const [error, setError] = useState();
   const [authenticationStep, setAuthenticationStep] = useState("login");
 
   const navigate = useNavigate();
 
-  // use shared functions provided by AuthContext
   const { storeToken, authenticateUser } = useContext(AuthContext);
 
   const handleLoginSubmit = (e) => {
@@ -33,13 +34,58 @@ function LoginPage() {
         storeToken(response.data.authToken);
         localStorage.setItem("Logged In", response.data.authToken);
         authenticateUser();
-        navigate("/");
+        navigate("/dashboard");
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;
         setError(errorDescription);
       });
   };
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    setIsStudent(false);
+  
+    const requestBody = { email, password, firstName, lastName, isStudent };
+    console.log(email, password, firstName, lastName, isStudent)
+  
+    if (email === '' || password === '' || firstName === '' || lastName === '') {
+      alert("Provide all fields in order to create a new Student");
+      return;
+    }
+  
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!emailRegex.test(email)) {
+      alert("Provide a valid email");
+      return;
+    }
+  
+    const passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
+    if (!passwordRegex.test(password)) {
+      alert("Password must have at least 6 characters and contain 1 lowercase letter, 1 uppercase letter, 1 number");
+      return;
+    }
+  
+    axios.post(`${API_URL}/auth/signup`, requestBody)
+  .then(() => {
+
+    return axios.post(`${API_URL}/auth/login`, requestBody);
+  })
+  .then((response) => {
+    storeToken(response.data.authToken);
+    localStorage.setItem("Logged In", response.data.authToken);
+    authenticateUser();
+    navigate("/dashboard");
+  })
+  .catch((error) => {
+    const errorDescription = error.response?.data?.message || 'Failed to create a Student. Please try again.';
+    setError(errorDescription);
+  });
+  };
+
+  const previousPage = () =>{
+    navigate("/")
+  }
 
   return (
     <section className="flex bg-white h-[100vh] w-[100vw]">
@@ -61,6 +107,8 @@ function LoginPage() {
               label="Email"
               variant="flat"
               className=" mb-3"
+              value={email} 
+              onChange={(e)=> setEmail(e.target.value)}
             />
             <Input
               size="sm"
@@ -68,13 +116,15 @@ function LoginPage() {
               label="Password"
               type="password"
               variant="flat"
+              value={password} 
+              onChange={(e)=> setPassword(e.target.value)}
             />
-            <Button className="w-full" color="primary">
+            <Button className="w-full" color="primary" onClick={handleLoginSubmit}>
               Login
             </Button>
             <Spacer y={5} />
             <div className="flex w-5/6">
-              <p className="mr-3 ">Don't have a account?</p>
+              <p className="mr-3 ">Do not have a account?</p>
               <Link
                 color="primary"
                 href="#"
@@ -95,19 +145,37 @@ function LoginPage() {
             <Input
               autoFocus
               size="sm"
-              label="Username"
+              label="First Name"
               variant="flat"
               className=" mb-3"
+              onChange={(e)=>{setFirstName(e.target.value)}}
             />
-            <Input size="sm" label="Email" variant="flat" className=" mb-3" />
+            <Input
+              autoFocus
+              size="sm"
+              label="Last Name"
+              variant="flat"
+              className=" mb-3"
+              onChange={(e)=>{setLastName(e.target.value)}}
+            />
+            <Input
+              autoFocus
+              size="sm"
+              label="Email"
+              variant="flat"
+              className=" mb-3"
+              value={email} 
+              onChange={(e)=> setEmail(e.target.value)}
+            />
             <Input
               size="sm"
               className="mb-5"
               label="Password"
               type="password"
               variant="flat"
+              onChange={(e)=>{setPassword(e.target.value)}}
             />
-            <Button className="w-full" color="primary">
+            <Button className="w-full" color="primary" onClick={handleRegister}>
               Register
             </Button>
             <Spacer y={5} />
@@ -124,84 +192,12 @@ function LoginPage() {
             </div>
           </div>
         )}
+        <Button className="w-full" color="primary" onClick={previousPage}>
+              Back
+        </Button>
       </div>
     </section>
   );
-  {
-    /*
-        axios.post(`${API_URL}/auth/login`, requestBody)
-            .then((response)=>{
-                storeToken(response.data.authToken);
-                localStorage.setItem("LoggedIn", response.data.authToken)
-                authenticateUser();
-                navigate('/virtualtour');
-            })
-            .catch((error)=>{
-                const errorDescription = error.response.data.message;
-                setError(errorDescription);
-        })
-    }
-
-    return(<div>
-        <h1>Login</h1>
-        <form onSubmit = {handleLoginSubmit}>
-            <div>
-                <label>Email:</label>
-                <input type="email" name="email" value={email} onChange={(e)=> setEmail(e.target.value)}/>
-            </div>
-            <div>
-                <label>Password:</label>
-                <input type="password" name="password" value={password} onChange={(e)=> setPassword(e.target.value)}/>
-            </div>
-            <div>
-                <button type="submit">Login</button>
-            </div>
-            {error && <p>{error}</p>}
-        </form>
-        */
-  }
-
-  {
-    /*
-        <section className="grid grid-cols-1 gap-0 lg:grid-cols-12 h-full">
-            <div class="w-full col-span-1 p-4 mx-auto mt-6 lg:col-span-8 xl:p-12 md:w-2/4">
-                <h1 class="mt-6 mb-4 text-xl font-light text-left text-gray-800">Log in to your account</h1>
-                <form class="pb-1 space-y-4">
-                <label class="block">
-                    <span class="block mb-1 text-xs font-medium text-gray-700">Your Email</span>
-                    <input class="form-input" type="email" placeholder="Ex. james@bond.com" inputmode="email" required />
-                </label>
-                <label class="block">
-                    <span class="block mb-1 text-xs font-medium text-gray-700">Your Password</span>
-                    <input class="form-input" type="password" placeholder="••••••••" required />
-                </label>
-                <div class="flex items-center justify-between">
-                    <label class="flex items-center">
-                    <input type="checkbox" class="form-checkbox" />
-                    <span class="block ml-2 text-xs font-medium text-gray-700 cursor-pointer">Remember me</span>
-                    </label>
-                    <input type="submit" class="btn btn-primary" value="Login" />
-                </div>
-                </form>
-                <div class="my-6 space-y-2">
-                <p class="text-xs text-gray-600">
-                    Don't have an account?
-                    <a href="#" class="text-purple-700 hover:text-black">Create an account</a>
-                </p>
-                <a href="#" class="block text-xs text-purple-700 hover:text-black">Forgot password?</a>
-                <a href="#" class="block text-xs text-purple-700 hover:text-black">Privacy & Terms</a>
-                </div>
-            </div>
-            <div class="col-span-1 lg:col-span-4">
-                <img
-                src="https://images.unsplash.com/photo-1531548731165-c6ae86ff6491?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80"
-                alt="3 women looking at a laptop"
-                class="object-cover w-full h-64 min-h-full bg-gray-100"
-                loading="lazy"
-                />
-            </div>
-            </section>*/
-  }
 }
 
 export default LoginPage;
