@@ -66,7 +66,7 @@ function NavBar() {
   const logout = () => {
     logOut();
     setLoggedUser("");
-    navigate("/");
+    navigate("/landing");
   };
 
   return (

@@ -47,17 +47,17 @@ function VirtualTour() {
       {userLogged ? (
         <>
           {tourStep === 0 ? (
-            <h1>Slide 1</h1>
+            <h1>Welcome to the heart of our campus! The entrance is the gateway to a vibrant learning experience. As you step through the doors, you will feel the energy of a community ready to explore, create, and grow together.</h1>
           ) : tourStep === 1 ? (
-            <h1>slide 2 </h1>
+            <h1>Dive into the world of data in our state-of-the-art Data Analytics Classroom. Equipped with cutting-edge technology, this space is where students unravel the power of data to uncover insights and make informed decisions.</h1>
           ) : tourStep === 2 ? (
-            <h1>slide 3 </h1>
+            <h1>Immerse yourself in the art and science of user experience and interface design. Our UX/UI Classroom is a haven for creativity, where students craft user-centric solutions that seamlessly blend aesthetics with functionality.</h1>
           ) : tourStep === 3 ? (
-            <h1>slide 4 </h1>
+            <h1>Enter the realm of coding and web development in our dynamic Web Dev Classroom. From HTML to JavaScript, this space is where students transform lines of code into interactive and visually stunning web applications.</h1>
           ) : tourStep === 4 ? (
-            <h1>slide 5 </h1>
+            <h1>Hungry for knowledge and a good meal? Our Kitchen is more than just a place to heat up your lunch; it is a hub of culinary delights and social interaction. Fuel your brain and body in this cozy space designed for shared meals and delightful conversations.</h1>
           ) : tourStep === 5 ? (
-            <h1>slide 6 </h1>
+            <h1>Kick back and relax in our Lounge, the ultimate chill-out zone on campus. This vibrant space is perfect for unwinding, socializing, and engaging in friendly soccer table matches. Whether you are catching up with friends or taking a break from your studies, the Lounge is the go-to spot for leisure and camaraderie.</h1>
           ) : (
             <h1>final slide </h1>
           )}

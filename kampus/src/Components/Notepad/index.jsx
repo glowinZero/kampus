@@ -27,7 +27,7 @@ function NotePad() {
   useEffect(() => {
     console.log("see UserId", user._id, storeToken);
     axios
-      .get(`${API_URL}/api/notes?userId=${user._id}`)
+      .get(`${API_URL}/api/notes/${user._id}`)
       .then((response) => {
         setNotes(response.data);
       })

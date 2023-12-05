@@ -12,12 +12,14 @@ import TaskDetails from "./Components/ToDoList/TaskDetails";
 import EditTask from "./Components/ToDoList/EditTask";
 import NotePad from "./Components/Notepad";
 import VirtualTour from "./Pages/VirtualTour";
+import WebPage from "./Pages/WebPage";
 
 function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<WebPage />} />
+        <Route path="/landing" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/Todolist/AddTask" element={<AddTask />} />{" "}
         {/* TEMPORARIO */}

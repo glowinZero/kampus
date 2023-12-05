@@ -271,3 +271,25 @@
 #heading-profile-page {
   margin-top: 10vh;
 }
+
+
+#topbar{
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#promotional-page{
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+#promotional-headings{
+  padding-top: 20vh;
+}

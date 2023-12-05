@@ -9,8 +9,8 @@ import {
   useDisclosure,
   Input,
   Link,
+  Spacer
 } from "@nextui-org/react";
-import { Spacer } from "@nextui-org/react";
 import { AuthContext } from "../../Context/auth.context";
 import axios from "axios";
 import { useContext, useState } from "react";
@@ -36,7 +36,7 @@ function LandingPage() {
         storeToken(response.data.authToken);
         localStorage.setItem("LoggedIn", response.data.authToken);
         authenticateUser();
-        navigate("/dashboard");
+        navigate("/virtualtour");
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;
