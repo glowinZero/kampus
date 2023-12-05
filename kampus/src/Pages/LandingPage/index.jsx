@@ -15,16 +15,21 @@ import { AuthContext } from "../../Context/auth.context";
 import axios from "axios";
 import { useContext, useState } from "react";
 const API_URL = "http://localhost:5005";
+
 function LandingPage() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
   const { storeToken, authenticateUser } = useContext(AuthContext);
+
   const handleLoginSubmit = (e) => {
     e.preventDefault();
+
     const requestBody = { email, password };
+
     axios
       .post(`${API_URL}/auth/login`, requestBody)
       .then((response) => {
@@ -38,9 +43,11 @@ function LandingPage() {
         setError(errorDescription);
       });
   };
+
   const goToLoginPage = () => {
     navigate("/login");
   };
+
   return (
     <div id="landing-page" className="scale-200">
       <h1 className="[word-spacing:-100px] text-7xl font-thin">Welcome!</h1>
@@ -67,10 +74,10 @@ function LandingPage() {
           classNames={{
             size: "4xl",
             body: "py-6",
-            backdrop: "bg-[#292F46]/50 backdrop-opacity-40 blur",
-            base: "border-[#292F46] bg-white text-[#71717A]",
-            header: "border-b-[1px] border-[#292F46]",
-            footer: "border-t-[1px] border-[#292F46]",
+            backdrop: "bg-[#292f46]/50 backdrop-opacity-40 blur",
+            base: "border-[#292f46] bg-white text-[#71717a]",
+            header: "border-b-[1px] border-[#292f46]",
+            footer: "border-t-[1px] border-[#292f46]",
             closeButton: "active:bg-white/10",
           }}
           size="l"
@@ -102,6 +109,11 @@ function LandingPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
+                  <div className="flex py-2 px-1 justify-between">
+                    <Link color="primary" href="#" size="sm">
+                      Forgot password?
+                    </Link>
+                  </div>
                 </ModalBody>
                 <ModalFooter>
                   <Button color="danger" variant="flat" onPress={onClose}>

@@ -7,22 +7,23 @@ const BACKEND_TODO_URL = "http://localhost:5005";
 
 const EditTask = () => {
   const { taskId } = useParams();
-  const [taskIdFromParams, setTaskIdFromParams] = useState('');
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
-  const [deadline, setDeadline] = useState('');
-  const [status, setStatus] = useState('');
+  const [taskIdFromParams, setTaskIdFromParams] = useState("");
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const [deadline, setDeadline] = useState("");
+  const [status, setStatus] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`${BACKEND_TODO_URL}/api/tasks/${taskId}`)
+    axios
+      .get(`${BACKEND_TODO_URL}/api/tasks/${taskId}`)
       .then((response) => {
         const taskDetails = response.data;
-        setTaskIdFromParams(taskDetails._id || '');
-        setTitle(taskDetails.title || '');
-        setBody(taskDetails.body || '');
-        setDeadline(taskDetails.deadline || '');
-        setStatus(taskDetails.status || '');
+        setTaskIdFromParams(taskDetails._id || "");
+        setTitle(taskDetails.title || "");
+        setBody(taskDetails.body || "");
+        setDeadline(taskDetails.deadline || "");
+        setStatus(taskDetails.status || "");
       })
       .catch((error) => {
         console.error("Error fetching Task details:", error);
@@ -33,13 +34,22 @@ const EditTask = () => {
     e.preventDefault();
 
     const requestBody = {};
-    if (title !== '') {requestBody.title = title;}
-    if (body !== '') {requestBody.body = body;}
-    if (deadline !== '') {requestBody.deadline = deadline;}
-    if (status !== '') {requestBody.status = status;}
+    if (title !== "") {
+      requestBody.title = title;
+    }
+    if (body !== "") {
+      requestBody.body = body;
+    }
+    if (deadline !== "") {
+      requestBody.deadline = deadline;
+    }
+    if (status !== "") {
+      requestBody.status = status;
+    }
 
     const newTaskId = localStorage.getItem("taskId");
-    axios.put(`${BACKEND_TODO_URL}/api/tasks/${newTaskId}`, requestBody)
+    axios
+      .put(`${BACKEND_TODO_URL}/api/tasks/${newTaskId}`, requestBody)
       .then(() => {
         console.log("TASK EDITED!", newTaskId);
         navigate(`/Todolist/${newTaskId}`);
@@ -80,10 +90,21 @@ const EditTask = () => {
             value={status}
             onChange={(e) => setStatus(e.target.value)}
           >
-            <option value="Choose the status of the task" style={{color:"black"}}>Choose the status of the task</option>
-            <option value="To do" style={{color:"black"}}>To do</option>
-            <option value="In Progress" style={{color:"black"}}>In Progress</option>
-            <option value="Done" style={{color:"black"}}>Done</option>
+            <option
+              value="Choose the status of the task"
+              style={{ color: "black" }}
+            >
+              Choose the status of the task
+            </option>
+            <option value="To do" style={{ color: "black" }}>
+              To do
+            </option>
+            <option value="In Progress" style={{ color: "black" }}>
+              In Progress
+            </option>
+            <option value="Done" style={{ color: "black" }}>
+              Done
+            </option>
           </select>
         </label>
 
@@ -100,4 +121,3 @@ const EditTask = () => {
 };
 
 export default EditTask;
-

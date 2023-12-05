@@ -25,8 +25,6 @@
   background-color: green;
 }
 
-
-
 .home__container > * {
   margin-bottom: 10px;
 }
@@ -42,8 +40,8 @@
   padding: 10px;
   font-size: 16px;
   cursor: pointer;
-  background-color: #607EAA;
-  color: #F9F5EB;
+  background-color: #607eaa;
+  color: #f9f5eb;
   outline: none;
   border: none;
   border-radius: 5px;
@@ -56,7 +54,7 @@
 }
 .chat__sidebar {
   height: 100%;
-  background-color: #F9F5EB;
+  background-color: #f9f5eb;
   flex: 0.2;
   padding: 20px;
   border-right: 1px solid #fdfdfd;
@@ -70,7 +68,7 @@
 }
 .chat__users > * {
   margin-bottom: 10px;
-  color: #607EAA;
+  color: #607eaa;
   font-size: 14px;
 }
 .online__users > * {
@@ -85,16 +83,16 @@
   align-items: center;
   justify-content: space-between;
   padding: 20px;
-  background-color: #F9F5EB;
+  background-color: #f9f5eb;
 }
 .leaveChat__btn {
   padding: 10px;
   width: 150px;
   border: none;
   outline: none;
-  background-color: #D1512D;
+  background-color: #d1512d;
   cursor: pointer;
-  color: #EAE3D2;
+  color: #eae3d2;
 }
 .message__container {
   width: 100%;
@@ -109,7 +107,7 @@
 }
 .chat__footer {
   padding: 10px;
-  background-color: #F9F5EB;
+  background-color: #f9f5eb;
   height: 10vh;
 }
 .form {
@@ -133,26 +131,26 @@
   padding: 10px;
   border: none;
   outline: none;
-  color: #EAE3D2;
+  color: #eae3d2;
   cursor: pointer;
 }
 .sendBtn:hover {
   background-color: rgb(129, 201, 129);
 }
 .message__recipient {
-background-color: #f5ccc2;
-width: 300px;
-padding: 10px;
-border-radius: 10px;
-font-size: 15px;
+  background-color: #f5ccc2;
+  width: 300px;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 15px;
 }
-.message__sender{
-background-color: rgb(194, 243, 194);
-max-width: 300px;
-padding: 10px;
-border-radius: 10px;
-margin-left: auto;
-font-size: 15px;
+.message__sender {
+  background-color: rgb(194, 243, 194);
+  max-width: 300px;
+  padding: 10px;
+  border-radius: 10px;
+  margin-left: auto;
+  font-size: 15px;
 }
 .message__chats > p {
   font-size: 13px;
@@ -168,7 +166,7 @@ font-size: 15px;
   margin-top: 30vh;
 }
 
-#background-img{
+#background-img {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -176,7 +174,7 @@ font-size: 15px;
   object-fit: cover;
 }
 
-#virtual-tour{
+#virtual-tour {
   position: fixed;
   width: 100vw;
   height: 100vh;
@@ -184,9 +182,9 @@ font-size: 15px;
   padding: 0;
 }
 
-#virtual-tour h1{
+#virtual-tour h1 {
   font-size: 15px;
-  position:absolute;
+  position: absolute;
   width: 60vw;
   margin-top: 80vh;
   margin-left: 20vw;
@@ -196,8 +194,8 @@ font-size: 15px;
   background-color: white;
 }
 
-#tour-button{
-  position:absolute;
+#tour-button {
+  position: absolute;
   width: fit-content;
   margin-top: 90vh;
   margin-left: 40vw;
@@ -207,43 +205,42 @@ font-size: 15px;
   background-color: white;
 }
 
-
-#students-card{
+#students-card {
   display: flex;
   flex-direction: row;
 }
 
-#email{
+#email {
   width: 20vw;
 }
 
-#name{
+#name {
   width: 10vw;
 }
 
-#students-card-p{
+#students-card-p {
   width: 5vw;
   display: flex;
 }
 
-#students-lists{
+#students-lists {
   position: center;
 }
 
-#dashboard-staff{
+#dashboard-staff {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
-#buttons-students-list{
+#buttons-students-list {
   display: flex;
   flex-direction: row;
   gap: 2vw;
 }
 
-#navbar{
+#navbar {
   position: absolute;
   z-index: 3;
   margin-left: -90vw;
@@ -252,25 +249,25 @@ font-size: 15px;
   height: 90vh;
 }
 
-#list-navbar{
+#list-navbar {
   background-color: transparent;
 }
 
-#button-navbar{
+#button-navbar {
   background-color: transparent;
 }
 
-#heading-staff-dashboard{
+#heading-staff-dashboard {
   margin-top: 10vh;
 }
 
-#profile-page{
+#profile-page {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
-#heading-profile-page{
+#heading-profile-page {
   margin-top: 10vh;
 }

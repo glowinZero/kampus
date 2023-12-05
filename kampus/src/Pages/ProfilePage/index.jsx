@@ -1,190 +1,269 @@
-import { useNavigate } from 'react-router-dom';
-import NavBar from '../../Components/Navbar/NavBar';
-import { AuthContext } from '../../Context/auth.context';
+import { useNavigate } from "react-router-dom";
+import NavBar from "../../Components/Navbar/NavBar";
+import { AuthContext } from "../../Context/auth.context";
 import { useEffect, useContext, useState } from "react";
 import axios from "axios";
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, Input, Card, CardBody, Spacer} from "@nextui-org/react";
-
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure,
+  Input,
+  Card,
+  CardBody,
+  Spacer,
+} from "@nextui-org/react";
 
 const API_URL = "http://localhost:5005";
 
-function ProfilePage(){
-    const navigate = useNavigate();
-    const {isOpen, onOpen, onOpenChange} = useDisclosure();
-    const {isLoggedIn, user } = useContext(AuthContext);
-    const [loggedUser, setLoggedUser] = useState()
-    const [email, setEmail] = useState();
-    const [firstName, setFirstName] = useState();
-    const [lastName, setLastName] = useState();
+function ProfilePage() {
+  const navigate = useNavigate();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isLoggedIn, user } = useContext(AuthContext);
+  const [loggedUser, setLoggedUser] = useState();
+  const [email, setEmail] = useState();
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
 
-    useEffect(() => {
-        const token = localStorage.getItem("authToken")
-  
-        if(!token){
-            onOpen()
-            
-            setTimeout(() => {
-              navigate("/")
-            }, 3000);    
-          }
-  
-          const fetchData = async () => {
-            const getToken = localStorage.getItem("authToken");
-        
-            if (getToken && user) {
-              try {
-                const idUser = user._id;
-        
-                const responseUser = await axios.get(`${API_URL}/auth/users/${idUser}`);
-                console.log(responseUser.data.isStudent);
-                setLoggedUser(responseUser.data);
-                console.log(responseUser.data)
-        
-              } catch (error) {
-                console.error("Error fetching user details:", error);
-              }
-            }
-          };
-        
-          fetchData();
-    }, [user, isLoggedIn]);
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
 
-    const editUser = (userEdit) =>{
-        const isStudent = false;
-        const password = loggedUser.password
-        const cohort = loggedUser.cohort
-        const campus = loggedUser.campus
-        const manager = ""
-        const teacher = ""
-        const updatedFields = {
-            ...(email !== undefined && { email: email !== '' ? email : loggedUser.email }),
-            password,
-            ...(firstName !== undefined && { firstName: firstName !== '' ? firstName : loggedUser.firstName }),
-            ...(lastName !== undefined && { lastName: lastName !== '' ? lastName : loggedUser.lastName }),
-            cohort,
-            campus,
-            manager,
-            teacher,
-            isStudent,
-        };
+    if (!token) {
+      onOpen();
 
-        if (Object.keys(updatedFields).length === 0) {
-            alert("No fields to update");
-            return;
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    }
+
+    const fetchData = async () => {
+      const getToken = localStorage.getItem("authToken");
+
+      if (getToken && user) {
+        try {
+          const idUser = user._id;
+
+          const responseUser = await axios.get(
+            `${API_URL}/auth/users/${idUser}`
+          );
+          console.log(responseUser.data.isStudent);
+          setLoggedUser(responseUser.data);
+          console.log(responseUser.data);
+        } catch (error) {
+          console.error("Error fetching user details:", error);
         }
-    
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
-        if (!emailRegex.test(updatedFields.email)) {
-            alert("Provide a valid email");
-            return;
-        }
-        
-        axios.put(`${API_URL}/auth/users/${userEdit._id}`, updatedFields)
-        .then(() => {
+      }
+    };
+
+    fetchData();
+  }, [user, isLoggedIn]);
+
+  const editUser = (userEdit) => {
+    const isStudent = false;
+    const password = loggedUser.password;
+    const cohort = loggedUser.cohort;
+    const campus = loggedUser.campus;
+    const manager = "";
+    const teacher = "";
+    const updatedFields = {
+      ...(email !== undefined && {
+        email: email !== "" ? email : loggedUser.email,
+      }),
+      password,
+      ...(firstName !== undefined && {
+        firstName: firstName !== "" ? firstName : loggedUser.firstName,
+      }),
+      ...(lastName !== undefined && {
+        lastName: lastName !== "" ? lastName : loggedUser.lastName,
+      }),
+      cohort,
+      campus,
+      manager,
+      teacher,
+      isStudent,
+    };
+
+    if (Object.keys(updatedFields).length === 0) {
+      alert("No fields to update");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!emailRegex.test(updatedFields.email)) {
+      alert("Provide a valid email");
+      return;
+    }
+
+    axios
+      .put(`${API_URL}/auth/users/${userEdit._id}`, updatedFields)
+      .then(() => {
         navigate(`/dashboard`);
       })
       .catch((error) => {
-        console.error('Error creating task:', error);
-        alert('Failed to create task. Please try again.');
+        console.error("Error creating task:", error);
+        alert("Failed to create task. Please try again.");
       });
 
-      const fetchData = async () => {
-        const getToken = localStorage.getItem("authToken");
-    
-        if (getToken && user) {
-          try {
-            const idUser = user._id;
-            const responseUser = await axios.get(`${API_URL}/auth/users/${idUser}`);
-            console.log(responseUser.data.isStudent);
-            setLoggedUser(responseUser.data);
+    const fetchData = async () => {
+      const getToken = localStorage.getItem("authToken");
 
-          } catch (error) {
-            console.error("Error fetching user details:", error);
-          }
+      if (getToken && user) {
+        try {
+          const idUser = user._id;
+          const responseUser = await axios.get(
+            `${API_URL}/auth/users/${idUser}`
+          );
+          console.log(responseUser.data.isStudent);
+          setLoggedUser(responseUser.data);
+        } catch (error) {
+          console.error("Error fetching user details:", error);
         }
-      };
-    
-      fetchData();
-    }
+      }
+    };
 
-    const resetProfile = () =>{
-        const idUser = user._id;
-        axios.get(`${API_URL}/auth/users/${idUser}`).then((response)=>{
-            console.log(response.data.isStudent)
-            setLoggedUser(response.data);
-        }).catch((error)=>{
-            console.error("Error fetching user details:", error);
-        })
-    }
+    fetchData();
+  };
 
-    return(
+  const resetProfile = () => {
+    const idUser = user._id;
+    axios
+      .get(`${API_URL}/auth/users/${idUser}`)
+      .then((response) => {
+        console.log(response.data.isStudent);
+        setLoggedUser(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching user details:", error);
+      });
+  };
+
+  return (
+    <div>
+      {!loggedUser ? (
         <div>
-            {!loggedUser ? (<div>
-                <Modal
-                classNames={{
-                    size: "4xl",
-                    body: "py-6",
-                    backdrop: "bg-[#292f46]/50 backdrop-opacity-40 blur",
-                    base: "border-[#292f46] bg-white text-[#71717a]",
-                    header: "border-b-[1px] border-[#292f46]",
-                    footer: "border-t-[1px] border-[#292f46]",
-                    closeButton: "active:bg-white/10"}}
-                size="2xl"
-                backdrop="blur"
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                placement="center">
-                <ModalContent>
-                    {(onClose) => (
-                    <div>
-                        <ModalHeader className="flex flex-col gap-1">Log in</ModalHeader>
-                        <ModalBody>
-                        <p>User not Logged in</p>
-                        </ModalBody>
-                        <ModalFooter>
-                        <Button color="danger" variant="flat" onPress={() => onClose()}>
-                            Close
-                        </Button>
-                        </ModalFooter>
-                    </div>
-                    )}
-                </ModalContent>
-                </Modal>
-                </div>) : ( <div id="profile-page">
-                    <NavBar/>
-                    <h1 id="heading-profile-page">Hi Profile Page</h1>
-                    <div>
-                        <div>
-                            {/*<img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Student Photo" style={{ width: '200px'}}/>
+          <Modal
+            classNames={{
+              size: "4xl",
+              body: "py-6",
+              backdrop: "bg-[#292f46]/50 backdrop-opacity-40 blur",
+              base: "border-[#292f46] bg-white text-[#71717a]",
+              header: "border-b-[1px] border-[#292f46]",
+              footer: "border-t-[1px] border-[#292f46]",
+              closeButton: "active:bg-white/10",
+            }}
+            size="2xl"
+            backdrop="blur"
+            isOpen={isOpen}
+            onOpenChange={onOpenChange}
+            placement="center"
+          >
+            <ModalContent>
+              {(onClose) => (
+                <div>
+                  <ModalHeader className="flex flex-col gap-1">
+                    Log in
+                  </ModalHeader>
+                  <ModalBody>
+                    <p>User not Logged in</p>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button
+                      color="danger"
+                      variant="flat"
+                      onPress={() => onClose()}
+                    >
+                      Close
+                    </Button>
+                  </ModalFooter>
+                </div>
+              )}
+            </ModalContent>
+          </Modal>
+        </div>
+      ) : (
+        <div id="profile-page">
+          <NavBar />
+          <h1 id="heading-profile-page">Hi Profile Page</h1>
+          <div>
+            <div>
+              {/*<img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Student Photo" style={{ width: '200px'}}/>
                             <Card style={{ width: "20vw"}}>
                                 <CardBody style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: "2vw", paddingRight: "2vw"}}>
                                     <h3>{loggedUser.firstName} {loggedUser.lastName}</h3>
                                     <p>{loggedUser.cohort} {loggedUser.campus}</p>
                                 </CardBody>
                             </Card>*/}
-                        </div>
-                        <Spacer y={8} />
-                        <Card  style={{ width: "80vw"}}>
-                            <CardBody>
-                                <Input type="string" label="First Name" placeholder={loggedUser.firstName} onChange={(e)=>{setFirstName(e.target.value)}}/>
-                                <Input type="string" label="Last Name" placeholder={loggedUser.lastName} onChange={(e)=>{setLastName(e.target.value)}}/>
-                                <Input type="email" label="email" placeholder={loggedUser.email} onChange={(e)=>{setEmail(e.target.value)}}/>
-                                <Input label="Password" type='password' variant="flat" disabled="true" value={loggedUser.password} readOnly style={{ color: 'Gainsboro'}} />
-                                <Input type="cohort" label="Cohort" placeholder={loggedUser.cohort} readOnly style={{ color: 'Gainsboro'}}>{loggedUser.cohort}</Input>
-                                <Input type="campus" label="Campus" placeholder={loggedUser.campus} readOnly style={{ color: 'Gainsboro'}}>{loggedUser.campus}</Input>
-                            </CardBody>
-                        </Card>
-                        <Button color="danger" variant="flat" onPress={resetProfile}>
-                            Cancel
-                        </Button>
-                        <Button color="primary" onClick={editUser}>
-                            Save changes
-                        </Button>
-                        </div>
-                </div>
-            )}
+            </div>
+            <Spacer y={8} />
+            <Card style={{ width: "80vw" }}>
+              <CardBody>
+                <Input
+                  type="string"
+                  label="First Name"
+                  placeholder={loggedUser.firstName}
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                  }}
+                />
+                <Input
+                  type="string"
+                  label="Last Name"
+                  placeholder={loggedUser.lastName}
+                  onChange={(e) => {
+                    setLastName(e.target.value);
+                  }}
+                />
+                <Input
+                  type="email"
+                  label="email"
+                  placeholder={loggedUser.email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                />
+                <Input
+                  label="Password"
+                  type="password"
+                  variant="flat"
+                  disabled="true"
+                  value={loggedUser.password}
+                  readOnly
+                  style={{ color: "Gainsboro" }}
+                />
+                <Input
+                  type="cohort"
+                  label="Cohort"
+                  placeholder={loggedUser.cohort}
+                  readOnly
+                  style={{ color: "Gainsboro" }}
+                >
+                  {loggedUser.cohort}
+                </Input>
+                <Input
+                  type="campus"
+                  label="Campus"
+                  placeholder={loggedUser.campus}
+                  readOnly
+                  style={{ color: "Gainsboro" }}
+                >
+                  {loggedUser.campus}
+                </Input>
+              </CardBody>
+            </Card>
+            <Button color="danger" variant="flat" onPress={resetProfile}>
+              Cancel
+            </Button>
+            <Button color="primary" onClick={editUser}>
+              Save changes
+            </Button>
+          </div>
         </div>
-    )
+      )}
+    </div>
+  );
 }
 
-export default ProfilePage
+export default ProfilePage;

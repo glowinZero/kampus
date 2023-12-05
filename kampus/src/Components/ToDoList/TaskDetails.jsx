@@ -22,7 +22,8 @@ function TaskDetails() {
   }, [taskId]);
 
   function deleteTask() {
-    axios.delete(`${BACKEND_TODO_URL}/api/task/${taskId}`)
+    axios
+      .delete(`${BACKEND_TODO_URL}/api/task/${taskId}`)
       .then(() => {
         console.log("Task deleted!");
         navigate(`/Todolist`);
@@ -34,7 +35,7 @@ function TaskDetails() {
 
   return (
     <div>
-        <NavBar/>
+      <NavBar />
       <h1>Task</h1>
       {task && (
         <div key={task._id}>
@@ -47,20 +48,16 @@ function TaskDetails() {
         </div>
       )}
       <Link to={`/Todolist/${taskId}/edit`}>
-  <button>Edit Task</button>
-</Link>
+        <button>Edit Task</button>
+      </Link>
 
-<div>
-<Link to={`/Todolist`}>
-  <button>Back to To Do List</button>
-</Link>
-</div>
-
-
-      
+      <div>
+        <Link to={`/Todolist`}>
+          <button>Back to To Do List</button>
+        </Link>
+      </div>
     </div>
   );
 }
 
 export default TaskDetails;
-

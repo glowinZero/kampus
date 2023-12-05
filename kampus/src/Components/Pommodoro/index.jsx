@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
-import ReactSlider from 'react-slider';
+import { useState, useEffect } from "react";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import ReactSlider from "react-slider";
 
-const red = '#f54e4e';
-const green = '#4aec8c';
+const red = "#f54e4e";
+const green = "#4aec8c";
 
 function Pomodoro() {
   const [showSettings, setShowSettings] = useState(true);
@@ -12,9 +12,10 @@ function Pomodoro() {
   const [breakMinutes, setBreakMinutes] = useState(0);
   const [isPaused, setIsPaused] = useState(true);
   const [secondsLeft, setSecondsLeft] = useState(workMinutes * 60);
-  const [mode, setMode] = useState('work');
+  const [mode, setMode] = useState("work");
 
-  const initialTotalTime = mode === 'work' ? workMinutes * 60 : breakMinutes * 60;
+  const initialTotalTime =
+    mode === "work" ? workMinutes * 60 : breakMinutes * 60;
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -38,19 +39,19 @@ function Pomodoro() {
   };
 
   const switchMode = () => {
-    const nextMode = mode === 'work' ? 'break' : 'work';
+    const nextMode = mode === "work" ? "break" : "work";
     setMode(nextMode);
-    setSecondsLeft(nextMode === 'work' ? workMinutes * 60 : breakMinutes * 60);
+    setSecondsLeft(nextMode === "work" ? workMinutes * 60 : breakMinutes * 60);
   };
 
-  const resetPommodoro = () =>{
+  const resetPommodoro = () => {
     setShowSettings(true);
     setSecondsLeft(0);
-    setMode("work")
-    setWorkMinutes(0)
-    setBreakMinutes(0)
-    setIsPaused(true)
-  }
+    setMode("work");
+    setWorkMinutes(0);
+    setBreakMinutes(0);
+    setIsPaused(true);
+  };
 
   return (
     <div>
@@ -76,7 +77,7 @@ function Pomodoro() {
             max={60}
             onChange={setBreakMinutes}
           />
-          <button style={{ backgroundColor: 'grey' }} onClick={startTimer}>
+          <button style={{ backgroundColor: "grey" }} onClick={startTimer}>
             Start
           </button>
         </div>
@@ -85,15 +86,20 @@ function Pomodoro() {
           <h1>pomodoro timer</h1>
           <CircularProgressbar
             value={(secondsLeft / initialTotalTime) * 100}
-            text={`${Math.floor(secondsLeft / 60)}:${(secondsLeft % 60).toString().padStart(2, '0')}`}
+            text={`${Math.floor(secondsLeft / 60)}:${(secondsLeft % 60)
+              .toString()
+              .padStart(2, "0")}`}
             styles={buildStyles({
-              textColor: '#1c1c1c',
-              pathColor: mode === 'work' ? red : green,
-              trailColor: 'rgba(255, 255, 255,.2)',
+              textColor: "#1c1c1c",
+              pathColor: mode === "work" ? red : green,
+              trailColor: "rgba(255, 255, 255,.2)",
             })}
           />
-          <button style={{ backgroundColor: 'grey' }} onClick={isPaused ? startTimer : pauseTimer}>
-            {isPaused ? 'Play' : 'Pause'}
+          <button
+            style={{ backgroundColor: "grey" }}
+            onClick={isPaused ? startTimer : pauseTimer}
+          >
+            {isPaused ? "Play" : "Pause"}
           </button>
           <button onClick={resetPommodoro}>Reset</button>
         </div>
