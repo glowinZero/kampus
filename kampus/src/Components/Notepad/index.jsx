@@ -16,13 +16,13 @@ function NotePad() {
     const { user, storeToken } = useContext(AuthContext);
   
     useEffect(() => {
-      console.log("ver user id", user._id, storeToken);
+      console.log("see UserId", user._id, storeToken);
       axios
         .get(`${API_URL}/api/notes?userId=${user._id}`)
         .then((response) => {
           setNotes(response.data);
-          setEditedNotesTitle(response.data.map(() => false));
-          setEditedNotesBody(response.data.map(() => false));
+          // setEditedNotesTitle(response.data.map(() => false));
+          // setEditedNotesBody(response.data.map(() => false));
         })
         .catch((error) => {
           console.error("Error fetching tasks details:", error);

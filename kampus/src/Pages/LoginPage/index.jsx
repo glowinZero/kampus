@@ -129,6 +129,21 @@ function LoginPage() {
   );
   {
     /*
+        axios.post(`${API_URL}/auth/login`, requestBody)
+            .then((response)=>{
+                storeToken(response.data.authToken);
+                localStorage.setItem("LoggedIn", response.data.authToken)
+                authenticateUser();
+                navigate('/virtualtour');
+            })
+            .catch((error)=>{
+                const errorDescription = error.response.data.message;
+                setError(errorDescription);
+        })
+    }
+
+    return(<div>
+        <h1>Login</h1>
         <form onSubmit = {handleLoginSubmit}>
             <div>
                 <label>Email:</label>

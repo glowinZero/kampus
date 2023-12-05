@@ -11,13 +11,6 @@ import ContactsPage from './Pages/ContactsPage';
 import TaskDetails from './Components/ToDoList/TaskDetails';
 import EditTask from './Components/ToDoList/EditTask';
 import NotePad from './Components/Notepad';
-import ChatPage from './Components/Chat/ChatPage';
-import Home from './Components/Chat/Home';
-import socketIO from "socket.io-client"
-
-const socket = socketIO.connect("http://localhost:5005")
-
-
 import VirtualTour from './Pages/VirtualTour';
 
 function App() {
@@ -34,11 +27,6 @@ function App() {
         <Route path="/Todolist/:_id" element={<TaskDetails />} /> {/* TEMPORARIO */}
         <Route path="/Todolist/:_id/edit" element={<EditTask />} /> {/* TEMPORARIO */}
         <Route path="/notepad" element={<NotePad/>}/>
-
-        <Route path="/chat" element={<Home socket={socket}/>}></Route> 
-        <Route path="/chat/:id" element={<ChatPage socket={socket}/>}></Route>{/* TEMPORARIO */}
-
-
         <Route path="/virtualtour" element={<VirtualTour/>}/>
       </Routes>
     </div>
