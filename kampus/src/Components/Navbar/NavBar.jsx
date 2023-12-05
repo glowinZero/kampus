@@ -12,8 +12,6 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
-  Card,
-  CardBody,
 } from "@nextui-org/react";
 import axios from "axios";
 
