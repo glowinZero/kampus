@@ -184,81 +184,88 @@ function ProfilePage() {
           </Modal>
         </div>
       ) : (
-        <div id="profile-page">
+        <div id="dashboard-staff" className="w-screen">
           <NavBar />
-          <h1 id="heading-profile-page">Hi Profile Page</h1>
-          <div>
+          <div className=" w-[90vw] h-[95vh] bg-gray-400 m-5 p-5 rounded-3xl">
+            <h1 id="heading-profile-page" className="font-semibold p-1">
+              Hi Profile Page
+            </h1>
             <div>
-              {/*<img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Student Photo" style={{ width: '200px'}}/>
+              <div>
+                {/*<img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Student Photo" style={{ width: '200px'}}/>
                             <Card style={{ width: "20vw"}}>
                                 <CardBody style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: "2vw", paddingRight: "2vw"}}>
                                     <h3>{loggedUser.firstName} {loggedUser.lastName}</h3>
                                     <p>{loggedUser.cohort} {loggedUser.campus}</p>
                                 </CardBody>
                             </Card>*/}
+              </div>
+              <Spacer y={8} />
+              <Card>
+                <CardBody>
+                  <Input
+                    type="string"
+                    label="First Name"
+                    placeholder={loggedUser.firstName}
+                    onChange={(e) => {
+                      setFirstName(e.target.value);
+                    }}
+                  />
+                  <Input
+                    type="string"
+                    label="Last Name"
+                    placeholder={loggedUser.lastName}
+                    onChange={(e) => {
+                      setLastName(e.target.value);
+                    }}
+                  />
+                  <Input
+                    type="email"
+                    label="email"
+                    placeholder={loggedUser.email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                  />
+                  <Input
+                    label="Password"
+                    type="password"
+                    variant="flat"
+                    disabled="true"
+                    value={loggedUser.password}
+                    readOnly
+                    style={{ color: "Gainsboro" }}
+                  />
+                  <Input
+                    type="cohort"
+                    label="Cohort"
+                    placeholder={loggedUser.cohort}
+                    readOnly
+                    style={{ color: "Gainsboro" }}
+                  >
+                    {loggedUser.cohort}
+                  </Input>
+                  <Input
+                    type="campus"
+                    label="Campus"
+                    placeholder={loggedUser.campus}
+                    readOnly
+                    style={{ color: "Gainsboro" }}
+                  >
+                    {loggedUser.campus}
+                  </Input>
+                </CardBody>
+              </Card>
+              <div className="flex row justify-center mt-5">
+                <Button color="danger" variant="flat" onPress={resetProfile}>
+                  Cancel
+                </Button>
+                <Spacer x={5} />
+                <Button color="primary" onClick={editUser}>
+                  Save changes
+                </Button>
+              </div>
             </div>
-            <Spacer y={8} />
-            <Card style={{ width: "80vw" }}>
-              <CardBody>
-                <Input
-                  type="string"
-                  label="First Name"
-                  placeholder={loggedUser.firstName}
-                  onChange={(e) => {
-                    setFirstName(e.target.value);
-                  }}
-                />
-                <Input
-                  type="string"
-                  label="Last Name"
-                  placeholder={loggedUser.lastName}
-                  onChange={(e) => {
-                    setLastName(e.target.value);
-                  }}
-                />
-                <Input
-                  type="email"
-                  label="email"
-                  placeholder={loggedUser.email}
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
-                />
-                <Input
-                  label="Password"
-                  type="password"
-                  variant="flat"
-                  disabled="true"
-                  value={loggedUser.password}
-                  readOnly
-                  style={{ color: "Gainsboro" }}
-                />
-                <Input
-                  type="cohort"
-                  label="Cohort"
-                  placeholder={loggedUser.cohort}
-                  readOnly
-                  style={{ color: "Gainsboro" }}
-                >
-                  {loggedUser.cohort}
-                </Input>
-                <Input
-                  type="campus"
-                  label="Campus"
-                  placeholder={loggedUser.campus}
-                  readOnly
-                  style={{ color: "Gainsboro" }}
-                >
-                  {loggedUser.campus}
-                </Input>
-              </CardBody>
-            </Card>
-            <Button color="danger" variant="flat" onPress={resetProfile}>
-              Cancel
-            </Button>
-            <Button color="primary" onClick={editUser}>
-              Save changes
-            </Button>
           </div>
         </div>
       )}

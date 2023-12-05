@@ -3,9 +3,13 @@ import NavBar from "../../Components/Navbar/NavBar";
 import Pommodoro from "../../Components/Pommodoro";
 import { useEffect, useContext, useState } from "react";
 import axios from "axios";
+import addIcon from "../../assets/images/add.png";
+import removeIcon from "../../assets/images/remove.png";
+import editIcon from "../../assets/images/pencil.png";
 import { useNavigate } from "react-router-dom";
 import ToDoList from "../../Components/ToDoList/ToDoList";
 import NotePad from "../../Components/Notepad";
+import { ScrollShadow } from "@nextui-org/react";
 import {
   Spacer,
   Modal,
@@ -19,6 +23,7 @@ import {
   Card,
   CardBody,
 } from "@nextui-org/react";
+import Pomodoro from "../../Components/Pommodoro";
 
 const API_URL = "http://localhost:5005";
 
@@ -347,237 +352,266 @@ function DashboardPage() {
       ) : (
         <div>
           {isStudents === true ? (
-            <div>
+            <div id="dashboard-staff" className="w-screen">
               <NavBar />
-              {loggedUser && <h1>Hi {loggedUser.firstName}</h1>}
-              <NotePad />
-              <ToDoList />
-              <Pommodoro />
+              <div className=" w-[90%] h-[95vh] bg-gray-400 m-5 p-5 rounded-3xl">
+                {loggedUser && (
+                  <h1 className="font-semibold">Hi {loggedUser.firstName}!</h1>
+                )}
+                <div className=" w-[100%] h-[30vh] bg-gray-300 mt-5 mb-5 pt-5 pb-5 rounded-3xl">
+                  <ToDoList />
+                </div>
+                <div className="flex  auto row place-content-between w-[100%] h-[50vh] bg-gray-400  rounded-3xl">
+                  <div className="flex-1 pr-5 pl-5 pt-5 pb-5 mb-5 mr-5 bg-gray-600 rounded-3xl overflow-auto scrollbar-hide overscroll-none scroll-smooth">
+                    <NotePad />
+                  </div>
+                  <div className="w-[24%] pr-5 pl-5 pt-5 pb-5 mb-5 bg-gray-600 rounded-3xl">
+                    <Pommodoro ></Pommodoro>
+                  </div>
+                </div>
+              </div>
             </div>
           ) : (
-            <div id="dashboard-staff">
-              <NavBar />
-              <h1 id="heading-staff-dashboard">Students</h1>
-              {users.map((elem) => (
-                <div key={elem._id} id="students-list">
-                  <Spacer y={8} />
-                  <Card style={{ width: "80vw" }}>
-                    <CardBody
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        paddingLeft: "2vw",
-                        paddingRight: "2vw",
-                      }}
-                    >
-                      <div id="students-card">
-                        <p id="name">
-                          {elem.firstName} {elem.lastName}
-                        </p>
-                        <Spacer x={16} />
-                        <p id="students-card-p">{elem.cohort}</p>
-                        <Spacer x={8} />
-                        <p id="students-card-p">{elem.campus}</p>
-                        <Spacer x={8} />
-                        <p id="email">{elem.email}</p>
-                      </div>
-                      <div id="buttons-students-list">
-                        <Button
-                          onPress={() => {
-                            deleteStudent(elem);
-                            setUserDelete(elem);
-                          }}
-                          size="lg"
-                          className="bg-[#D3D3D3] text-[#00072D] w-20 h-12 font-semibold shadow-lg flex items-center"
-                        >
-                          delete
-                        </Button>
-                        <Button
-                          onPress={() => {
-                            resetInputs();
-                            openEditModal(elem);
-                            setUserEdit(elem);
-                          }}
-                          size="lg"
-                          className="bg-[#D3D3D3] text-[#00072D] w-20 h-12 font-semibold shadow-lg"
-                        >
-                          edit
-                        </Button>
-                      </div>
-                    </CardBody>
-                  </Card>
-                </div>
-              ))}
-              <Modal
-                classNames={{
-                  size: "4xl",
-                  body: "py-6",
-                  backdrop: "bg-[#292f46]/50 backdrop-opacity-40 blur",
-                  base: "border-[#292f46] bg-white text-[#71717a]",
-                  header: "border-b-[1px] border-[#292f46]",
-                  footer: "border-t-[1px] border-[#292f46]",
-                  closeButton: "active:bg-white/10",
-                }}
-                size="2xl"
-                backdrop="blur"
-                isOpen={isOpen}
-                onOpenChange={onOpenChange}
-                placement="center"
-              >
-                <ModalContent>
-                  {(onClose) => (
-                    <div>
-                      <ModalHeader className="flex flex-col gap-1">
-                        Log in
-                      </ModalHeader>
-                      <ModalBody className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
-                        <Input
-                          autoFocus
-                          label="First Name"
-                          variant="flat"
-                          value={
-                            editingUser ? editingUser.firstName : firstName
-                          }
-                          onChange={(e) =>
-                            editingUser
-                              ? setEditingUser({
-                                  ...editingUser,
-                                  firstName: e.target.value,
-                                })
-                              : setFirstName(e.target.value)
-                          }
-                        />
-                        <Input
-                          label="Last Name"
-                          variant="flat"
-                          value={editingUser ? editingUser.lastName : lastName}
-                          onChange={(e) =>
-                            editingUser
-                              ? setEditingUser({
-                                  ...editingUser,
-                                  lastName: e.target.value,
-                                })
-                              : setLastName(e.target.value)
-                          }
-                        />
-                        <Input
-                          label="Email"
-                          variant="flat"
-                          value={editingUser ? editingUser.email : email}
-                          onChange={(e) =>
-                            editingUser
-                              ? setEditingUser({
-                                  ...editingUser,
-                                  email: e.target.value,
-                                })
-                              : setEmail(e.target.value)
-                          }
-                        />
-                        <Input
-                          label="Password"
-                          type="password"
-                          disabled={editingUser ? true : false}
-                          variant="flat"
-                          value={editingUser ? editingUser.password : password}
-                          onChange={(e) =>
-                            editingUser
-                              ? setEditingUser({
-                                  ...editingUser,
-                                  password: e.target.value,
-                                })
-                              : setPassword(e.target.value)
-                          }
-                          style={{ opacity: 0.1 }}
-                        />
-                        <Input
-                          label="Cohort"
-                          variant="flat"
-                          value={editingUser ? editingUser.cohort : cohort}
-                          onChange={(e) =>
-                            editingUser
-                              ? setEditingUser({
-                                  ...editingUser,
-                                  cohort: e.target.value,
-                                })
-                              : setCohort(e.target.value)
-                          }
-                        />
-                        <Input
-                          label="Campus"
-                          variant="flat"
-                          value={editingUser ? editingUser.campus : campus}
-                          onChange={(e) =>
-                            editingUser
-                              ? setEditingUser({
-                                  ...editingUser,
-                                  campus: e.target.value,
-                                })
-                              : setCampus(e.target.value)
-                          }
-                        />
-                        <Input
-                          label="Teacher"
-                          variant="flat"
-                          value={editingUser ? editingUser.teacher : teacher}
-                          onChange={(e) =>
-                            editingUser
-                              ? setEditingUser({
-                                  ...editingUser,
-                                  teacher: e.target.value,
-                                })
-                              : setTeacher(e.target.value)
-                          }
-                        />
-                        <Input
-                          label="Manager"
-                          variant="flat"
-                          value={editingUser ? editingUser.manager : manager}
-                          onChange={(e) =>
-                            editingUser
-                              ? setEditingUser({
-                                  ...editingUser,
-                                  manager: e.target.value,
-                                })
-                              : setManager(e.target.value)
-                          }
-                        />
-                      </ModalBody>
-                      <ModalFooter>
-                        <Button
-                          color="danger"
-                          variant="flat"
-                          onPress={() => closeModal(onClose)}
-                        >
-                          Close
-                        </Button>
-                        <Button
-                          color="primary"
-                          onClick={() => {
-                            if (editingUser) {
-                              editStudent(userEdit);
-                            } else {
-                              addStudent();
+            <div id="dashboard-staff" className="w-screen">
+              <NavBar className="w-[100%]" />
+              <div className=" w-[90%] h-[95vh] bg-gray-400 m-5 p-5 rounded-3xl">
+                <h1 id="heading-staff-dashboard" className="font-semibold p-1">
+                  STUDENTS
+                </h1>
+                {users.map((elem) => (
+                  <div key={elem._id} id="students-list">
+                    <Spacer y={8} />
+                    <Card>
+                      <CardBody
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          paddingLeft: "2vw",
+                          paddingRight: "2vw",
+                        }}
+                      >
+                        <div id="students-card">
+                          <p id="name">
+                            {elem.firstName} {elem.lastName}
+                          </p>
+                          <Spacer x={16} />
+                          <p id="students-card-p">{elem.cohort}</p>
+                          <Spacer x={8} />
+                          <p id="students-card-p">{elem.campus}</p>
+                          <Spacer x={8} />
+                          <p id="email">{elem.email}</p>
+                        </div>
+                        <div id="buttons-students-list">
+                          <Button
+                            isIconOnly
+                            onPress={() => {
+                              resetInputs();
+                              openEditModal(elem);
+                              setUserEdit(elem);
+                            }}
+                            size="lg"
+                            className="shadow-lg rounded-full bg-transparent"
+                          >
+                            <img
+                              src={editIcon}
+                              className="flex-shrink-0 w-[auto] h-6"
+                            />
+                          </Button>
+                          <Button
+                            isIconOnly
+                            onPress={() => {
+                              deleteStudent(elem);
+                              setUserDelete(elem);
+                            }}
+                            size="lg"
+                            className="shadow-lg rounded-full bg-transparent"
+                          >
+                            <img
+                              src={removeIcon}
+                              className="flex-shrink-0 w-[auto] h-6"
+                            />
+                          </Button>
+                        </div>
+                      </CardBody>
+                    </Card>
+                  </div>
+                ))}
+                <Modal
+                  classNames={{
+                    size: "4xl",
+                    body: "py-6",
+                    backdrop: "bg-[#292f46]/50 backdrop-opacity-40 blur",
+                    base: "border-[#292f46] bg-white text-[#71717a]",
+                    header: "border-b-[1px] border-[#292f46]",
+                    footer: "border-t-[1px] border-[#292f46]",
+                    closeButton: "active:bg-white/10",
+                  }}
+                  size="2xl"
+                  backdrop="blur"
+                  isOpen={isOpen}
+                  onOpenChange={onOpenChange}
+                  placement="center"
+                >
+                  <ModalContent>
+                    {(onClose) => (
+                      <div>
+                        <ModalHeader className="flex flex-col gap-1">
+                          Log in
+                        </ModalHeader>
+                        <ModalBody className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+                          <Input
+                            autoFocus
+                            label="First Name"
+                            variant="flat"
+                            value={
+                              editingUser ? editingUser.firstName : firstName
                             }
-                            onClose();
-                          }}
-                        >
-                          Submit
-                        </Button>
-                      </ModalFooter>
-                    </div>
-                  )}
-                </ModalContent>
-              </Modal>
-              <Spacer y={8} />
-              <Button
-                onPress={onOpen}
-                size="lg"
-                className="bg-[#D3D3D3] text-[#00072D] w-64 h-12 font-semibold shadow-lg"
-              >
-                add student
-              </Button>
+                            onChange={(e) =>
+                              editingUser
+                                ? setEditingUser({
+                                    ...editingUser,
+                                    firstName: e.target.value,
+                                  })
+                                : setFirstName(e.target.value)
+                            }
+                          />
+                          <Input
+                            label="Last Name"
+                            variant="flat"
+                            value={
+                              editingUser ? editingUser.lastName : lastName
+                            }
+                            onChange={(e) =>
+                              editingUser
+                                ? setEditingUser({
+                                    ...editingUser,
+                                    lastName: e.target.value,
+                                  })
+                                : setLastName(e.target.value)
+                            }
+                          />
+                          <Input
+                            label="Email"
+                            variant="flat"
+                            value={editingUser ? editingUser.email : email}
+                            onChange={(e) =>
+                              editingUser
+                                ? setEditingUser({
+                                    ...editingUser,
+                                    email: e.target.value,
+                                  })
+                                : setEmail(e.target.value)
+                            }
+                          />
+                          <Input
+                            label="Password"
+                            type="password"
+                            disabled={editingUser ? true : false}
+                            variant="flat"
+                            value={
+                              editingUser ? editingUser.password : password
+                            }
+                            onChange={(e) =>
+                              editingUser
+                                ? setEditingUser({
+                                    ...editingUser,
+                                    password: e.target.value,
+                                  })
+                                : setPassword(e.target.value)
+                            }
+                            style={{ opacity: 0.1 }}
+                          />
+                          <Input
+                            label="Cohort"
+                            variant="flat"
+                            value={editingUser ? editingUser.cohort : cohort}
+                            onChange={(e) =>
+                              editingUser
+                                ? setEditingUser({
+                                    ...editingUser,
+                                    cohort: e.target.value,
+                                  })
+                                : setCohort(e.target.value)
+                            }
+                          />
+                          <Input
+                            label="Campus"
+                            variant="flat"
+                            value={editingUser ? editingUser.campus : campus}
+                            onChange={(e) =>
+                              editingUser
+                                ? setEditingUser({
+                                    ...editingUser,
+                                    campus: e.target.value,
+                                  })
+                                : setCampus(e.target.value)
+                            }
+                          />
+                          <Input
+                            label="Teacher"
+                            variant="flat"
+                            value={editingUser ? editingUser.teacher : teacher}
+                            onChange={(e) =>
+                              editingUser
+                                ? setEditingUser({
+                                    ...editingUser,
+                                    teacher: e.target.value,
+                                  })
+                                : setTeacher(e.target.value)
+                            }
+                          />
+                          <Input
+                            label="Manager"
+                            variant="flat"
+                            value={editingUser ? editingUser.manager : manager}
+                            onChange={(e) =>
+                              editingUser
+                                ? setEditingUser({
+                                    ...editingUser,
+                                    manager: e.target.value,
+                                  })
+                                : setManager(e.target.value)
+                            }
+                          />
+                        </ModalBody>
+                        <ModalFooter>
+                          <Button
+                            color="danger"
+                            variant="flat"
+                            onPress={() => closeModal(onClose)}
+                          >
+                            Close
+                          </Button>
+                          <Button
+                            color="primary"
+                            onClick={() => {
+                              if (editingUser) {
+                                editStudent(userEdit);
+                              } else {
+                                addStudent();
+                              }
+                              onClose();
+                            }}
+                          >
+                            Submit
+                          </Button>
+                        </ModalFooter>
+                      </div>
+                    )}
+                  </ModalContent>
+                </Modal>
+                <Spacer y={8} />
+                <Button
+                  isIconOnly
+                  onPress={onOpen}
+                  size="lg"
+                  className=" absolute bottom-10 right-10 bg-[#D3D3D3] shadow-lg rounded-full"
+                >
+                  <img src={addIcon} className="flex-shrink-0 w-[auto] h-8" />
+                </Button>
+              </div>
             </div>
           )}
         </div>

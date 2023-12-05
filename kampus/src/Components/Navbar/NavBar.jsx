@@ -117,26 +117,26 @@ function NavBar() {
           {isStudents ? (
             <aside
               id="default-sidebar"
-              className="fixed top-5 left-5 z-40 bottom-5 rounded-full"
+              className="absolute top-5 left-5 bottom-5 rounded-full h-[95%]"
             >
-              <div className="h-full px-4 py-4 overflow-y-auto bg-gray-50 rounded-xl">
-                <ul className="space-y-4">
+              <div className="h-full py-2 overflow-y-auto bg-gray-50 rounded-xl">
+                <ul>
                   <li>
                     <Button id="button-navbar" className="mt-4">
                       <Link to="/dashboard">
                         <img
                           src={dashIcon}
-                          className="flex-shrink-0 w-[auto] h-10"
+                          className="flex-shrink-0 w-[auto] h-6"
                         />
                       </Link>
                     </Button>
                   </li>
                   <li>
-                    <Button id="button-navbar" className=" mt-3">
+                    <Button id="button-navbar" className=" mt-6">
                       <Link to="/profile">
                         <img
                           src={profileIcon}
-                          className="flex-shrink-0 w-[auto] h-10"
+                          className="flex-shrink-0 w-[auto] h-6"
                         />
                       </Link>
                     </Button>
@@ -145,12 +145,12 @@ function NavBar() {
                     <Button
                       id="button-navbar"
                       onPress={logout}
-                      className="absolute bottom-12 left-4"
+                      className="absolute bottom-8 left-0"
                     >
                       <Link to="/">
                         <img
                           src={logoutIcon}
-                          className="flex-shrink-0 w-[auto] h-10"
+                          className="flex-shrink-0 w-[auto] h-8"
                         />
                       </Link>
                     </Button>
@@ -163,24 +163,24 @@ function NavBar() {
               id="default-sidebar"
               className="absolute top-5 left-5 bottom-5 rounded-full"
             >
-              <div className="h-full px-4 py-4 overflow-y-auto bg-gray-50 rounded-xl">
-                <ul className="space-y-4">
+              <div className="h-full py-2 overflow-y-auto bg-gray-50 rounded-xl">
+                <ul>
                   <li>
                     <Button id="button-navbar" className="mt-4">
                       <Link to="/dashboard">
                         <img
                           src={dashIcon}
-                          className="flex-shrink-0 w-[auto] h-10"
+                          className="flex-shrink-0 w-[auto] h-6"
                         />
                       </Link>
                     </Button>
                   </li>
                   <li>
-                    <Button id="button-navbar" className=" mt-3">
+                    <Button id="button-navbar" className=" mt-6">
                       <Link to="/profile">
                         <img
                           src={profileIcon}
-                          className="flex-shrink-0 w-[auto] h-10"
+                          className="flex-shrink-0 w-[auto] h-6"
                         />
                       </Link>
                     </Button>
@@ -189,12 +189,12 @@ function NavBar() {
                     <Button
                       id="button-navbar"
                       onPress={logout}
-                      className="absolute bottom-12 left-4"
+                      className="absolute bottom-8 left-0"
                     >
                       <Link to="/">
                         <img
                           src={logoutIcon}
-                          className="flex-shrink-0 w-[auto] h-10"
+                          className="flex-shrink-0 w-[auto] h-8"
                         />
                       </Link>
                     </Button>

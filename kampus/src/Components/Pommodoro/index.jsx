@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import ReactSlider from "react-slider";
+import { Button } from "@nextui-org/button";
+import { color } from "framer-motion";
 
 const red = "#f54e4e";
 const green = "#4aec8c";
@@ -56,10 +58,12 @@ function Pomodoro() {
   return (
     <div>
       {showSettings ? (
-        <div>
-          <label>Work minutes {workMinutes}</label>
+        <div className="mt-5">
+          <label className="font-medium text-2xl">
+            WORK MINUTES {workMinutes}
+          </label>
           <ReactSlider
-            className="slider"
+            className="slider mt-5 mb-5"
             thumbClassName="thumb"
             trackClassName="track"
             value={workMinutes}
@@ -67,9 +71,11 @@ function Pomodoro() {
             max={60}
             onChange={setWorkMinutes}
           />
-          <label>Break minutes {breakMinutes}</label>
+          <label className="font-medium text-2xl">
+            BREAK MINUTES {breakMinutes}
+          </label>
           <ReactSlider
-            className="slider green"
+            className="slider green mt-5 mb-5"
             thumbClassName="thumb"
             trackClassName="track"
             value={breakMinutes}
@@ -77,13 +83,12 @@ function Pomodoro() {
             max={60}
             onChange={setBreakMinutes}
           />
-          <button style={{ backgroundColor: "grey" }} onClick={startTimer}>
+          <Button color="primary" onClick={startTimer} className="mt-5">
             Start
-          </button>
+          </Button>
         </div>
       ) : (
         <div>
-          <h1>pomodoro timer</h1>
           <CircularProgressbar
             value={(secondsLeft / initialTotalTime) * 100}
             text={`${Math.floor(secondsLeft / 60)}:${(secondsLeft % 60)
@@ -94,14 +99,18 @@ function Pomodoro() {
               pathColor: mode === "work" ? red : green,
               trailColor: "rgba(255, 255, 255,.2)",
             })}
+            className="mb-5"
           />
-          <button
-            style={{ backgroundColor: "grey" }}
+          <Button
             onClick={isPaused ? startTimer : pauseTimer}
+            className="mr-5"
+            color="primary"
           >
             {isPaused ? "Play" : "Pause"}
-          </button>
-          <button onClick={resetPommodoro}>Reset</button>
+          </Button>
+          <Button color="danger" onClick={resetPommodoro}>
+            Reset
+          </Button>
         </div>
       )}
     </div>

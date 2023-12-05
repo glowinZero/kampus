@@ -109,11 +109,6 @@ function LandingPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                  <div className="flex py-2 px-1 justify-between">
-                    <Link color="primary" href="#" size="sm">
-                      Forgot password?
-                    </Link>
-                  </div>
                 </ModalBody>
                 <ModalFooter>
                   <Button color="danger" variant="flat" onPress={onClose}>
