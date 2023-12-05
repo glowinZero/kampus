@@ -11,6 +11,7 @@ import {
   Input,
 } from "@nextui-org/react";
 import { AuthContext } from "../../Context/auth.context";
+import { Accordion, AccordionItem } from "@nextui-org/react";
 
 const API_URL = "http://localhost:5005";
 

@@ -211,7 +211,11 @@ function LoginPage() {
             </div>
           </div>
         )}
-        <Button className="w-full" color="primary" onClick={previousPage}>
+        <Button
+          className=" absolute bottom-5 right-5 mt-5"
+          color="default"
+          onClick={previousPage}
+        >
           Back
         </Button>
       </div>

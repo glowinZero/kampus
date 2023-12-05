@@ -230,8 +230,9 @@
 #dashboard-staff {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   flex-direction: column;
+  overflow: hidden;
 }
 
 #buttons-students-list {
@@ -257,9 +258,7 @@
   background-color: transparent;
 }
 
-#heading-staff-dashboard {
-  margin-top: 10vh;
-}
+
 
 #profile-page {
   display: flex;
