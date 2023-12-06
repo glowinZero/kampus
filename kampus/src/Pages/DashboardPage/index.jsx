@@ -7,9 +7,8 @@ import addIcon from "../../assets/images/add.png";
 import removeIcon from "../../assets/images/remove.png";
 import editIcon from "../../assets/images/pencil.png";
 import { useNavigate } from "react-router-dom";
-import ToDoList from "../../Components/ToDoList/ToDoList";
+import Tasks from "../../Components/ToDoList";
 import NotePad from "../../Components/Notepad";
-import { ScrollShadow } from "@nextui-org/react";
 import {
   Spacer,
   Modal,
@@ -23,9 +22,8 @@ import {
   Card,
   CardBody,
 } from "@nextui-org/react";
-import Pomodoro from "../../Components/Pommodoro";
 
-const API_URL = "http://localhost:5005";
+const API_URL = "https://kampus.adaptable.app";
 
 function DashboardPage() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -359,7 +357,7 @@ function DashboardPage() {
                   <h1 className="font-bold">Hi {loggedUser.firstName}!</h1>
                 )}
                 <div className=" w-[100%] h-[30vh] bg-blue-600 mt-5 mb-5 pt-5 pb-5 rounded-3xl overflow-auto scrollbar-hide overscroll-none scroll-smooth">
-                  <ToDoList />
+                  <Tasks />
                 </div>
                 <div className="flex  auto row place-content-between w-[100%] h-[50vh] bg-gray-50  rounded-3xl">
                   <div className="flex-1 pr-5 pl-5 pt-5 pb-5 mb-5 mr-5 bg-gray-600 rounded-3xl overflow-auto scrollbar-hide overscroll-none scroll-smooth">

@@ -1,23 +1,27 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import Checkbox from "./Checkbox";
 import { Button } from "@nextui-org/button";
-import { Switch } from "@nextui-org/react";
+
+import Checkbox from "./Checkbox";
 
 import editIcon from "../../assets/images/pencil.png";
 import removeIcon from "../../assets/images/remove.png";
 
-const BACKEND_TODO_URL = "http://localhost:5005";
+const API_URL = "https://kampus.adaptable.app";
 
 function ToDoList() {
   const [tasks, setTasks] = useState([]);
-  const navigate = useNavigate();
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState(""); 
+  const [deadline, setDeadline] = useState("");
+  const [status, setStatus] = useState("To do");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [editedTaskId, setEditedTaskId] = useState(null);
 
   useEffect(() => {
-    localStorage.removeItem("taskId");
     axios
-      .get(`${BACKEND_TODO_URL}/api/tasks`)
+      .get(`${API_URL}/api/tasks`)
       .then((response) => {
         setTasks(response.data);
       })
@@ -26,28 +30,13 @@ function ToDoList() {
       });
   }, []);
 
-  const addButton = () => {
-    navigate("/Todolist/AddTask");
-  };
-
-  const editTask = (taskId) => {
-    localStorage.setItem("taskId", taskId);
-    navigate(`/Todolist/${taskId}/edit`);
-  };
-
-  const TaskDetails = (taskId) => {
-    localStorage.setItem("taskId", taskId);
-    navigate(`/Todolist/${taskId}`);
-  };
-
   const handleStatusChange = (taskId, newStatus) => {
-    // Handle status change if needed
     console.log(`Task ${taskId} status changed to: ${newStatus}`);
   };
 
-  function deleteTask(taskId) {
+  const deleteTask = (taskId) => {
     axios
-      .delete(`${BACKEND_TODO_URL}/api/tasks/${taskId}`)
+      .delete(`${API_URL}/api/task/${taskId}`)
       .then(() => {
         console.log("Task deleted!");
         setTasks((prevTasks) =>
@@ -57,11 +46,55 @@ function ToDoList() {
       .catch((error) => {
         console.error("Error deleting task:", error);
       });
-  }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const requestBody = {
+      title,
+      body,
+      deadline,
+      status,
+    };
+
+    if (editedTaskId) {
+      axios
+        .put(`${API_URL}/api/tasks/${editedTaskId}`, requestBody)
+        .then(() => {
+          console.log("Task edited!");
+          setEditedTaskId(null);
+          setTasks((prevTasks) =>
+            prevTasks.map((task) =>
+              task._id === editedTaskId ? { ...task, ...requestBody } : task
+            )
+          );
+        })
+        .catch((error) => {
+          console.error("Error updating task details:", error);
+        });
+    } else {
+      axios
+        .post(`${API_URL}/api/task`, requestBody)
+        .then((response) => {
+          console.log("Task created!", response.data);
+          setTasks((prevTasks) => [...prevTasks, response.data]);
+        })
+        .catch((error) => {
+          console.error("Error creating task:", error);
+          setErrorMessage("Failed to create task. Please try again.");
+        });
+    }
+
+    setTitle("");
+    setBody("");
+    setDeadline("");
+    setStatus("To do");
+  };
 
   return (
     <div>
-      <div className=" text-mainColor-900 bg-transparent flex items-center flex-col">
+      <div className="text-mainColor-900 bg-transparent flex items-center flex-col">
         {tasks &&
           tasks.map((task) => (
             <div
@@ -70,7 +103,7 @@ function ToDoList() {
             >
               <div
                 className="task-title bg-slate-700 text-xl ml-3"
-                onClick={() => TaskDetails(task._id)}
+                onClick={() => setEditedTaskId(task._id)}
               >
                 <h2>{task.title}</h2>
               </div>
@@ -86,7 +119,7 @@ function ToDoList() {
                   isIconOnly
                   onClick={(e) => {
                     e.preventDefault();
-                    editTask(task._id);
+                    setEditedTaskId(task._id);
                   }}
                   size="lg"
                   className="shadow-lg rounded-full bg-transparent"
@@ -108,11 +141,59 @@ function ToDoList() {
             </div>
           ))}
       </div>
-      <Button className="primary" onClick={addButton}>
-        Add New Task
-      </Button>
+
+      <form onSubmit={handleSubmit} className="custom-form">
+        <label>
+          Task:{" "}
+          <input
+            type="text"
+            name="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </label>
+
+        <label>
+          Description:{" "}
+          <input
+            type="text"
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
+          />
+        </label>
+
+        <label>
+          Deadline:{" "}
+          <input
+            type="date"
+            value={deadline}
+            onChange={(e) => setDeadline(e.target.value)}
+          />
+        </label>
+
+        <label>
+          Status:
+          <select
+            name="status"
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+          >
+            <option value="To do">To do</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Done">Done</option>
+          </select>
+        </label>
+
+        <button type="submit">Submit</button>
+      </form>
+
+      {successMessage && (
+        <div className="success-message">{successMessage}</div>
+      )}
+      {errorMessage && <div className="error-message">{errorMessage}</div>}
     </div>
   );
 }
 
 export default ToDoList;
+

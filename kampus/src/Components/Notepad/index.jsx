@@ -15,7 +15,7 @@ import { Accordion, AccordionItem } from "@nextui-org/react";
 import { Textarea } from "@nextui-org/react";
 import removeIcon from '../../assets/images/remove.png'
 
-const API_URL = "http://localhost:5005";
+const API_URL = "https://kampus.adaptable.app";
 
 function NotePad() {
   const [notes, setNotes] = useState([]);

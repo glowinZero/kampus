@@ -10,7 +10,7 @@ import {
 } from "date-fns";
 import CountDown from "./Countdown";
 
-const BACKEND_TODO_URL = "http://localhost:5005";
+const BACKEND_TODO_URL = "https://kampus.adaptable.app";
 
 function TaskDetails() {
   const [task, setTask] = useState(null);

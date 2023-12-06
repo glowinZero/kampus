@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const BACKEND_TODO_URL = "http://localhost:5005/api/tasks";
+const BACKEND_TODO_URL = "https://kampus.adaptable.app/api/tasks";
 
 function Checkbox({ taskId, status, onStatusChange }) {
   const [taskStatus, setTaskStatus] = useState('To do');
