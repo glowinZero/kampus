@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams, Link } from "react-router-dom";
 
-const BACKEND_TODO_URL = "http://localhost:5005";
+const BACKEND_TODO_URL = "https://kampus.adaptable.app";
 
 const EditTask = () => {
   const { taskId } = useParams();

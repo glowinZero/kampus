@@ -7,7 +7,7 @@ import Checkbox from "./Checkbox";
 import editIcon from "../../assets/images/pencil.png";
 import removeIcon from "../../assets/images/remove.png";
 
-const API_URL = "http://localhost:5005";
+const API_URL = "https://kampus.adaptable.app";
 
 function ToDoList() {
   const [tasks, setTasks] = useState([]);

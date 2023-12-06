@@ -14,7 +14,7 @@ import {
 import { AuthContext } from "../../Context/auth.context";
 import axios from "axios";
 import { useContext, useState } from "react";
-const API_URL = "http://localhost:5005";
+const API_URL = "https://kampus.adaptable.app";
 
 function LandingPage() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();

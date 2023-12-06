@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { parseISO, differenceInSeconds } from "date-fns";
 
-const BACKEND_TODO_URL = "http://localhost:5005";
+const BACKEND_TODO_URL = "https://kampus.adaptable.app";
 
 function CountDown() {
   const [task, setTask] = useState(null);

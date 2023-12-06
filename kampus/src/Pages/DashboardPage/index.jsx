@@ -23,7 +23,7 @@ import {
   CardBody,
 } from "@nextui-org/react";
 
-const API_URL = "http://localhost:5005";
+const API_URL = "https://kampus.adaptable.app";
 
 function DashboardPage() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();

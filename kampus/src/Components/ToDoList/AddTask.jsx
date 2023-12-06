@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const BACKEND_TODO_URL = "http://localhost:5005";
+const BACKEND_TODO_URL = "https://kampus.adaptable.app";
 
 const AddTask = () => {
   const [title, setTitle] = useState('');

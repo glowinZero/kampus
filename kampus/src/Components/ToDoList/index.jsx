@@ -16,7 +16,7 @@ import {
 import { AuthContext } from "../../Context/auth.context";
 import removeIcon from "../../assets/images/remove.png";
 
-const API_URL = "http://localhost:5005";
+const API_URL = "https://kampus.adaptable.app";
 
 function Tasks() {
   const [tasks, setTasks] = useState([]);
