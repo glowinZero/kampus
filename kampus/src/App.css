@@ -175,34 +175,29 @@
 }
 
 #virtual-tour {
-  position: fixed;
   width: 100vw;
   height: 100vh;
   margin: 0;
   padding: 0;
 }
 
+
 #virtual-tour h1 {
-  font-size: 15px;
   position: absolute;
-  width: 60vw;
+  width: 70vw;
   margin-top: 80vh;
-  margin-left: 20vw;
+  margin-left: 15vw;
   height: fit-content;
   z-index: 0;
-  color: black;
-  background-color: white;
+
 }
 
 #tour-button {
   position: absolute;
   width: fit-content;
   margin-top: 90vh;
-  margin-left: 40vw;
-  height: fit-content;
+  margin-left: 42vw;
   z-index: 0;
-  color: black;
-  background-color: white;
 }
 
 #students-card {
@@ -289,10 +284,9 @@
   height: 100vh;
 }
 
-#promotional-headings{
-  padding-top: 20vh;
-}
-*STYLING TO DO LIST*/
+
+/*STYLING TO DO LIST*/
+/*
 body {
   font-family: 'Arial', sans-serif;
   background-color: #F5F5F5;
@@ -326,7 +320,7 @@ h1 {
   flex: 1;
 }
 .task-actions {
-  
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -352,7 +346,7 @@ h1 {
 .add-button:hover {
   background-color: #218838;
 }
-/*EDIT TASK FORM*/
+
 .form-container {
   max-width: 400px;
   margin: auto;
@@ -403,8 +397,7 @@ h1 {
 .back-button button:hover {
   background-color: #bbb;
 }
-/*ADD NEW TASK */
-/* AddTask Form Styles */
+
 .custom-form {
   max-width: 400px;
   margin: auto;
@@ -446,7 +439,6 @@ h1 {
   color: red;
   margin-top: 10px;
 }
-/*/* task detais*/
 .container {
   margin: 0 auto;
   padding: 20px;
@@ -475,29 +467,27 @@ h1 {
 .delete-button:hover, .edit-button:hover, .back-button:hover {
   background-color: #0056B3;
 }
-/*  from task details */
 .task-details-container {
   display: flex;
-  flex-direction: column; /* Stack the properties vertically */
+  flex-direction: column;
 }
 .task-details-buttons {
   display: flex;
   justify-content: center;
 }
 .task-details-buttons > div {
-  margin: 0 10px; /* Adjust margin as needed */
-}
+  margin: 0 10px;
 .delete-button,
 .edit-button,
 .back-button {
-  width: 150px; /* Adjust width as needed */
+  width: 150px; /
   padding: 10px;
   text-align: center;
   font-size: 16px;
   cursor: pointer;
   justify-content: center;
 }
-/*Checkbox*/
+
 .checkbox-container {
   display: flex;
   align-items: center;
@@ -513,4 +503,4 @@ h1 {
 .checkbox-input {
   margin-right: 5px;
 }
-/**/
+*/

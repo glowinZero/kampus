@@ -98,13 +98,7 @@ function LoginPage() {
 
   return (
     <section className="flex bg-white h-[100vh] w-[100vw]">
-      <div
-        style={{
-          backgroundImage:
-            "url(https://www.brookings.edu/wp-content/uploads/2020/05/empty-classroom_elementary-school-middle-school-high-school.jpg?w=1500)",
-        }}
-        className="w-[60%] bg-blue-900 grid place-content-center bg-cover"
-      ></div>
+      <div className="w-[60%] bg-blue-900/95 bg-loginPageBackground grid place-content-center bg-cover"></div>
       <div className="flex-1 grid place-content-center text-black">
         {authenticationStep === "login" && (
           <div className="w-80">
@@ -166,7 +160,6 @@ function LoginPage() {
               }}
             />
             <Input
-              autoFocus
               size="sm"
               label="Last Name"
               variant="flat"
@@ -176,7 +169,6 @@ function LoginPage() {
               }}
             />
             <Input
-              autoFocus
               size="sm"
               label="Email"
               variant="flat"

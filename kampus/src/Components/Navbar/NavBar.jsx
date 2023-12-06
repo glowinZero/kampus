@@ -117,7 +117,8 @@ function NavBar() {
           {isStudents ? (
             <aside
               id="default-sidebar"
-              className="absolute top-5 left-5 bottom-5 rounded-full h-[95%]"
+              className="fixed top-5 left-5 bottom-5 z-40 w-20 transition-transform -translate-x-full sm:translate-x-0"
+              aria-label="Sidebar"
             >
               <div className="h-full py-2 overflow-y-auto bg-gray-50 rounded-xl">
                 <ul>

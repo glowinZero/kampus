@@ -97,7 +97,7 @@ function LandingPage() {
                     autoFocus
                     label="Email"
                     placeholder="Enter your email"
-                    variant="flat"
+                    variant="bordered"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
@@ -105,7 +105,7 @@ function LandingPage() {
                     label="Password"
                     placeholder="Enter your password"
                     type="password"
-                    variant="flat"
+                    variant="bordered"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />

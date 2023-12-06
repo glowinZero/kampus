@@ -9,6 +9,10 @@ export default {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        background: "url('./assets/images/background.jpg')",
+        loginPageBackground: "url('./assets/images/login-page-img.jpg')"
+      },
       colors: {
         button: "#1f2d91",
 
