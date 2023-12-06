@@ -354,19 +354,19 @@ function DashboardPage() {
           {isStudents === true ? (
             <div id="dashboard-staff" className="w-screen">
               <NavBar />
-              <div className=" w-[90%] h-[95vh] bg-gray-400 m-5 p-5 rounded-3xl">
+              <div className=" w-[90%] h-[95vh] bg-gray-50 m-5 p-5 rounded-3xl">
                 {loggedUser && (
-                  <h1 className="font-semibold">Hi {loggedUser.firstName}!</h1>
+                  <h1 className="font-bold">Hi {loggedUser.firstName}!</h1>
                 )}
-                <div className=" w-[100%] h-[30vh] bg-gray-300 mt-5 mb-5 pt-5 pb-5 rounded-3xl">
+                <div className=" w-[100%] h-[30vh] bg-blue-600 mt-5 mb-5 pt-5 pb-5 rounded-3xl overflow-auto scrollbar-hide overscroll-none scroll-smooth">
                   <ToDoList />
                 </div>
-                <div className="flex  auto row place-content-between w-[100%] h-[50vh] bg-gray-400  rounded-3xl">
+                <div className="flex  auto row place-content-between w-[100%] h-[50vh] bg-gray-50  rounded-3xl">
                   <div className="flex-1 pr-5 pl-5 pt-5 pb-5 mb-5 mr-5 bg-gray-600 rounded-3xl overflow-auto scrollbar-hide overscroll-none scroll-smooth">
                     <NotePad />
                   </div>
                   <div className="w-[24%] pr-5 pl-5 pt-5 pb-5 mb-5 bg-gray-600 rounded-3xl">
-                    <Pommodoro ></Pommodoro>
+                    <Pommodoro></Pommodoro>
                   </div>
                 </div>
               </div>

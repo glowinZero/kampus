@@ -1,19 +1,31 @@
 /** @type {import('tailwindcss').Config} */
-const {nextui} = require("@nextui-org/react");
+const { nextui } = require("@nextui-org/react");
 export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
-    './node_modules/@nextui-org/theme/dist/components/(button|snippet|code|input).js'
+    "./node_modules/@nextui-org/theme/dist/components/(button|snippet|code|input).js",
   ],
   theme: {
     extend: {
       colors: {
-        button: "#1f2d91"
-      }
+        button: "#1f2d91",
+
+        mainColor: {
+          100: "#cccdd5",
+          200: "#999cab",
+          300: "#666a81",
+          400: "#333957",
+          500: "#00072d",
+          600: "#000624",
+          700: "#00041b",
+          800: "#000312",
+          900: "#000109",
+        },
+      },
     },
   },
   darkMode: "class",
   plugins: [nextui()],
-}
+};
