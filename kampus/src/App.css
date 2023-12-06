@@ -292,3 +292,225 @@
 #promotional-headings{
   padding-top: 20vh;
 }
+*STYLING TO DO LIST*/
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #F5F5F5;
+  margin: 0;
+  padding: 0;
+  border-radius: 5px;
+}
+.container, .container2 {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  color: #333;
+  border-radius: 5px;
+  background-color: #F5F5F5;
+}
+h1 {
+  color: #333;
+}
+.task-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  transition: transform 0.3s;
+}
+.task-container:hover {
+  transform: translateY(-4px);
+}
+.task-details {
+  flex: 1;
+}
+.task-actions {
+  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.button {
+  border: none;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+.delete-button {
+  background-color: #FF6347;
+  color: white;
+}
+.delete-button:hover {
+  background-color: #FF4C35;
+}
+.add-button {
+  background-color: #28A745;
+  color: #fff;
+}
+.add-button:hover {
+  background-color: #218838;
+}
+/*EDIT TASK FORM*/
+.form-container {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  color: #333;
+}
+.form-container label {
+  margin-bottom: 10px;
+  display: block;
+  font-weight: bold;
+  color: #333;
+}
+.form-container input,
+.form-container select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  color: #333;
+}
+.form-container button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.form-container button:hover {
+  background-color: #45A049;
+}
+.back-button {
+  margin-top: 10px;
+}
+.back-button a {
+  text-decoration: none;
+  color: #333;
+}
+.back-button button {
+  background-color: #ccc;
+}
+.back-button button:hover {
+  background-color: #bbb;
+}
+/*ADD NEW TASK */
+/* AddTask Form Styles */
+.custom-form {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+.custom-form label {
+  display: block;
+  margin-bottom: 10px;
+  color: #333;
+}
+.custom-form input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  color: #333;
+}
+.custom-form button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.custom-form button:hover {
+  background-color: #45A049;
+}
+.success-message {
+  color: green;
+  margin-top: 10px;
+}
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+/*/* task detais*/
+.container {
+  margin: 0 auto;
+  padding: 20px;
+}
+.task-details-container {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+.heading {
+  color: #333;
+}
+.task-property {
+  margin-bottom: 10px;
+}
+.delete-button, .edit-button, .back-button {
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  margin-right: 10px;
+}
+.delete-button:hover, .edit-button:hover, .back-button:hover {
+  background-color: #0056B3;
+}
+/*  from task details */
+.task-details-container {
+  display: flex;
+  flex-direction: column; /* Stack the properties vertically */
+}
+.task-details-buttons {
+  display: flex;
+  justify-content: center;
+}
+.task-details-buttons > div {
+  margin: 0 10px; /* Adjust margin as needed */
+}
+.delete-button,
+.edit-button,
+.back-button {
+  width: 150px; /* Adjust width as needed */
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  justify-content: center;
+}
+/*Checkbox*/
+.checkbox-container {
+  display: flex;
+  align-items: center;
+}
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.checkbox-status {
+  margin-right: 10px;
+}
+.checkbox-input {
+  margin-right: 5px;
+}
+/**/

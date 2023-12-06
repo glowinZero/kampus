@@ -12,6 +12,8 @@ import {
 } from "@nextui-org/react";
 import { AuthContext } from "../../Context/auth.context";
 import { Accordion, AccordionItem } from "@nextui-org/react";
+import { Textarea } from "@nextui-org/react";
+import removeIcon from '../../assets/images/remove.png'
 
 const API_URL = "http://localhost:5005";
 
@@ -117,13 +119,13 @@ function NotePad() {
       .delete(`${API_URL}/api/notes/${note._id}`)
       .then(() => {
         console.log("Note deleted");
-        fetchData(); 
+        fetchData();
       })
       .catch((error) => {
         console.error("Error deleting Student:", error);
       });
   };
-  
+
   const fetchData = async () => {
     try {
       const responseNotes = await axios.get(`${API_URL}/api/notes/`);
@@ -134,16 +136,32 @@ function NotePad() {
     }
   };
 
-    
-
   return (
     <div>
       {notes.map((note, index) => (
-        <div key={note._id}>
-          {note.date && <p>{note.date.substring(0, 10)}</p>}
+        <div
+          key={note._id}
+          className=" text-xl p-5 bg-slate-700 rounded-3xl mb-5 relative"
+        >
+          <Button
+            isIconOnly
+            onClick={() => deleteNote(note)}
+            size="lg"
+            className="shadow-lg  rounded-full bg-transparent top-6 absolute right-5 z-40"
+          >
+            <img src={removeIcon} className="flex-shrink-0 w-[auto] h-5" />
+          </Button>
+          {note.date && (
+            <p className="absolute right-20 top-9 text-lg">
+              {note.date.substring(0, 10)}
+            </p>
+          )}
           <Input
-            color="grey"
-            placeholder={note.title}
+            className="text-white decoration-sky-500 mb-2 text-lg"
+            color="primary"
+            variant="underlined"
+            size="lg"
+            placeholder="Title"
             value={editedNotesTitle[index] ? title : note.title}
             onChange={(e) => setTitle(e.target.value)}
             onKeyDown={(e) => {
@@ -159,8 +177,10 @@ function NotePad() {
               })
             }
           />
-          <Input
-            placeholder={note.body}
+          <Textarea
+            maxRows={3}
+            className="text-black placeholder-gray-500"
+            placeholder="Write your notes here"
             value={editedNotesBody[index] ? body : note.body}
             onChange={(e) => setBody(e.target.value)}
             onKeyDown={(e) => {
@@ -176,13 +196,10 @@ function NotePad() {
               })
             }
           />
-          <Button color="danger" variant="flat" onClick={() => deleteNote(note)} >
-                  delete
-          </Button>
         </div>
       ))}
-      <Button onPress={onOpen} color="secondary">
-        add note
+      <Button onPress={onOpen} color="secondary" className="mt-5">
+        ADD NOTE
       </Button>
       <Modal
         size="L"

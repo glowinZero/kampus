@@ -4,6 +4,7 @@ import "react-circular-progressbar/dist/styles.css";
 import ReactSlider from "react-slider";
 import { Button } from "@nextui-org/button";
 import { color } from "framer-motion";
+import { Slider } from "@nextui-org/react";
 
 const red = "#f54e4e";
 const green = "#4aec8c";
@@ -58,14 +59,16 @@ function Pomodoro() {
   return (
     <div>
       {showSettings ? (
-        <div className="mt-5">
+        <div className="mt-24">
           <label className="font-medium text-2xl">
             WORK MINUTES {workMinutes}
           </label>
-          <ReactSlider
-            className="slider mt-5 mb-5"
-            thumbClassName="thumb"
-            trackClassName="track"
+          <Slider
+
+            size="lg"
+            className="mt-5 mb-5"
+            color="danger"
+            key="danger"
             value={workMinutes}
             min={0}
             max={60}
@@ -74,10 +77,11 @@ function Pomodoro() {
           <label className="font-medium text-2xl">
             BREAK MINUTES {breakMinutes}
           </label>
-          <ReactSlider
-            className="slider green mt-5 mb-5"
-            thumbClassName="thumb"
-            trackClassName="track"
+          <Slider
+            size="lg"
+            className="mt-5 mb-5"
+            color="success"
+            key="success"
             value={breakMinutes}
             min={0}
             max={60}
