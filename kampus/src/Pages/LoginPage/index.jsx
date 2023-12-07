@@ -94,7 +94,7 @@ function LoginPage() {
         storeToken(response.data.authToken);
         localStorage.setItem("Logged In", response.data.authToken);
         authenticateUser();
-        navigate("/virtualtour");
+        navigate("/dashboard");
       })
       .catch((error) => {
         const errorDescription =
