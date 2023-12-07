@@ -47,7 +47,6 @@ function NavBar() {
           const responseUser = await axios.get(
             `${API_URL}/auth/users/${idUser}`
           );
-          console.log(responseUser.data.isStudent);
           setIsStudents(responseUser.data.isStudent);
           setLoggedUser(responseUser.data);
         } catch (error) {
@@ -66,6 +65,7 @@ function NavBar() {
   const logout = () => {
     logOut();
     setLoggedUser("");
+    localStorage.removeItem("Logged In")
     navigate("/landing");
   };
 

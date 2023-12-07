@@ -23,14 +23,13 @@ function Tasks() {
   const [tasks, setTasks] = useState([]);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [title, setTitle] = useState("");
-  const [editedTasksTitle, setEditedTasksTitle] = useState(
-    Array(tasks.length).fill(false)
-  );
-  const [editedTasks, setEditedTasks] = useState(
-    Array(tasks.length).fill(false)
-  );
+  const [deadline, setDeadline] = useState();
+  const [editedTasksTitle, setEditedTasksTitle] = useState(Array(tasks.length).fill(false));
+  // eslint-disable-next-line no-unused-vars
+  const [editedTasks, setEditedTasks] = useState(Array(tasks.length).fill(false));
   const [statuses, setStatuses] = useState(Array(tasks.length).fill("To do"));
 
+  // eslint-disable-next-line no-unused-vars
   const { user, storeToken } = useContext(AuthContext);
 
   useEffect(() => {
@@ -47,11 +46,10 @@ function Tasks() {
 
   const addTask = async () => {
     try {
-      const generateDate = new Date().toISOString();
       const updatestatus = "To do";
       const requestBody = {
         title,
-        deadline: generateDate,
+        deadline,
         status: updatestatus,
         user: user._id,
       };
@@ -60,9 +58,7 @@ function Tasks() {
 
       console.log("Task Created Successfully:", response.data);
 
-      const updatedResponse = await axios.get(
-        `${API_URL}/api/tasks?userId=${user._id}`
-      );
+      const updatedResponse = await axios.get(`${API_URL}/api/tasks/${user._id}`)
       setTasks(updatedResponse.data);
       setEditedTasksTitle(Array(updatedResponse.data.length).fill(false));
       setEditedTasks(Array(updatedResponse.data.length).fill(false));
@@ -150,21 +146,70 @@ function Tasks() {
     }
   };
 
+  const calculateDaysLeft = (deadline) => {
+    const currentDate = new Date();
+    const deadlineDate = new Date(deadline);
+    const timeDifference = deadlineDate.getTime() - currentDate.getTime();
+    const daysLeft = Math.floor(timeDifference / (1000 * 3600 * 24));
+    return daysLeft;
+  };
+
   return (
-    <div className="relative">
-      <Button
-        isIconOnly
-        onPress={onOpen}
-        size="md"
-        className=" fixed top-[360px] right-14 bg-[#D3D3D3] shadow-lg rounded-full z-40"
+    <div>
+    {tasks.length === 0 ? <div>
+    <p>No tasks created</p>
+    <Modal
+        size="L"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement="center"
       >
-        <img src={addIcon} className="flex-shrink-0 w-[auto] h-6" />
-      </Button>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader>Add Task</ModalHeader>
+              <ModalBody>
+                <Input
+                  autoFocus
+                  label="Title"
+                  placeholder="Enter the title of the task"
+                  variant="bordered"
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+                <Input
+                  className="text-white decoration-sky-500 mb-2 text-lg"
+                  color="primary"
+                  size="lg"
+                  placeholder="Title"
+                  type="date" value={deadline}
+                  onChange={(e) => setDeadline(e.target.value)} />
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="flat" onPress={onClose}>
+                  Cancel
+                </Button>
+                <Button
+                  color="primary"
+                  onPress={() => {
+                    addTask();
+                    onClose();
+                  }}
+                >
+                  Submit
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+    <Button onPress={onOpen} color="secondary" className="mt-5">
+        ADD TASK
+      </Button></div> : <div>
       {tasks.map((task, index) => (
-        <div
-          key={task._id}
-          className=" text-xl p-5 bg-slate-700 rounded-3xl mr-5 ml-5 mb-5 relative"
-        >
+      <div
+        key={task._id}
+        className=" text-xl p-5 bg-slate-700 rounded-3xl mb-5 relative"
+      >
           <Checkbox
             className="rounded-full bg-transparent top-10 absolute right-48 z-40"
             checked={statuses[index] === "Done"}
@@ -180,7 +225,11 @@ function Tasks() {
           </Button>
           {task.deadline && (
             <p className="absolute right-20 top-9 text-lg">
-              {task.deadline.substring(0, 10)}
+            {task.deadline && (
+            <div className="absolute right-20 top-9 text-lg">
+              <p>{calculateDaysLeft(task.deadline) < 0 ? "Overdue" : calculateDaysLeft(task.deadline) + " days left"}</p>
+            </div>
+          )}
             </p>
           )}
           <Input
@@ -206,7 +255,6 @@ function Tasks() {
           />
         </div>
       ))}
-
       <Modal
         size="L"
         isOpen={isOpen}
@@ -225,6 +273,13 @@ function Tasks() {
                   variant="bordered"
                   onChange={(e) => setTitle(e.target.value)}
                 />
+                <Input
+                  className="text-white decoration-sky-500 mb-2 text-lg"
+                  color="primary"
+                  size="lg"
+                  placeholder="Title"
+                  type="date" value={deadline}
+                  onChange={(e) => setDeadline(e.target.value)} />
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="flat" onPress={onClose}>
@@ -244,6 +299,10 @@ function Tasks() {
           )}
         </ModalContent>
       </Modal>
+      <Button onPress={onOpen} color="secondary" className="mt-5">
+        ADD TASK
+      </Button>
+    </div>}
     </div>
   );
 }

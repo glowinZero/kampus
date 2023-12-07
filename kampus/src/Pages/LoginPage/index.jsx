@@ -5,7 +5,6 @@ import { Input } from "@nextui-org/react";
 import { Spacer } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 import { Link } from "react-router-dom";
-
 import { useNavigate } from "react-router-dom";
 
 const API_URL = "https://kampus.adaptable.app";
@@ -18,9 +17,7 @@ function LoginPage() {
   const [isStudent, setIsStudent] = useState(false);
   const [error, setError] = useState();
   const [authenticationStep, setAuthenticationStep] = useState("login");
-
   const navigate = useNavigate();
-
   const { storeToken, authenticateUser } = useContext(AuthContext);
 
   const handleLoginSubmit = (e) => {
@@ -32,11 +29,30 @@ function LoginPage() {
       .post(`${API_URL}/auth/login`, requestBody)
       .then((response) => {
         storeToken(response.data.authToken);
-        localStorage.setItem("Logged In", response.data.authToken);
-        authenticateUser();
-        navigate("/dashboard");
-      })
-      .catch((error) => {
+        axios.get(`${API_URL}/auth/users`).then((usersResponse) => {
+          const users = usersResponse.data;
+  
+          const loggedInUserEmail = requestBody.email; 
+          const userWithEmail = users.find(user => user.email === loggedInUserEmail);
+          if (userWithEmail) {
+            // Check the isStudent property for the logged-in user
+            const isStudent = userWithEmail.isStudent;
+  
+            // Perform logic based on the value of isStudent
+            if (isStudent) {
+              alert('You need to have a staff account to login this page');
+            } else {
+              localStorage.setItem("Logged In", response.data.authToken);
+              authenticateUser();
+              navigate("/virtualtour");
+            }
+          }
+        })
+        .catch((usersError) => {
+          console.error('Error fetching users:', usersError);
+        });
+    })   
+      .catch(() => {
         const errorDescription = error.response.data.message;
         setError(errorDescription);
       });
@@ -45,9 +61,7 @@ function LoginPage() {
   const handleRegister = (e) => {
     e.preventDefault();
     setIsStudent(false);
-
     const requestBody = { email, password, firstName, lastName, isStudent };
-    console.log(email, password, firstName, lastName, isStudent);
 
     if (
       email === "" ||
@@ -67,9 +81,7 @@ function LoginPage() {
 
     const passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
     if (!passwordRegex.test(password)) {
-      alert(
-        "Password must have at least 6 characters and contain 1 lowercase letter, 1 uppercase letter, 1 number"
-      );
+      alert("Password must have at least 6 characters and contain 1 lowercase letter, 1 uppercase letter, 1 number");
       return;
     }
 
@@ -82,18 +94,14 @@ function LoginPage() {
         storeToken(response.data.authToken);
         localStorage.setItem("Logged In", response.data.authToken);
         authenticateUser();
-        navigate("/dashboard");
+        navigate("/virtualtour");
       })
       .catch((error) => {
         const errorDescription =
-          error.response?.data?.message ||
+          error.response.data.message ||
           "Failed to create a Student. Please try again.";
         setError(errorDescription);
       });
-  };
-
-  const previousPage = () => {
-    navigate("/");
   };
 
   return (
@@ -206,7 +214,7 @@ function LoginPage() {
         <Button
           className=" absolute bottom-5 right-5 mt-5"
           color="default"
-          onClick={previousPage}
+          onClick={() =>{navigate("/landing")}}
         >
           Back
         </Button>

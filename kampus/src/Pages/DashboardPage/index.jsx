@@ -43,7 +43,6 @@ function DashboardPage() {
   const [userDelete, setUserDelete] = useState();
   const [editingUser, setEditingUser] = useState(null);
   const [userEdit, setUserEdit] = useState();
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -53,7 +52,7 @@ function DashboardPage() {
       onOpen();
 
       setTimeout(() => {
-        navigate("/");
+        navigate("/landing");
       }, 3000);
     }
 
@@ -64,15 +63,11 @@ function DashboardPage() {
         try {
           const idUser = user._id;
 
-          const responseUser = await axios.get(
-            `${API_URL}/auth/users/${idUser}`
-          );
-          console.log(responseUser.data.isStudent);
+          const responseUser = await axios.get(`${API_URL}/auth/users/${idUser}`);
           setIsStudents(responseUser.data.isStudent);
           setLoggedUser(responseUser.data);
 
           const responseUsers = await axios.get(`${API_URL}/auth/users/`);
-          console.log("users", responseUsers.data);
           setUsers(responseUsers.data);
         } catch (error) {
           console.error("Error fetching user details:", error);
@@ -120,9 +115,7 @@ function DashboardPage() {
 
     const passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
     if (!passwordRegex.test(password)) {
-      alert(
-        "Password must have at least 6 characters and contain 1 lowercase letter, 1 uppercase letter, 1 number"
-      );
+      alert("Password must have at least 6 characters and contain 1 lowercase letter, 1 uppercase letter, 1 number");
       return;
     }
 
@@ -145,12 +138,10 @@ function DashboardPage() {
           const responseUser = await axios.get(
             `${API_URL}/auth/users/${idUser}`
           );
-          console.log(responseUser.data.isStudents);
           setIsStudents(responseUser.data.isStudents);
           setLoggedUser(responseUser.data);
 
           const responseUsers = await axios.get(`${API_URL}/auth/users/`);
-          console.log("users", responseUsers.data);
           setUsers(responseUsers.data);
         } catch (error) {
           console.error("Error fetching user details:", error);
@@ -173,15 +164,14 @@ function DashboardPage() {
   };
 
   const deleteStudent = (elem) => {
-    axios
-      .delete(`${API_URL}/auth/users/${elem._id}`)
-      .then(() => {
-        console.log(userDelete);
-      })
-      .catch((error) => {
-        console.error("Error deleting Student:", error);
-        alert("Failed to delete Student. Please try again.");
-      });
+    axios.delete(`${API_URL}/auth/users/${elem._id}`)
+    .then(() => {
+      console.log(userDelete);
+    })
+    .catch((error) => {
+      console.error("Error deleting Student:", error);
+      alert("Failed to delete Student. Please try again.");
+    });
 
     const fetchData = async () => {
       const getToken = localStorage.getItem("authToken");
@@ -210,9 +200,9 @@ function DashboardPage() {
   };
 
   const editStudent = (userEdit) => {
-    console.log("edituser", userEdit);
     setType(true);
     const isStudent = editingUser ? editingUser.isStudent : type;
+
     const updatedFields = {
       ...(email !== undefined && {
         email: email !== "" ? email : editingUser.email,
@@ -276,15 +266,11 @@ function DashboardPage() {
       if (getToken && user) {
         try {
           const idUser = user._id;
-          const responseUser = await axios.get(
-            `${API_URL}/auth/users/${idUser}`
-          );
-          console.log(responseUser.data.isStudent);
+          const responseUser = await axios.get(`${API_URL}/auth/users/${idUser}`);
           setIsStudents(responseUser.data.isStudent);
           setLoggedUser(responseUser.data);
 
           const responseUsers = await axios.get(`${API_URL}/auth/users/`);
-          console.log("users", responseUsers.data);
           setUsers(responseUsers.data);
         } catch (error) {
           console.error("Error fetching user details:", error);
@@ -404,11 +390,11 @@ function DashboardPage() {
                           </p>
                           <Spacer x={8} />
                           <p id="students-card-p">
-                            {elem.cohort.toUpperCase()}
+                            {elem.cohort}
                           </p>
                           <Spacer x={8} />
                           <p id="students-card-p">
-                            {elem.campus.toUpperCase()}
+                            {elem.campus}
                           </p>
                         </div>
                         <div id="buttons-students-list">

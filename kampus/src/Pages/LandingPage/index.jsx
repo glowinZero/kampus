@@ -8,7 +8,6 @@ import {
   Button,
   useDisclosure,
   Input,
-  Link,
   Spacer
 } from "@nextui-org/react";
 import { AuthContext } from "../../Context/auth.context";
@@ -22,27 +21,42 @@ function LandingPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
   const { storeToken, authenticateUser } = useContext(AuthContext);
 
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-
     const requestBody = { email, password };
 
     axios
-      .post(`${API_URL}/auth/login`, requestBody)
-      .then((response) => {
-        storeToken(response.data.authToken);
-        localStorage.setItem("LoggedIn", response.data.authToken);
-        authenticateUser();
-        navigate("/virtualtour");
+    .post(`${API_URL}/auth/login`, requestBody)
+    .then((response) => {
+      storeToken(response.data.authToken);
+      axios.get(`${API_URL}/auth/users`).then((usersResponse) => {
+        const users = usersResponse.data;
+
+        const loggedInUserEmail = requestBody.email; 
+        const userWithEmail = users.find(user => user.email === loggedInUserEmail);
+        if (userWithEmail) {
+          const isStudent = userWithEmail.isStudent;
+
+          if (!isStudent) {
+            alert('You have a staff account. Please go to the staff login page');
+          } else {
+            localStorage.setItem("Logged In", response.data.authToken);
+            authenticateUser();
+            navigate("/virtualtour");
+          }
+        }
       })
-      .catch((error) => {
-        const errorDescription = error.response.data.message;
-        setError(errorDescription);
+      .catch((usersError) => {
+        console.error('Error fetching users:', usersError);
       });
-  };
+  })   
+    .catch(() => {
+      const errorDescription = error.response.data.message;
+      setError(errorDescription);
+    });
+};
 
   const goToLoginPage = () => {
     navigate("/login");

@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import ReactSlider from "react-slider";
 import { Button } from "@nextui-org/button";
-import { color } from "framer-motion";
 import { Slider } from "@nextui-org/react";
 
 const red = "#f54e4e";
@@ -16,9 +14,7 @@ function Pomodoro() {
   const [isPaused, setIsPaused] = useState(true);
   const [secondsLeft, setSecondsLeft] = useState(workMinutes * 60);
   const [mode, setMode] = useState("work");
-
-  const initialTotalTime =
-    mode === "work" ? workMinutes * 60 : breakMinutes * 60;
+  const initialTotalTime = mode === "work" ? workMinutes * 60 : breakMinutes * 60;
 
   useEffect(() => {
     const intervalId = setInterval(() => {
