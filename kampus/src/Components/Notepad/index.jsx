@@ -11,8 +11,8 @@ import {
   Input,
 } from "@nextui-org/react";
 import { AuthContext } from "../../Context/auth.context";
-import { Accordion, AccordionItem } from "@nextui-org/react";
 import { Textarea } from "@nextui-org/react";
+import addIcon from '../../assets/images/add.png'
 import removeIcon from '../../assets/images/remove.png'
 
 const API_URL = "https://kampus.adaptable.app";
@@ -137,7 +137,15 @@ function NotePad() {
   };
 
   return (
-    <div>
+    <div className="relative">
+      <Button
+        isIconOnly
+        onPress={onOpen}
+        size="md"
+        className=" fixed bottom-[100px] right-[485px] bg-[#D3D3D3] shadow-lg rounded-full z-40"
+      >
+        <img src={addIcon} className="flex-shrink-0 w-[auto] h-6" />
+      </Button>
       {notes.map((note, index) => (
         <div
           key={note._id}
@@ -147,7 +155,7 @@ function NotePad() {
             isIconOnly
             onClick={() => deleteNote(note)}
             size="lg"
-            className="shadow-lg  rounded-full bg-transparent top-6 absolute right-5 z-40"
+            className="rounded-full bg-transparent top-6 absolute right-5 z-40"
           >
             <img src={removeIcon} className="flex-shrink-0 w-[auto] h-5" />
           </Button>
@@ -198,9 +206,6 @@ function NotePad() {
           />
         </div>
       ))}
-      <Button onPress={onOpen} color="secondary" className="mt-5">
-        ADD NOTE
-      </Button>
       <Modal
         size="L"
         isOpen={isOpen}

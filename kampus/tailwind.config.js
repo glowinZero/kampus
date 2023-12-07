@@ -11,11 +11,14 @@ export default {
     extend: {
       backgroundImage: {
         background: "url('./assets/images/background.jpg')",
-        loginPageBackground: "url('./assets/images/login-page-img.jpg')"
+        loginPageBackground: "url('./assets/images/login-page-img.jpg')",
       },
       colors: {
         button: "#1f2d91",
 
+        gradStart: "#0a2472",
+        gradMiddle: "[#0A2472]/",
+        gradEnd: "rgba(10,36,114,0.19931722689075626)",
         mainColor: {
           100: "#cccdd5",
           200: "#999cab",

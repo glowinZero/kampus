@@ -11,6 +11,7 @@ import {
   Input,
   Checkbox
 } from "@nextui-org/react";
+import addIcon from '../../assets/images/add.png'
 // ... (other imports)
 
 import { AuthContext } from "../../Context/auth.context";
@@ -22,8 +23,12 @@ function Tasks() {
   const [tasks, setTasks] = useState([]);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [title, setTitle] = useState("");
-  const [editedTasksTitle, setEditedTasksTitle] = useState(Array(tasks.length).fill(false));
-  const [editedTasks, setEditedTasks] = useState(Array(tasks.length).fill(false));
+  const [editedTasksTitle, setEditedTasksTitle] = useState(
+    Array(tasks.length).fill(false)
+  );
+  const [editedTasks, setEditedTasks] = useState(
+    Array(tasks.length).fill(false)
+  );
   const [statuses, setStatuses] = useState(Array(tasks.length).fill("To do"));
 
   const { user, storeToken } = useContext(AuthContext);
@@ -146,13 +151,22 @@ function Tasks() {
   };
 
   return (
-    <div>
+    <div className="relative">
+      <Button
+        isIconOnly
+        onPress={onOpen}
+        size="md"
+        className=" fixed top-[360px] right-14 bg-[#D3D3D3] shadow-lg rounded-full z-40"
+      >
+        <img src={addIcon} className="flex-shrink-0 w-[auto] h-6" />
+      </Button>
       {tasks.map((task, index) => (
         <div
           key={task._id}
-          className=" text-xl p-5 bg-slate-700 rounded-3xl mb-5 relative"
+          className=" text-xl p-5 bg-slate-700 rounded-3xl mr-5 ml-5 mb-5 relative"
         >
           <Checkbox
+            className="rounded-full bg-transparent top-10 absolute right-48 z-40"
             checked={statuses[index] === "Done"}
             onChange={() => changeTaskStatus(task._id, index)}
           />
@@ -160,7 +174,7 @@ function Tasks() {
             isIconOnly
             onClick={() => deleteTask(task._id)}
             size="lg"
-            className="shadow-lg  rounded-full bg-transparent top-6 absolute right-5 z-40"
+            className="rounded-full bg-transparent top-6 absolute right-5 z-40"
           >
             <img src={removeIcon} className="flex-shrink-0 w-[auto] h-5" />
           </Button>
@@ -192,9 +206,7 @@ function Tasks() {
           />
         </div>
       ))}
-      <Button onPress={onOpen} color="secondary" className="mt-5">
-        ADD TASK
-      </Button>
+
       <Modal
         size="L"
         isOpen={isOpen}
