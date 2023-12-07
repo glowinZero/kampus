@@ -81,9 +81,8 @@ function Pomodoro() {
             onChange={setBreakMinutes}
           />
           <Button
-            color="primary"
             onClick={startTimer}
-            className=" absolute  bottom-0 w-30 text-center"
+            className="bg-Color3 text-white absolute  bottom-0 w-30 text-center"
           >
             START
           </Button>
@@ -96,7 +95,7 @@ function Pomodoro() {
               .toString()
               .padStart(2, "0")}`}
             styles={buildStyles({
-              textColor: "#1c1c1c",
+              textColor: "white",
               pathColor: mode === "work" ? red : green,
               trailColor: "rgba(255, 255, 255,.2)",
             })}

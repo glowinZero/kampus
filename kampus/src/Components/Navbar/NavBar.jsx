@@ -1,7 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import dashIcon from "../../assets/images/dashboard.png";
 import profileIcon from "../../assets/images/user.png";
-import logoutIcon from "../../assets/images/leave.png";
+import mapIcon from "../../assets/images/map.png";
+import staffIcon from "../../assets/images/staff.png";
+import logoutIcon from "../../assets/images/logout.png";
 import { AuthContext } from "../../Context/auth.context";
 import { useContext, useEffect, useState } from "react";
 import {
@@ -65,7 +67,7 @@ function NavBar() {
   const logout = () => {
     logOut();
     setLoggedUser("");
-    localStorage.removeItem("Logged In")
+    localStorage.removeItem("Logged In");
     navigate("/landing");
   };
 
@@ -117,10 +119,10 @@ function NavBar() {
           {isStudents ? (
             <aside
               id="default-sidebar"
-              className="fixed top-5 left-5 bottom-5 z-40 w-20 transition-transform -translate-x-full sm:translate-x-0"
+              className="fixed top-5 left-5 bottom-5 z-40 w-[5vw] h-[95vh]"
               aria-label="Sidebar"
             >
-              <div className="h-full py-2 overflow-y-auto bg-gray-50 rounded-xl">
+              <div className="h-full py-2 overflow-x-hidden bg-gray-50 rounded-xl">
                 <ul>
                   <li>
                     <Button id="button-navbar" className="mt-4">
@@ -141,6 +143,26 @@ function NavBar() {
                         />
                       </Link>
                     </Button>
+                    <li>
+                      <Button id="button-navbar" className=" mt-6">
+                        <Link to="/virtualTour">
+                          <img
+                            src={staffIcon}
+                            className="flex-shrink-0 w-[auto] h-8"
+                          />
+                        </Link>
+                      </Button>
+                    </li>
+                    <li>
+                      <Button id="button-navbar" className=" mt-6">
+                        <Link to="/virtualTour">
+                          <img
+                            src={mapIcon}
+                            className="flex-shrink-0 w-[auto] h-6"
+                          />
+                        </Link>
+                      </Button>
+                    </li>
                   </li>
                   <li>
                     <Button

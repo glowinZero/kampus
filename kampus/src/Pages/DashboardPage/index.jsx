@@ -338,18 +338,20 @@ function DashboardPage() {
           {isStudents === true ? (
             <div id="dashboard-staff" className="w-screen">
               <NavBar />
-              <div className=" w-[90%] h-[95vh] bg-gray-50 m-5 p-5 rounded-3xl">
+              <div className=" w-[91.5vw] h-[95vh] bg-gray-50 m-5 p-5 rounded-3xl">
                 {loggedUser && (
-                  <h1 className="font-bold">Hi {loggedUser.firstName}!</h1>
+                  <h1 className="font-bold text-Color2">
+                    Hi {loggedUser.firstName}!
+                  </h1>
                 )}
-                <div className=" w-[100%] h-[30vh] bg-blue-600 mt-5 mb-5 pt-5 pb-5 rounded-3xl overflow-auto scrollbar-hide overscroll-none scroll-smooth relative">
+                <div className=" w-[100%] h-[30vh] bg-Color4 mt-5 mb-5 pt-5 pb-5 rounded-3xl overflow-auto scrollbar-hide overscroll-none scroll-smooth relative">
                   <Tasks />
                 </div>
                 <div className="flex  auto row place-content-between w-[100%] h-[50vh] bg-gray-50  rounded-3xl">
-                  <div className="flex-1 pr-5 pl-5 pt-5 pb-5 mb-5 mr-5 bg-gray-600 rounded-3xl overflow-auto scrollbar-hide overscroll-none scroll-smooth">
+                  <div className="flex-1 pr-5 pl-5 pt-5 pb-5 mb-5 mr-5 bg-Color4 rounded-3xl overflow-auto scrollbar-hide overscroll-none scroll-smooth">
                     <NotePad />
                   </div>
-                  <div className="w-[24%] pr-5 pl-5 pt-5 pb-5 mb-5 bg-gray-600 rounded-3xl">
+                  <div className="w-[24%] pr-5 pl-5 pt-5 pb-5 mb-5 bg-Color4 rounded-3xl">
                     <Pommodoro></Pommodoro>
                   </div>
                 </div>
@@ -357,18 +359,18 @@ function DashboardPage() {
             </div>
           ) : (
             <div id="dashboard-staff" className="w-screen">
-              <NavBar className="w-[100%]" />
-              <div className=" w-[90%] h-[95vh] bg-gray-400 m-5 p-5 rounded-3xl">
+              <NavBar />
+              <div className=" w-[91.5vw] h-[95vh] bg-gray-50 m-5 p-5 rounded-3xl overflow-auto scrollbar-hide overscroll-none scroll-smooth">
                 <h1
                   id="heading-staff-dashboard"
-                  className=" font-light p-1 text-left"
+                  className=" font-light text-Color3 p-3 text-left"
                 >
-                  USERS
+                  STUDENTS
                 </h1>
                 {users.map((elem) => (
                   <div key={elem._id} id="students-list">
                     <Spacer y={8} />
-                    <Card>
+                    <Card className="shadow-lg shadow-Color3/40">
                       <CardBody
                         style={{
                           display: "flex",
@@ -378,6 +380,7 @@ function DashboardPage() {
                           paddingLeft: "2vw",
                           paddingRight: "2vw",
                         }}
+                        className=" bg-Color3/40  "
                       >
                         <div id="students-card">
                           <p id="name">
@@ -389,13 +392,9 @@ function DashboardPage() {
                             {elem.isStudent === true ? "STUDENT" : "STAFF"}
                           </p>
                           <Spacer x={8} />
-                          <p id="students-card-p">
-                            {elem.cohort}
-                          </p>
+                          <p id="students-card-p">{elem.cohort}</p>
                           <Spacer x={8} />
-                          <p id="students-card-p">
-                            {elem.campus}
-                          </p>
+                          <p id="students-card-p">{elem.campus}</p>
                         </div>
                         <div id="buttons-students-list">
                           <Button
@@ -406,11 +405,11 @@ function DashboardPage() {
                               setUserEdit(elem);
                             }}
                             size="lg"
-                            className="shadow-lg rounded-full bg-transparent"
+                            className=" rounded-full bg-transparent"
                           >
                             <img
                               src={editIcon}
-                              className="flex-shrink-0 w-[auto] h-6"
+                              className="flex-shrink-0 color w-[auto] h-6"
                             />
                           </Button>
                           <Button
@@ -420,7 +419,7 @@ function DashboardPage() {
                               setUserDelete(elem);
                             }}
                             size="lg"
-                            className="shadow-lg rounded-full bg-transparent"
+                            className="rounded-full bg-transparent"
                           >
                             <img
                               src={removeIcon}
@@ -436,14 +435,35 @@ function DashboardPage() {
                   classNames={{
                     size: "4xl",
                     body: "py-6",
-                    backdrop: "bg-[#292f46]/50 backdrop-opacity-40 blur",
-                    base: "border-[#292f46] bg-white text-[#71717a]",
-                    header: "border-b-[1px] border-[#292f46]",
+                    backdrop:
+                      "bg-gradient-to-t from-ScaleColor1-500 to-ScaleColor1-500/10 backdrop-opacity-20",
+                    base: "border-[#292f46] bg-white text-black",
+                    header: "border-b-[1px] border-[#292f46] text-black",
                     footer: "border-t-[1px] border-[#292f46]",
                     closeButton: "active:bg-white/10",
                   }}
+                  motionProps={{
+                    variants: {
+                      enter: {
+                        y: 0,
+                        opacity: 1,
+                        transition: {
+                          duration: 0.2,
+                          ease: "easeOut",
+                        },
+                      },
+                      exit: {
+                        y: -20,
+                        opacity: 0,
+                        transition: {
+                          duration: 0.2,
+                          ease: "easeIn",
+                        },
+                      },
+                    },
+                  }}
+                  backdrop="opaque"
                   size="2xl"
-                  backdrop="blur"
                   isOpen={isOpen}
                   onOpenChange={onOpenChange}
                   placement="center"
@@ -454,11 +474,11 @@ function DashboardPage() {
                         <ModalHeader className="flex flex-col gap-1">
                           Log in
                         </ModalHeader>
-                        <ModalBody className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+                        <ModalBody className="grid grid-cols-2 gap-4">
                           <Input
                             autoFocus
                             label="First Name"
-                            variant="flat"
+                            variant="bordered"
                             value={
                               editingUser ? editingUser.firstName : firstName
                             }
@@ -473,7 +493,7 @@ function DashboardPage() {
                           />
                           <Input
                             label="Last Name"
-                            variant="flat"
+                            variant="bordered"
                             value={
                               editingUser ? editingUser.lastName : lastName
                             }
@@ -488,7 +508,7 @@ function DashboardPage() {
                           />
                           <Input
                             label="Email"
-                            variant="flat"
+                            variant="bordered"
                             value={editingUser ? editingUser.email : email}
                             onChange={(e) =>
                               editingUser
@@ -503,7 +523,7 @@ function DashboardPage() {
                             label="Password"
                             type="password"
                             disabled={editingUser ? true : false}
-                            variant="flat"
+                            variant="bordered"
                             value={
                               editingUser ? editingUser.password : password
                             }
@@ -515,11 +535,11 @@ function DashboardPage() {
                                   })
                                 : setPassword(e.target.value)
                             }
-                            style={{ opacity: 0.1 }}
+                            style={{ opacity: 0.5 }}
                           />
                           <Input
                             label="Cohort"
-                            variant="flat"
+                            variant="bordered"
                             value={editingUser ? editingUser.cohort : cohort}
                             onChange={(e) =>
                               editingUser
@@ -532,7 +552,7 @@ function DashboardPage() {
                           />
                           <Input
                             label="Campus"
-                            variant="flat"
+                            variant="bordered"
                             value={editingUser ? editingUser.campus : campus}
                             onChange={(e) =>
                               editingUser
@@ -545,7 +565,7 @@ function DashboardPage() {
                           />
                           <Input
                             label="Teacher"
-                            variant="flat"
+                            variant="bordered"
                             value={editingUser ? editingUser.teacher : teacher}
                             onChange={(e) =>
                               editingUser
@@ -558,7 +578,7 @@ function DashboardPage() {
                           />
                           <Input
                             label="Manager"
-                            variant="flat"
+                            variant="bordered"
                             value={editingUser ? editingUser.manager : manager}
                             onChange={(e) =>
                               editingUser
@@ -573,12 +593,13 @@ function DashboardPage() {
                         <ModalFooter>
                           <Button
                             color="danger"
-                            variant="flat"
+                            variant="shadow"
                             onPress={() => closeModal(onClose)}
                           >
                             Close
                           </Button>
                           <Button
+                            variant="shadow"
                             color="primary"
                             onClick={() => {
                               if (editingUser) {

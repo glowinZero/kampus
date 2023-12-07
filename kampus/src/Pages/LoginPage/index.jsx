@@ -31,27 +31,27 @@ function LoginPage() {
         storeToken(response.data.authToken);
         axios.get(`${API_URL}/auth/users`).then((usersResponse) => {
           const users = usersResponse.data;
-  
-          const loggedInUserEmail = requestBody.email; 
+
+          const loggedInUserEmail = requestBody.email;
           const userWithEmail = users.find(user => user.email === loggedInUserEmail);
           if (userWithEmail) {
             // Check the isStudent property for the logged-in user
             const isStudent = userWithEmail.isStudent;
-  
+
             // Perform logic based on the value of isStudent
             if (isStudent) {
               alert('You need to have a staff account to login this page');
             } else {
               localStorage.setItem("Logged In", response.data.authToken);
               authenticateUser();
-              navigate("/virtualtour");
+              navigate("/dashboard");
             }
           }
         })
         .catch((usersError) => {
           console.error('Error fetching users:', usersError);
         });
-    })   
+    })
       .catch(() => {
         const errorDescription = error.response.data.message;
         setError(errorDescription);
@@ -114,7 +114,7 @@ function LoginPage() {
             <h4 className="text-xl text-left font-medium mb-5">Welcome back</h4>
             <Input
               autoFocus
-              size="sm"
+              size="lg"
               label="Email"
               variant="flat"
               className=" mb-3"
@@ -122,7 +122,7 @@ function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
             />
             <Input
-              size="sm"
+              size="lg"
               className="mb-5"
               label="Password"
               type="password"
@@ -143,7 +143,6 @@ function LoginPage() {
               <Link
                 color="primary"
                 href="#"
-                size="sm"
                 onClick={() => setAuthenticationStep("signup")}
               >
                 Sign up
@@ -159,7 +158,7 @@ function LoginPage() {
             </h4>
             <Input
               autoFocus
-              size="sm"
+              size="lg"
               label="First Name"
               variant="flat"
               className=" mb-3"
@@ -168,7 +167,7 @@ function LoginPage() {
               }}
             />
             <Input
-              size="sm"
+              size="lg"
               label="Last Name"
               variant="flat"
               className=" mb-3"
@@ -177,7 +176,7 @@ function LoginPage() {
               }}
             />
             <Input
-              size="sm"
+              size="lg"
               label="Email"
               variant="flat"
               className=" mb-3"
@@ -185,7 +184,7 @@ function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
             />
             <Input
-              size="sm"
+              size="lg"
               className="mb-5"
               label="Password"
               type="password"
@@ -203,7 +202,6 @@ function LoginPage() {
               <Link
                 color="primary"
                 href="#"
-                size="sm"
                 onClick={() => setAuthenticationStep("login")}
               >
                 Log In
@@ -214,7 +212,9 @@ function LoginPage() {
         <Button
           className=" absolute bottom-5 right-5 mt-5"
           color="default"
-          onClick={() =>{navigate("/landing")}}
+          onClick={() => {
+            navigate("/landing");
+          }}
         >
           Back
         </Button>

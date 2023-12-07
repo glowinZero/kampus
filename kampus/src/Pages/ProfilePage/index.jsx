@@ -46,7 +46,9 @@ function ProfilePage() {
         try {
           const idUser = user._id;
 
-          const responseUser = await axios.get(`${API_URL}/auth/users/${idUser}`);
+          const responseUser = await axios.get(
+            `${API_URL}/auth/users/${idUser}`
+          );
           setLoggedUser(responseUser.data);
         } catch (error) {
           console.error("Error fetching user details:", error);
@@ -66,10 +68,16 @@ function ProfilePage() {
     const teacher = "";
 
     const updatedFields = {
-      ...(email !== undefined && {email: email !== "" ? email : loggedUser.email,}),
+      ...(email !== undefined && {
+        email: email !== "" ? email : loggedUser.email,
+      }),
       password,
-      ...(firstName !== undefined && {firstName: firstName !== "" ? firstName : loggedUser.firstName,}),
-      ...(lastName !== undefined && {lastName: lastName !== "" ? lastName : loggedUser.lastName,}),
+      ...(firstName !== undefined && {
+        firstName: firstName !== "" ? firstName : loggedUser.firstName,
+      }),
+      ...(lastName !== undefined && {
+        lastName: lastName !== "" ? lastName : loggedUser.lastName,
+      }),
       cohort,
       campus,
       manager,
@@ -88,7 +96,8 @@ function ProfilePage() {
       return;
     }
 
-    axios.put(`${API_URL}/auth/users/${userEdit._id}`, updatedFields)
+    axios
+      .put(`${API_URL}/auth/users/${userEdit._id}`, updatedFields)
       .then(() => {
         navigate(`/dashboard`);
       })
@@ -116,10 +125,11 @@ function ProfilePage() {
 
     fetchData();
   };
-
+  const colors = ["#d4d4d4"];
   const resetProfile = () => {
     const idUser = user._id;
-    axios.get(`${API_URL}/auth/users/${idUser}`)
+    axios
+      .get(`${API_URL}/auth/users/${idUser}`)
       .then((response) => {
         console.log(response.data.isStudent);
         setLoggedUser(response.data);
@@ -175,15 +185,21 @@ function ProfilePage() {
       ) : (
         <div id="dashboard-staff" className="w-screen">
           <NavBar />
-          <div className=" w-[90vw] h-[95vh] bg-gray-400 m-5 p-5 rounded-3xl">
-            <h1 id="heading-profile-page" className="font-semibold p-1">
-              Hi Profile Page
+          <div className=" w-[91.5vw] h-[95vh] bg-gray-50 m-5 p-5 rounded-3xl overflow-auto scrollbar-hide overscroll-none scroll-smooth">
+            <h1
+              id="heading-profile-page"
+              className="font-semibold text-Color3 p-1"
+            >
+              Your Profile
             </h1>
             <div>
               <Spacer y={8} />
-              <Card>
+              <Card className="w-2/3 p-2 mx-auto shadow-xl">
                 <CardBody>
                   <Input
+                    className="mb-5 text-lg"
+                    size="lg"
+                    variant="bordered"
                     type="string"
                     label="First Name"
                     placeholder={loggedUser.firstName}
@@ -192,6 +208,9 @@ function ProfilePage() {
                     }}
                   />
                   <Input
+                    className=" bg mb-2 text-lg"
+                    size="lg"
+                    variant="bordered"
                     type="string"
                     label="Last Name"
                     placeholder={loggedUser.lastName}
@@ -200,48 +219,59 @@ function ProfilePage() {
                     }}
                   />
                   <Input
+                    className=" bg mb-2 text-lg"
+                    size="lg"
+                    variant="bordered"
                     type="email"
-                    label="email"
+                    label="Email"
                     placeholder={loggedUser.email}
                     onChange={(e) => {
                       setEmail(e.target.value);
                     }}
                   />
                   <Input
+                    isDisabled
+                    className="bg mb-2 text-lg"
+                    size="lg"
+                    variant="bordered"
                     label="Password"
                     type="password"
-                    variant="flat"
                     disabled="true"
                     value={loggedUser.password}
-                    readOnly
-                    style={{ color: "Gainsboro" }}
+                    style={{ color: "Gainsboro", opacity: "0.8" }}
                   />
                   <Input
+                    isDisabled
+                    className="bg mb-2 text-lg"
+                    size="lg"
+                    variant="bordered"
                     type="cohort"
                     label="Cohort"
                     placeholder={loggedUser.cohort}
-                    readOnly
-                    style={{ color: "Gainsboro" }}
+                    style={{ color: "Gainsboro", opacity: "0.8" }}
                   >
                     {loggedUser.cohort}
                   </Input>
                   <Input
+                    isDisabled
+                    className=" bg mb-2 text-lg"
+                    size="lg"
+                    variant="bordered"
                     type="campus"
                     label="Campus"
                     placeholder={loggedUser.campus}
-                    readOnly
-                    style={{ color: "Gainsboro" }}
+                    style={{ color: "Gainsboro", opacity: "0.8" }}
                   >
                     {loggedUser.campus}
                   </Input>
                 </CardBody>
               </Card>
               <div className="flex row justify-center mt-5">
-                <Button color="danger" variant="flat" onPress={resetProfile}>
+                <Button color="danger" variant="shadow" onPress={resetProfile}>
                   Cancel
                 </Button>
                 <Spacer x={5} />
-                <Button color="primary" onClick={editUser}>
+                <Button variant="shadow" color="primary" onClick={editUser}>
                   Save changes
                 </Button>
               </div>

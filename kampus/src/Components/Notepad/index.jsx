@@ -145,18 +145,48 @@ function NotePad() {
         isIconOnly
         onPress={onOpen}
         size="md"
-        className=" fixed bottom-[100px] right-[485px] bg-[#D3D3D3] shadow-lg rounded-full z-40"
+        className=" fixed small:bottom-[8vh] medium:bottom-[10vh] main:bottom-[10.5vh]
+        small:right-[27vw] medium:right-[26vw] main:right-[26vw] bg-[#D3D3D3] shadow-lg rounded-full z-40"
       >
         <img src={addIcon} className="flex-shrink-0 w-[auto] h-6" />
       </Button>
       <div>
         {notes.length === 0 ? (
           <div>
-            <p>No notes created</p>
-            <Button onPress={onOpen} color="secondary" className="mt-5">
-              ADD NOTE
-            </Button>
+            <p className="mt-5 opacity-90">NO NOTES CREATED</p>
+
             <Modal
+              classNames={{
+                size: "5xl",
+                body: "py-6",
+                backdrop:
+                  "bg-gradient-to-t from-ScaleColor1-500 to-ScaleColor1-500/10 backdrop-opacity-20",
+                base: "border-[#292f46] bg-white text-black",
+                header: "border-b-[1px] border-[#292f46] text-black",
+                footer: "border-t-[1px] border-[#292f46]",
+                closeButton: "active:bg-white/10",
+              }}
+              motionProps={{
+                variants: {
+                  enter: {
+                    y: 0,
+                    opacity: 1,
+                    transition: {
+                      duration: 0.2,
+                      ease: "easeOut",
+                    },
+                  },
+                  exit: {
+                    y: -20,
+                    opacity: 0,
+                    transition: {
+                      duration: 0.2,
+                      ease: "easeIn",
+                    },
+                  },
+                },
+              }}
+              backdrop="opaque"
               size="L"
               isOpen={isOpen}
               onOpenChange={onOpenChange}
@@ -164,13 +194,14 @@ function NotePad() {
             >
               <ModalContent>
                 {(onClose) => (
-                  <>
-                    <ModalHeader>Add Note</ModalHeader>
+                  <div>
+                    <ModalHeader className="text-black">Add Note</ModalHeader>
                     <ModalBody>
                       <Input
                         autoFocus
                         label="Title"
                         placeholder="Enter the title of the note"
+                        size="md"
                         variant="bordered"
                         onChange={(e) => setTitle(e.target.value)}
                       />
@@ -182,10 +213,11 @@ function NotePad() {
                       />
                     </ModalBody>
                     <ModalFooter>
-                      <Button color="danger" variant="flat" onPress={onClose}>
+                      <Button color="danger" variant="shadow" onPress={onClose}>
                         Cancel
                       </Button>
                       <Button
+                        variant="shadow"
                         color="primary"
                         onPress={() => {
                           addNote();
@@ -195,7 +227,7 @@ function NotePad() {
                         Submit
                       </Button>
                     </ModalFooter>
-                  </>
+                  </div>
                 )}
               </ModalContent>
             </Modal>
@@ -205,7 +237,7 @@ function NotePad() {
             {notes.map((note, index) => (
               <div
                 key={note._id}
-                className="text-xl p-5 bg-slate-700 rounded-3xl mb-5 relative"
+                className="text-xl p-5 bg-Color2 rounded-3xl mb-5 relative"
               >
                 <Button
                   isIconOnly
@@ -224,7 +256,7 @@ function NotePad() {
                   </p>
                 )}
                 <Input
-                  className="text-white decoration-sky-500 mb-2 text-lg"
+                  className="text-white decoration-sky-500 mb-5 text-lg"
                   color="primary"
                   variant="underlined"
                   size="lg"
@@ -290,6 +322,37 @@ function NotePad() {
               </div>
             ))}
             <Modal
+              classNames={{
+                size: "5xl",
+                body: "py-6",
+                backdrop:
+                  "bg-gradient-to-t from-ScaleColor1-500 to-ScaleColor1-500/10 backdrop-opacity-20",
+                base: "border-[#292f46] bg-white text-black",
+                header: "border-b-[1px] border-[#292f46] text-black",
+                footer: "border-t-[1px] border-[#292f46]",
+                closeButton: "active:bg-white/10",
+              }}
+              motionProps={{
+                variants: {
+                  enter: {
+                    y: 0,
+                    opacity: 1,
+                    transition: {
+                      duration: 0.2,
+                      ease: "easeOut",
+                    },
+                  },
+                  exit: {
+                    y: -20,
+                    opacity: 0,
+                    transition: {
+                      duration: 0.2,
+                      ease: "easeIn",
+                    },
+                  },
+                },
+              }}
+              backdrop="opaque"
               size="L"
               isOpen={isOpen}
               onOpenChange={onOpenChange}
@@ -297,13 +360,14 @@ function NotePad() {
             >
               <ModalContent>
                 {(onClose) => (
-                  <>
-                    <ModalHeader>Add Note</ModalHeader>
+                  <div>
+                    <ModalHeader className="text-black">Add Note</ModalHeader>
                     <ModalBody>
                       <Input
                         autoFocus
                         label="Title"
                         placeholder="Enter the title of the note"
+                        size="md"
                         variant="bordered"
                         onChange={(e) => setTitle(e.target.value)}
                       />
@@ -315,10 +379,11 @@ function NotePad() {
                       />
                     </ModalBody>
                     <ModalFooter>
-                      <Button color="danger" variant="flat" onPress={onClose}>
+                      <Button color="danger" variant="shadow" onPress={onClose}>
                         Cancel
                       </Button>
                       <Button
+                        variant="shadow"
                         color="primary"
                         onPress={() => {
                           addNote();
@@ -328,7 +393,7 @@ function NotePad() {
                         Submit
                       </Button>
                     </ModalFooter>
-                  </>
+                  </div>
                 )}
               </ModalContent>
             </Modal>
