@@ -9,10 +9,9 @@ import {
   Button,
   useDisclosure,
   Input,
+  Textarea
 } from "@nextui-org/react";
 import { AuthContext } from "../../Context/auth.context";
-import { Accordion, AccordionItem } from "@nextui-org/react";
-import { Textarea } from "@nextui-org/react";
 import removeIcon from '../../assets/images/remove.png'
 
 const API_URL = "https://kampus.adaptable.app";
@@ -22,9 +21,10 @@ function NotePad() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [editedNotesTitle, setEditedNotesTitle] = useState([]);
-  const [editedNotesBody, setEditedNotesBody] = useState([]);
-
+  const [editedNotesTitle, setEditedNotesTitle] = useState(Array(notes.length).fill(false));
+  const [editedNotesBody, setEditedNotesBody] = useState(Array(notes.length).fill(false));
+  const [editedTitle, setEditedTitle] = useState(Array(notes.length).fill(""));
+  const [editedBody, setEditedBody] = useState(Array(notes.length).fill(""));
   const { user, storeToken } = useContext(AuthContext);
 
   useEffect(() => {
@@ -49,9 +49,7 @@ function NotePad() {
         user: user._id,
       };
 
-      const response = await axios.post(`${API_URL}/api/note`, requestBody);
-
-      console.log("Note Created Successfully:", response.data);
+      await axios.post(`${API_URL}/api/note`, requestBody);
 
       const updatedResponse = await axios.get(
         `${API_URL}/api/notes?userId=${user._id}`
@@ -138,11 +136,57 @@ function NotePad() {
 
   return (
     <div>
+      {notes.length === 0 ? <div>
+      <p>No notes created</p>
+      <Button onPress={onOpen} color="secondary" className="mt-5">
+        ADD NOTE
+      </Button>
+      <Modal
+        size="L"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement="center"
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader>Add Note</ModalHeader>
+              <ModalBody>
+                <Input
+                  autoFocus
+                  label="Title"
+                  placeholder="Enter the title of the note"
+                  variant="bordered"
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+                <Input
+                  label="Body"
+                  placeholder="Write the description of the note"
+                  variant="bordered"
+                  onChange={(e) => setBody(e.target.value)}
+                />
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="flat" onPress={onClose}>
+                  Cancel
+                </Button>
+                <Button
+                  color="primary"
+                  onPress={() => {
+                    addNote();
+                    onClose();
+                  }}
+                >
+                  Submit
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+      </div> : <div>
       {notes.map((note, index) => (
-        <div
-          key={note._id}
-          className=" text-xl p-5 bg-slate-700 rounded-3xl mb-5 relative"
-        >
+        <div key={note._id} className="text-xl p-5 bg-slate-700 rounded-3xl mb-5 relative">
           <Button
             isIconOnly
             onClick={() => deleteNote(note)}
@@ -162,39 +206,43 @@ function NotePad() {
             variant="underlined"
             size="lg"
             placeholder="Title"
-            value={editedNotesTitle[index] ? title : note.title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={editedNotesTitle[index] ? editedTitle[index] : note.title}
+            onChange={(e) => setEditedTitle((prevTitles) => {
+              const newTitles = [...prevTitles];
+              newTitles[index] = e.target.value;
+              return newTitles;
+            })}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                updateNoteTitle(note._id, e.target.value, note.body, index);
+                updateNoteTitle(note._id, editedTitle[index], note.body, index);
               }
             }}
-            onFocus={() =>
-              setEditedNotesTitle((prevEditedNotes) => {
-                const newEditedNotes = [...prevEditedNotes];
-                newEditedNotes[index] = true;
-                return newEditedNotes;
-              })
-            }
+            onFocus={() => setEditedNotesTitle((prevEditedNotes) => {
+              const newEditedNotes = [...prevEditedNotes];
+              newEditedNotes[index] = true;
+              return newEditedNotes;
+            })}
           />
           <Textarea
             maxRows={3}
             className="text-black placeholder-gray-500"
             placeholder="Write your notes here"
-            value={editedNotesBody[index] ? body : note.body}
-            onChange={(e) => setBody(e.target.value)}
+            value={editedNotesBody[index] ? editedBody[index] : note.body}
+            onChange={(e) => setEditedBody((prevBodies) => {
+              const newBodies = [...prevBodies];
+              newBodies[index] = e.target.value;
+              return newBodies;
+            })}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                updateNoteBody(note._id, note.title, e.target.value, index);
+                updateNoteBody(note._id, note.title, editedBody[index], index);
               }
             }}
-            onFocus={() =>
-              setEditedNotesBody((prevEditedNotes) => {
-                const newEditedNotes = [...prevEditedNotes];
-                newEditedNotes[index] = true;
-                return newEditedNotes;
-              })
-            }
+            onFocus={() => setEditedNotesBody((prevEditedNotes) => {
+              const newEditedNotes = [...prevEditedNotes];
+              newEditedNotes[index] = true;
+              return newEditedNotes;
+            })}
           />
         </div>
       ))}
@@ -244,6 +292,8 @@ function NotePad() {
           )}
         </ModalContent>
       </Modal>
+      </div>}
+      
     </div>
   );
 }

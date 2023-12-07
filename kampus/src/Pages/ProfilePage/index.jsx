@@ -35,7 +35,7 @@ function ProfilePage() {
       onOpen();
 
       setTimeout(() => {
-        navigate("/");
+        navigate("/landing");
       }, 3000);
     }
 
@@ -46,12 +46,8 @@ function ProfilePage() {
         try {
           const idUser = user._id;
 
-          const responseUser = await axios.get(
-            `${API_URL}/auth/users/${idUser}`
-          );
-          console.log(responseUser.data.isStudent);
+          const responseUser = await axios.get(`${API_URL}/auth/users/${idUser}`);
           setLoggedUser(responseUser.data);
-          console.log(responseUser.data);
         } catch (error) {
           console.error("Error fetching user details:", error);
         }
@@ -68,17 +64,12 @@ function ProfilePage() {
     const campus = loggedUser.campus;
     const manager = "";
     const teacher = "";
+
     const updatedFields = {
-      ...(email !== undefined && {
-        email: email !== "" ? email : loggedUser.email,
-      }),
+      ...(email !== undefined && {email: email !== "" ? email : loggedUser.email,}),
       password,
-      ...(firstName !== undefined && {
-        firstName: firstName !== "" ? firstName : loggedUser.firstName,
-      }),
-      ...(lastName !== undefined && {
-        lastName: lastName !== "" ? lastName : loggedUser.lastName,
-      }),
+      ...(firstName !== undefined && {firstName: firstName !== "" ? firstName : loggedUser.firstName,}),
+      ...(lastName !== undefined && {lastName: lastName !== "" ? lastName : loggedUser.lastName,}),
       cohort,
       campus,
       manager,
@@ -97,8 +88,7 @@ function ProfilePage() {
       return;
     }
 
-    axios
-      .put(`${API_URL}/auth/users/${userEdit._id}`, updatedFields)
+    axios.put(`${API_URL}/auth/users/${userEdit._id}`, updatedFields)
       .then(() => {
         navigate(`/dashboard`);
       })
@@ -129,8 +119,7 @@ function ProfilePage() {
 
   const resetProfile = () => {
     const idUser = user._id;
-    axios
-      .get(`${API_URL}/auth/users/${idUser}`)
+    axios.get(`${API_URL}/auth/users/${idUser}`)
       .then((response) => {
         console.log(response.data.isStudent);
         setLoggedUser(response.data);
@@ -191,15 +180,6 @@ function ProfilePage() {
               Hi Profile Page
             </h1>
             <div>
-              <div>
-                {/*<img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Student Photo" style={{ width: '200px'}}/>
-                            <Card style={{ width: "20vw"}}>
-                                <CardBody style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: "2vw", paddingRight: "2vw"}}>
-                                    <h3>{loggedUser.firstName} {loggedUser.lastName}</h3>
-                                    <p>{loggedUser.cohort} {loggedUser.campus}</p>
-                                </CardBody>
-                            </Card>*/}
-              </div>
               <Spacer y={8} />
               <Card>
                 <CardBody>

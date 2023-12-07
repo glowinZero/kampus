@@ -10,14 +10,11 @@ function AuthProviderWrapper(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
 
-  /* Store the token in the local storage */
   const storeToken = (token) => {
     localStorage.setItem("authToken", token);
   };
 
-  /* Authenticate the User via JWT */
   const authenticateUser = () => {
-    // Get the stored token from the local storage
     const storedToken = localStorage.getItem("authToken");
 
     if (storedToken) {

@@ -13,6 +13,7 @@ import {
   ModalHeader,
   ModalBody,
   useDisclosure,
+  ModalFooter
 } from "@nextui-org/react";
 
 function VirtualTour() {
@@ -23,26 +24,22 @@ function VirtualTour() {
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-    setUserLogged(true);
 
     if (!token) {
       onOpen();
       setTimeout(() => {
-        navigate("/");
+        navigate("/landing");
       }, 3000);
+    } else {
+      setUserLogged(true);
     }
     setTourStep(0);
   }, [navigate]);
 
   const advanceTour = () => {
     setTourStep(tourStep + 1);
-    console.log(tourStep);
   };
-
-  const navigatePortal = () => {
-    navigate("/dashboard");
-  };
-
+  
   return (
     <div id="virtual-tour">
       {userLogged ? (
@@ -118,13 +115,15 @@ function VirtualTour() {
           ></img>
           <Button
             color="primary"
-            onClick={tourStep === 5 ? navigatePortal : advanceTour}
+            onClick={tourStep === 5 ? ()=>{navigate("/dashboard")} : advanceTour}
             id="tour-button"
           >
             {" "}
             Next
           </Button>
-          <Modal
+        </>
+      ) : ( <div>
+        <Modal
             classNames={{
               size: "4xl",
               body: "py-6",
@@ -134,28 +133,35 @@ function VirtualTour() {
               footer: "border-t-[1px] border-[#292f46]",
               closeButton: "active:bg-white/10",
             }}
-            size="l"
+            size="2xl"
             backdrop="blur"
             isOpen={isOpen}
             onOpenChange={onOpenChange}
             placement="center"
           >
             <ModalContent>
-              {() => (
-                <>
+              {(onClose) => (
+                <div>
                   <ModalHeader className="flex flex-col gap-1">
                     Log in
                   </ModalHeader>
                   <ModalBody>
                     <p>User not Logged in</p>
                   </ModalBody>
-                </>
+                  <ModalFooter>
+                    <Button
+                      color="danger"
+                      variant="flat"
+                      onPress={() => onClose()}
+                    >
+                      Close
+                    </Button>
+                  </ModalFooter>
+                </div>
               )}
             </ModalContent>
           </Modal>
-        </>
-      ) : (
-        <img src="Become part of us!" />
+      </div>
       )}
     </div>
   );
