@@ -46,12 +46,16 @@ function ContactsPage() {
         try {
           const idUser = user._id;
 
-          const responseUser = await axios.get(`${API_URL}/auth/users/${idUser}`);
+          const responseUser = await axios.get(
+            `${API_URL}/auth/users/${idUser}`
+          );
           setIsStudents(responseUser.data.isStudent);
           setLoggedUser(responseUser.data);
 
           const responseUsers = await axios.get(`${API_URL}/auth/users/`);
-          const filteredUsers = responseUsers.data.filter(user => !user.isStudent);
+          const filteredUsers = responseUsers.data.filter(
+            (user) => !user.isStudent
+          );
 
           setUsers(filteredUsers);
         } catch (error) {
@@ -106,51 +110,54 @@ function ContactsPage() {
         </Modal>
       ) : (
         <div>
-            <div id="dashboard-staff" className="w-screen">
-              <NavBar className="w-[100%]" />
-              <div className=" w-[90%] h-[95vh] bg-gray-400 m-5 p-5 rounded-3xl">
-                <h1 id="heading-staff-dashboard" className="font-semibold p-1">
-                  USERS
-                </h1>
-                {users.map((elem) => (
-                  <div key={elem._id} id="students-list">
-                    <Spacer y={8} />
-                    <Card>
-                      <CardBody
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          paddingLeft: "2vw",
-                          paddingRight: "2vw",
-                        }}
-                      >
-                        <div id="students-card">
-                          <p id="name">
-                            {elem.firstName} {elem.lastName}
-                          </p>
-                          <Spacer x={16} />
-                          <p id="students-card-p">{elem.campus}</p>
-                          <Spacer x={8} />
-                          <p id="role">{elem.role}</p>
-                          <Spacer x={8} />
-                          <p id="students-card-p">{elem.cohort}</p>
-                          <Spacer x={16} />
-                          <p id="email">{elem.email}</p>
-                        </div>
-                        <div id="buttons-students-list">
-                        </div>
-                      </CardBody>
-                    </Card>
-                  </div>
-                ))}
-              </div>
+          <div id="dashboard-staff" className="w-screen">
+            <NavBar className="w-[100%]" />
+            <div className=" w-[91.5vw] h-[95vh] bg-gray-50 m-5 p-5 rounded-3xl overflow-auto scrollbar-hide overscroll-none scroll-smooth">
+              <h1
+                id="heading-staff-dashboard"
+                className="font-semibold text-Color3 p-1"
+              >
+                STAFF
+              </h1>
+              {users.map((elem) => (
+                <div key={elem._id} id="students-list">
+                  <Spacer y={8} />
+                  <Card className="shadow-lg shadow-Color3/40">
+                    <CardBody
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        paddingLeft: "2vw",
+                        paddingRight: "2vw",
+                      }}
+                      className=" bg-Color3/40  "
+                    >
+                      <div id="students-card">
+                        <p id="name">
+                          {elem.firstName} {elem.lastName}
+                        </p>
+                        <p id="email">{elem.email}</p>
+                        <Spacer x={16} />
+                        <p id="students-card-p">{elem.campus}</p>
+                        <Spacer x={8} />
+                        <p id="students-card-p">{elem.cohort}</p>
+                        <Spacer x={8} />
+                        <p id="role">{elem.role}</p>
+                        <Spacer x={16} />
+                      </div>
+                      <div id="buttons-students-list"></div>
+                    </CardBody>
+                  </Card>
+                </div>
+              ))}
             </div>
+          </div>
         </div>
       )}
     </div>
-  )
+  );
 }
 
 export default ContactsPage;

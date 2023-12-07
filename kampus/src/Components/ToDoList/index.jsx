@@ -233,11 +233,11 @@ function Tasks() {
                     />
                   </ModalBody>
                   <ModalFooter>
-                    <Button color="danger" variant="shadow" onPress={onClose}>
+                    <Button color="danger" variant="solid" onPress={onClose}>
                       Cancel
                     </Button>
                     <Button
-                      variant="shadow"
+                      variant="solid"
                       color="primary"
                       onPress={() => {
                         addTask();
@@ -368,11 +368,10 @@ function Tasks() {
                     />
                   </ModalBody>
                   <ModalFooter>
-                    <Button color="danger" variant="shadow" onPress={onClose}>
+                    <Button color="danger" onPress={onClose}>
                       Cancel
                     </Button>
                     <Button
-                      variant="shadow"
                       color="primary"
                       onPress={() => {
                         addTask();

@@ -267,11 +267,11 @@ function ProfilePage() {
                 </CardBody>
               </Card>
               <div className="flex row justify-center mt-5">
-                <Button color="danger" variant="shadow" onPress={resetProfile}>
+                <Button color="danger" onPress={resetProfile}>
                   Cancel
                 </Button>
                 <Spacer x={5} />
-                <Button variant="shadow" color="primary" onClick={editUser}>
+                <Button color="primary" onClick={editUser}>
                   Save changes
                 </Button>
               </div>

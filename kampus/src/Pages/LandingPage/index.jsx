@@ -8,7 +8,7 @@ import {
   Button,
   useDisclosure,
   Input,
-  Spacer
+  Spacer,
 } from "@nextui-org/react";
 import { AuthContext } from "../../Context/auth.context";
 import axios from "axios";
@@ -28,35 +28,41 @@ function LandingPage() {
     const requestBody = { email, password };
 
     axios
-    .post(`${API_URL}/auth/login`, requestBody)
-    .then((response) => {
-      storeToken(response.data.authToken);
-      axios.get(`${API_URL}/auth/users`).then((usersResponse) => {
-        const users = usersResponse.data;
+      .post(`${API_URL}/auth/login`, requestBody)
+      .then((response) => {
+        storeToken(response.data.authToken);
+        axios
+          .get(`${API_URL}/auth/users`)
+          .then((usersResponse) => {
+            const users = usersResponse.data;
 
-        const loggedInUserEmail = requestBody.email; 
-        const userWithEmail = users.find(user => user.email === loggedInUserEmail);
-        if (userWithEmail) {
-          const isStudent = userWithEmail.isStudent;
+            const loggedInUserEmail = requestBody.email;
+            const userWithEmail = users.find(
+              (user) => user.email === loggedInUserEmail
+            );
+            if (userWithEmail) {
+              const isStudent = userWithEmail.isStudent;
 
-          if (!isStudent) {
-            alert('You have a staff account. Please go to the staff login page');
-          } else {
-            localStorage.setItem("Logged In", response.data.authToken);
-            authenticateUser();
-            navigate("/virtualtour");
-          }
-        }
+              if (!isStudent) {
+                alert(
+                  "You have a staff account. Please go to the staff login page"
+                );
+              } else {
+                localStorage.setItem("Logged In", response.data.authToken);
+                authenticateUser();
+                navigate("/virtualtour");
+              }
+            }
+          })
+          .catch((usersError) => {
+            console.error("Error fetching users:", usersError);
+          });
       })
-      .catch((usersError) => {
-        console.error('Error fetching users:', usersError);
+      .catch(() => {
+        const errorDescription = error.response.data.message;
+        setError(errorDescription);
       });
-  })   
-    .catch(() => {
-      const errorDescription = error.response.data.message;
-      setError(errorDescription);
-    });
-};
+  };
 
   const goToLoginPage = () => {
     navigate("/login");
@@ -86,16 +92,37 @@ function LandingPage() {
         </Button>
         <Modal
           classNames={{
-            size: "4xl",
+            size: "5xl",
             body: "py-6",
-            backdrop: "bg-[#292f46]/50 backdrop-opacity-40 blur",
-            base: "border-[#292f46] bg-white text-[#71717a]",
-            header: "border-b-[1px] border-[#292f46]",
+            backdrop:
+              "bg-gradient-to-t from-ScaleColor1-500 to-ScaleColor1-500/10 backdrop-opacity-20",
+            base: "border-[#292f46] bg-white text-black",
+            header: "border-b-[1px] border-[#292f46] text-black",
             footer: "border-t-[1px] border-[#292f46]",
             closeButton: "active:bg-white/10",
           }}
-          size="l"
-          backdrop="blur"
+          motionProps={{
+            variants: {
+              enter: {
+                y: 0,
+                opacity: 1,
+                transition: {
+                  duration: 0.2,
+                  ease: "easeOut",
+                },
+              },
+              exit: {
+                y: -20,
+                opacity: 0,
+                transition: {
+                  duration: 0.2,
+                  ease: "easeIn",
+                },
+              },
+            },
+          }}
+          backdrop="opaque"
+          size="L"
           isOpen={isOpen}
           onOpenChange={onOpenChange}
           placement="center"
@@ -125,11 +152,15 @@ function LandingPage() {
                   />
                 </ModalBody>
                 <ModalFooter>
-                  <Button color="danger" variant="flat" onPress={onClose}>
+                  <Button color="danger" variant="solid" onPress={onClose}>
                     Close
                   </Button>
-                  <Button color="primary" onClick={handleLoginSubmit}>
-                    Sign in
+                  <Button
+                    color="primary"
+                    variant="solid"
+                    onClick={handleLoginSubmit}
+                  >
+                    Log in
                   </Button>
                 </ModalFooter>
               </>

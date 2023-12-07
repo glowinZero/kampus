@@ -213,12 +213,12 @@ function NotePad() {
                       />
                     </ModalBody>
                     <ModalFooter>
-                      <Button color="danger" variant="shadow" onPress={onClose}>
+                      <Button color="danger" variant="solid" onPress={onClose}>
                         Cancel
                       </Button>
                       <Button
-                        variant="shadow"
                         color="primary"
+                        variant="solid"
                         onPress={() => {
                           addNote();
                           onClose();
@@ -379,11 +379,11 @@ function NotePad() {
                       />
                     </ModalBody>
                     <ModalFooter>
-                      <Button color="danger" variant="shadow" onPress={onClose}>
+                      <Button color="danger" variant="solid" onPress={onClose}>
                         Cancel
                       </Button>
                       <Button
-                        variant="shadow"
+                        variant="solid"
                         color="primary"
                         onPress={() => {
                           addNote();

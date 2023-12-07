@@ -63,7 +63,9 @@ function DashboardPage() {
         try {
           const idUser = user._id;
 
-          const responseUser = await axios.get(`${API_URL}/auth/users/${idUser}`);
+          const responseUser = await axios.get(
+            `${API_URL}/auth/users/${idUser}`
+          );
           setIsStudents(responseUser.data.isStudent);
           setLoggedUser(responseUser.data);
 
@@ -115,7 +117,9 @@ function DashboardPage() {
 
     const passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
     if (!passwordRegex.test(password)) {
-      alert("Password must have at least 6 characters and contain 1 lowercase letter, 1 uppercase letter, 1 number");
+      alert(
+        "Password must have at least 6 characters and contain 1 lowercase letter, 1 uppercase letter, 1 number"
+      );
       return;
     }
 
@@ -164,14 +168,15 @@ function DashboardPage() {
   };
 
   const deleteStudent = (elem) => {
-    axios.delete(`${API_URL}/auth/users/${elem._id}`)
-    .then(() => {
-      console.log(userDelete);
-    })
-    .catch((error) => {
-      console.error("Error deleting Student:", error);
-      alert("Failed to delete Student. Please try again.");
-    });
+    axios
+      .delete(`${API_URL}/auth/users/${elem._id}`)
+      .then(() => {
+        console.log(userDelete);
+      })
+      .catch((error) => {
+        console.error("Error deleting Student:", error);
+        alert("Failed to delete Student. Please try again.");
+      });
 
     const fetchData = async () => {
       const getToken = localStorage.getItem("authToken");
@@ -266,7 +271,9 @@ function DashboardPage() {
       if (getToken && user) {
         try {
           const idUser = user._id;
-          const responseUser = await axios.get(`${API_URL}/auth/users/${idUser}`);
+          const responseUser = await axios.get(
+            `${API_URL}/auth/users/${idUser}`
+          );
           setIsStudents(responseUser.data.isStudent);
           setLoggedUser(responseUser.data);
 
@@ -338,20 +345,20 @@ function DashboardPage() {
           {isStudents === true ? (
             <div id="dashboard-staff" className="w-screen">
               <NavBar />
-              <div className=" w-[91.5vw] h-[95vh] bg-gray-50 m-5 p-5 rounded-3xl">
+              <div className="  w-[91.5vw] h-[95vh] bg-gray-50 m-5 p-5 rounded-3xl overflow-auto scrollbar-hide overscroll-none scroll-smooth">
                 {loggedUser && (
                   <h1 className="font-bold text-Color2">
                     Hi {loggedUser.firstName}!
                   </h1>
                 )}
-                <div className=" w-[100%] h-[30vh] bg-Color4 mt-5 mb-5 pt-5 pb-5 rounded-3xl overflow-auto scrollbar-hide overscroll-none scroll-smooth relative">
+                <div className=" w-[100%] h-[30vh] bg-Color3/40 shadow-lg shadow-Color3/40 mt-5 mb-5 pt-5 pb-5 rounded-3xl overflow-auto scrollbar-hide overscroll-none scroll-smooth relative">
                   <Tasks />
                 </div>
                 <div className="flex  auto row place-content-between w-[100%] h-[50vh] bg-gray-50  rounded-3xl">
-                  <div className="flex-1 pr-5 pl-5 pt-5 pb-5 mb-5 mr-5 bg-Color4 rounded-3xl overflow-auto scrollbar-hide overscroll-none scroll-smooth">
+                  <div className="flex-1 pr-5 pl-5 pt-5 pb-5 mb-5 mr-5 bg-Color3/40 shadow-lg shadow-Color3/40 rounded-3xl overflow-auto scrollbar-hide overscroll-none scroll-smooth">
                     <NotePad />
                   </div>
-                  <div className="w-[24%] pr-5 pl-5 pt-5 pb-5 mb-5 bg-Color4 rounded-3xl">
+                  <div className="w-[24%] pr-5 pl-5 pt-5 pb-5 mb-5 bg-Color3/40 shadow-lg shadow-Color3/40 rounded-3xl">
                     <Pommodoro></Pommodoro>
                   </div>
                 </div>
@@ -365,7 +372,7 @@ function DashboardPage() {
                   id="heading-staff-dashboard"
                   className=" font-light text-Color3 p-3 text-left"
                 >
-                  STUDENTS
+                  USERS
                 </h1>
                 {users.map((elem) => (
                   <div key={elem._id} id="students-list">
@@ -622,7 +629,11 @@ function DashboardPage() {
                   isIconOnly
                   onPress={onOpen}
                   size="lg"
-                  className=" absolute bottom-10 right-10 bg-[#D3D3D3] shadow-lg rounded-full"
+                  className=" absolute
+                  main:right-12 main:bottom-12
+                  medium:right-12 medium:bottom-12
+                  small:right-12 small:bottom-12
+                  bg-[#D3D3D3] shadow-lg rounded-full"
                 >
                   <img src={addIcon} className="flex-shrink-0 w-[auto] h-8" />
                 </Button>
