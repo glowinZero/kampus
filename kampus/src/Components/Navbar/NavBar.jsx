@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import dashIcon from "../../assets/images/dashboard.png";
 import profileIcon from "../../assets/images/user.png";
-import staffIcon from "../../assets/images/id-card.png"
+import staffIcon from "../../assets/images/staff.png"
 import logoutIcon from "../../assets/images/leave.png";
 import { AuthContext } from "../../Context/auth.context";
 import { useContext, useEffect, useState } from "react";
