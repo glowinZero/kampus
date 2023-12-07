@@ -11,6 +11,8 @@ import {
   Input,
   Checkbox
 } from "@nextui-org/react";
+import addIcon from '../../assets/images/add.png'
+// ... (other imports)
 
 import { AuthContext } from "../../Context/auth.context";
 import removeIcon from "../../assets/images/remove.png";
@@ -174,12 +176,12 @@ function Tasks() {
                   variant="bordered"
                   onChange={(e) => setTitle(e.target.value)}
                 />
-                <Input 
+                <Input
                   className="text-white decoration-sky-500 mb-2 text-lg"
                   color="primary"
                   size="lg"
                   placeholder="Title"
-                  type="date" value={deadline} 
+                  type="date" value={deadline}
                   onChange={(e) => setDeadline(e.target.value)} />
               </ModalBody>
               <ModalFooter>
@@ -209,6 +211,7 @@ function Tasks() {
         className=" text-xl p-5 bg-slate-700 rounded-3xl mb-5 relative"
       >
           <Checkbox
+            className="rounded-full bg-transparent top-10 absolute right-48 z-40"
             checked={statuses[index] === "Done"}
             onChange={() => changeTaskStatus(task._id, index)}
           />
@@ -216,7 +219,7 @@ function Tasks() {
             isIconOnly
             onClick={() => deleteTask(task._id)}
             size="lg"
-            className="shadow-lg  rounded-full bg-transparent top-6 absolute right-5 z-40"
+            className="rounded-full bg-transparent top-6 absolute right-5 z-40"
           >
             <img src={removeIcon} className="flex-shrink-0 w-[auto] h-5" />
           </Button>
@@ -270,12 +273,12 @@ function Tasks() {
                   variant="bordered"
                   onChange={(e) => setTitle(e.target.value)}
                 />
-                <Input 
+                <Input
                   className="text-white decoration-sky-500 mb-2 text-lg"
                   color="primary"
                   size="lg"
                   placeholder="Title"
-                  type="date" value={deadline} 
+                  type="date" value={deadline}
                   onChange={(e) => setDeadline(e.target.value)} />
               </ModalBody>
               <ModalFooter>

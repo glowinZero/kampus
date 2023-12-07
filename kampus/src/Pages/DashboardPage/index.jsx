@@ -202,7 +202,7 @@ function DashboardPage() {
   const editStudent = (userEdit) => {
     setType(true);
     const isStudent = editingUser ? editingUser.isStudent : type;
-    
+
     const updatedFields = {
       ...(email !== undefined && {
         email: email !== "" ? email : editingUser.email,
@@ -342,7 +342,7 @@ function DashboardPage() {
                 {loggedUser && (
                   <h1 className="font-bold">Hi {loggedUser.firstName}!</h1>
                 )}
-                <div className=" w-[100%] h-[30vh] bg-blue-600 mt-5 mb-5 pt-5 pb-5 rounded-3xl overflow-auto scrollbar-hide overscroll-none scroll-smooth">
+                <div className=" w-[100%] h-[30vh] bg-blue-600 mt-5 mb-5 pt-5 pb-5 rounded-3xl overflow-auto scrollbar-hide overscroll-none scroll-smooth relative">
                   <Tasks />
                 </div>
                 <div className="flex  auto row place-content-between w-[100%] h-[50vh] bg-gray-50  rounded-3xl">
@@ -359,8 +359,11 @@ function DashboardPage() {
             <div id="dashboard-staff" className="w-screen">
               <NavBar className="w-[100%]" />
               <div className=" w-[90%] h-[95vh] bg-gray-400 m-5 p-5 rounded-3xl">
-                <h1 id="heading-staff-dashboard" className="font-semibold p-1">
-                  STUDENTS
+                <h1
+                  id="heading-staff-dashboard"
+                  className=" font-light p-1 text-left"
+                >
+                  USERS
                 </h1>
                 {users.map((elem) => (
                   <div key={elem._id} id="students-list">
@@ -380,12 +383,19 @@ function DashboardPage() {
                           <p id="name">
                             {elem.firstName} {elem.lastName}
                           </p>
-                          <Spacer x={16} />
-                          <p id="students-card-p">{elem.cohort}</p>
-                          <Spacer x={8} />
-                          <p id="students-card-p">{elem.campus}</p>
-                          <Spacer x={8} />
                           <p id="email">{elem.email}</p>
+                          <Spacer x={16} />
+                          <p id="students-card-p">
+                            {elem.isStudent === true ? "STUDENT" : "STAFF"}
+                          </p>
+                          <Spacer x={8} />
+                          <p id="students-card-p">
+                            {elem.cohort}
+                          </p>
+                          <Spacer x={8} />
+                          <p id="students-card-p">
+                            {elem.campus}
+                          </p>
                         </div>
                         <div id="buttons-students-list">
                           <Button

@@ -9,10 +9,11 @@ import {
   Button,
   useDisclosure,
   Input,
-  Textarea
+  Textarea,
 } from "@nextui-org/react";
 import { AuthContext } from "../../Context/auth.context";
-import removeIcon from '../../assets/images/remove.png'
+import addIcon from "../../assets/images/add.png";
+import removeIcon from "../../assets/images/remove.png";
 
 const API_URL = "https://kampus.adaptable.app";
 
@@ -21,8 +22,12 @@ function NotePad() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [editedNotesTitle, setEditedNotesTitle] = useState(Array(notes.length).fill(false));
-  const [editedNotesBody, setEditedNotesBody] = useState(Array(notes.length).fill(false));
+  const [editedNotesTitle, setEditedNotesTitle] = useState(
+    Array(notes.length).fill(false)
+  );
+  const [editedNotesBody, setEditedNotesBody] = useState(
+    Array(notes.length).fill(false)
+  );
   const [editedTitle, setEditedTitle] = useState(Array(notes.length).fill(""));
   const [editedBody, setEditedBody] = useState(Array(notes.length).fill(""));
   const { user, storeToken } = useContext(AuthContext);
@@ -135,165 +140,201 @@ function NotePad() {
   };
 
   return (
-    <div>
-      {notes.length === 0 ? <div>
-      <p>No notes created</p>
-      <Button onPress={onOpen} color="secondary" className="mt-5">
-        ADD NOTE
-      </Button>
-      <Modal
-        size="L"
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        placement="center"
+    <div className="relative">
+      <Button
+        isIconOnly
+        onPress={onOpen}
+        size="md"
+        className=" fixed bottom-[100px] right-[485px] bg-[#D3D3D3] shadow-lg rounded-full z-40"
       >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader>Add Note</ModalHeader>
-              <ModalBody>
-                <Input
-                  autoFocus
-                  label="Title"
-                  placeholder="Enter the title of the note"
-                  variant="bordered"
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-                <Input
-                  label="Body"
-                  placeholder="Write the description of the note"
-                  variant="bordered"
-                  onChange={(e) => setBody(e.target.value)}
-                />
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
-                  Cancel
-                </Button>
-                <Button
-                  color="primary"
-                  onPress={() => {
-                    addNote();
-                    onClose();
-                  }}
-                >
-                  Submit
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
-      </div> : <div>
-      {notes.map((note, index) => (
-        <div key={note._id} className="text-xl p-5 bg-slate-700 rounded-3xl mb-5 relative">
-          <Button
-            isIconOnly
-            onClick={() => deleteNote(note)}
-            size="lg"
-            className="shadow-lg  rounded-full bg-transparent top-6 absolute right-5 z-40"
-          >
-            <img src={removeIcon} className="flex-shrink-0 w-[auto] h-5" />
-          </Button>
-          {note.date && (
-            <p className="absolute right-20 top-9 text-lg">
-              {note.date.substring(0, 10)}
-            </p>
-          )}
-          <Input
-            className="text-white decoration-sky-500 mb-2 text-lg"
-            color="primary"
-            variant="underlined"
-            size="lg"
-            placeholder="Title"
-            value={editedNotesTitle[index] ? editedTitle[index] : note.title}
-            onChange={(e) => setEditedTitle((prevTitles) => {
-              const newTitles = [...prevTitles];
-              newTitles[index] = e.target.value;
-              return newTitles;
-            })}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                updateNoteTitle(note._id, editedTitle[index], note.body, index);
-              }
-            }}
-            onFocus={() => setEditedNotesTitle((prevEditedNotes) => {
-              const newEditedNotes = [...prevEditedNotes];
-              newEditedNotes[index] = true;
-              return newEditedNotes;
-            })}
-          />
-          <Textarea
-            maxRows={3}
-            className="text-black placeholder-gray-500"
-            placeholder="Write your notes here"
-            value={editedNotesBody[index] ? editedBody[index] : note.body}
-            onChange={(e) => setEditedBody((prevBodies) => {
-              const newBodies = [...prevBodies];
-              newBodies[index] = e.target.value;
-              return newBodies;
-            })}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                updateNoteBody(note._id, note.title, editedBody[index], index);
-              }
-            }}
-            onFocus={() => setEditedNotesBody((prevEditedNotes) => {
-              const newEditedNotes = [...prevEditedNotes];
-              newEditedNotes[index] = true;
-              return newEditedNotes;
-            })}
-          />
-        </div>
-      ))}
-      <Button onPress={onOpen} color="secondary" className="mt-5">
-        ADD NOTE
+        <img src={addIcon} className="flex-shrink-0 w-[auto] h-6" />
       </Button>
-      <Modal
-        size="L"
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        placement="center"
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader>Add Note</ModalHeader>
-              <ModalBody>
-                <Input
-                  autoFocus
-                  label="Title"
-                  placeholder="Enter the title of the note"
-                  variant="bordered"
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-                <Input
-                  label="Body"
-                  placeholder="Write the description of the note"
-                  variant="bordered"
-                  onChange={(e) => setBody(e.target.value)}
-                />
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
-                  Cancel
-                </Button>
+      <div>
+        {notes.length === 0 ? (
+          <div>
+            <p>No notes created</p>
+            <Button onPress={onOpen} color="secondary" className="mt-5">
+              ADD NOTE
+            </Button>
+            <Modal
+              size="L"
+              isOpen={isOpen}
+              onOpenChange={onOpenChange}
+              placement="center"
+            >
+              <ModalContent>
+                {(onClose) => (
+                  <>
+                    <ModalHeader>Add Note</ModalHeader>
+                    <ModalBody>
+                      <Input
+                        autoFocus
+                        label="Title"
+                        placeholder="Enter the title of the note"
+                        variant="bordered"
+                        onChange={(e) => setTitle(e.target.value)}
+                      />
+                      <Input
+                        label="Body"
+                        placeholder="Write the description of the note"
+                        variant="bordered"
+                        onChange={(e) => setBody(e.target.value)}
+                      />
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button color="danger" variant="flat" onPress={onClose}>
+                        Cancel
+                      </Button>
+                      <Button
+                        color="primary"
+                        onPress={() => {
+                          addNote();
+                          onClose();
+                        }}
+                      >
+                        Submit
+                      </Button>
+                    </ModalFooter>
+                  </>
+                )}
+              </ModalContent>
+            </Modal>
+          </div>
+        ) : (
+          <div>
+            {notes.map((note, index) => (
+              <div
+                key={note._id}
+                className="text-xl p-5 bg-slate-700 rounded-3xl mb-5 relative"
+              >
                 <Button
-                  color="primary"
-                  onPress={() => {
-                    addNote();
-                    onClose();
-                  }}
+                  isIconOnly
+                  onClick={() => deleteNote(note)}
+                  size="lg"
+                  className="rounded-full bg-transparent top-6 absolute right-5 z-40"
                 >
-                  Submit
+                  <img
+                    src={removeIcon}
+                    className="flex-shrink-0 w-[auto] h-5"
+                  />
                 </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
-      </div>}
-      
+                {note.date && (
+                  <p className="absolute right-20 top-9 text-lg">
+                    {note.date.substring(0, 10)}
+                  </p>
+                )}
+                <Input
+                  className="text-white decoration-sky-500 mb-2 text-lg"
+                  color="primary"
+                  variant="underlined"
+                  size="lg"
+                  placeholder="Title"
+                  value={
+                    editedNotesTitle[index] ? editedTitle[index] : note.title
+                  }
+                  onChange={(e) =>
+                    setEditedTitle((prevTitles) => {
+                      const newTitles = [...prevTitles];
+                      newTitles[index] = e.target.value;
+                      return newTitles;
+                    })
+                  }
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      updateNoteTitle(
+                        note._id,
+                        editedTitle[index],
+                        note.body,
+                        index
+                      );
+                    }
+                  }}
+                  onFocus={() =>
+                    setEditedNotesTitle((prevEditedNotes) => {
+                      const newEditedNotes = [...prevEditedNotes];
+                      newEditedNotes[index] = true;
+                      return newEditedNotes;
+                    })
+                  }
+                />
+                <Textarea
+                  maxRows={3}
+                  className="text-black placeholder-gray-500"
+                  placeholder="Write your notes here"
+                  value={editedNotesBody[index] ? editedBody[index] : note.body}
+                  onChange={(e) =>
+                    setEditedBody((prevBodies) => {
+                      const newBodies = [...prevBodies];
+                      newBodies[index] = e.target.value;
+                      return newBodies;
+                    })
+                  }
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      updateNoteBody(
+                        note._id,
+                        note.title,
+                        editedBody[index],
+                        index
+                      );
+                    }
+                  }}
+                  onFocus={() =>
+                    setEditedNotesBody((prevEditedNotes) => {
+                      const newEditedNotes = [...prevEditedNotes];
+                      newEditedNotes[index] = true;
+                      return newEditedNotes;
+                    })
+                  }
+                />
+              </div>
+            ))}
+            <Modal
+              size="L"
+              isOpen={isOpen}
+              onOpenChange={onOpenChange}
+              placement="center"
+            >
+              <ModalContent>
+                {(onClose) => (
+                  <>
+                    <ModalHeader>Add Note</ModalHeader>
+                    <ModalBody>
+                      <Input
+                        autoFocus
+                        label="Title"
+                        placeholder="Enter the title of the note"
+                        variant="bordered"
+                        onChange={(e) => setTitle(e.target.value)}
+                      />
+                      <Input
+                        label="Body"
+                        placeholder="Write the description of the note"
+                        variant="bordered"
+                        onChange={(e) => setBody(e.target.value)}
+                      />
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button color="danger" variant="flat" onPress={onClose}>
+                        Cancel
+                      </Button>
+                      <Button
+                        color="primary"
+                        onPress={() => {
+                          addNote();
+                          onClose();
+                        }}
+                      >
+                        Submit
+                      </Button>
+                    </ModalFooter>
+                  </>
+                )}
+              </ModalContent>
+            </Modal>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

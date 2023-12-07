@@ -55,13 +55,12 @@ function Pomodoro() {
   return (
     <div>
       {showSettings ? (
-        <div className="mt-24">
-          <label className="font-medium text-2xl">
+        <div className=" grid h-[40vh] w-full place-items-center justify-center content-center relative gap-4">
+          <label className="font-medium text-2xl mr-5 ml-5">
             WORK MINUTES {workMinutes}
           </label>
           <Slider
             size="lg"
-            className="mt-5 mb-5"
             color="danger"
             key="danger"
             value={workMinutes}
@@ -74,7 +73,6 @@ function Pomodoro() {
           </label>
           <Slider
             size="lg"
-            className="mt-5 mb-5"
             color="success"
             key="success"
             value={breakMinutes}
@@ -82,8 +80,12 @@ function Pomodoro() {
             max={60}
             onChange={setBreakMinutes}
           />
-          <Button color="primary" onClick={startTimer} className="mt-5">
-            Start
+          <Button
+            color="primary"
+            onClick={startTimer}
+            className=" absolute  bottom-0 w-30 text-center"
+          >
+            START
           </Button>
         </div>
       ) : (
