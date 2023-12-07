@@ -136,6 +136,16 @@ function NavBar() {
                   </li>
                   <li>
                     <Button id="button-navbar" className=" mt-6">
+                      <Link to="/staff">
+                        <img
+                          src={staffIcon}
+                          className="flex-shrink-0 w-[auto] h-6"
+                        />
+                      </Link>
+                    </Button>
+                  </li>
+                  <li>
+                    <Button id="button-navbar" className=" mt-6">
                       <Link to="/profile">
                         <img
                           src={profileIcon}

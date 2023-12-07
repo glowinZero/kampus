@@ -55,7 +55,7 @@
 #virtual-tour h1 {
   position: absolute;
   width: 70vw;
-  margin-top: 80vh;
+  margin-top: 75vh;
   margin-left: 15vw;
   height: fit-content;
   z-index: 0;
@@ -67,6 +67,14 @@
   width: fit-content;
   margin-top: 90vh;
   margin-left: 42vw;
+  z-index: 0;
+}
+
+#audio-button {
+  position: absolute;
+  width: fit-content;
+  margin-top: 90vh;
+  margin-left: -48vw;
   z-index: 0;
 }
 
@@ -151,4 +159,13 @@
   padding: 0;
   width: 100vw;
   height: 100vh;
+}
+
+
+.cssStyle {
+  padding: 1.25rem; /* Equivalent to p-5 */
+  font-weight: 600; /* Equivalent to font-semibold */
+  font-size: 1.25rem; /* Equivalent to text-2xl */
+  background-color: #4a5568; /* Equivalent to bg-mainColor-500 */
+  border-radius: 1.5rem; /* Equivalent to rounded-3xl */
 }
