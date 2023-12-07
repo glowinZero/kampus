@@ -7,6 +7,7 @@ import ProfilePage from "./Pages/ProfilePage";
 import DashboardPage from "./Pages/DashboardPage";
 import VirtualTour from "./Pages/VirtualTour";
 import WebPage from "./Pages/WebPage";
+import ContactsPage from "./Pages/ContactsPage";
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/virtualtour" element={<VirtualTour />} />
+        <Route path="/virtualtour" element={<VirtualTour />} />~
+        <Route path="/staff" element={<ContactsPage />} />
       </Routes>
     </div>
   );

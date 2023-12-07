@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import dashIcon from "../../assets/images/dashboard.png";
 import profileIcon from "../../assets/images/user.png";
+import staffIcon from "../../assets/images/id-card.png"
 import logoutIcon from "../../assets/images/leave.png";
 import { AuthContext } from "../../Context/auth.context";
 import { useContext, useEffect, useState } from "react";
@@ -127,6 +128,16 @@ function NavBar() {
                       <Link to="/dashboard">
                         <img
                           src={dashIcon}
+                          className="flex-shrink-0 w-[auto] h-6"
+                        />
+                      </Link>
+                    </Button>
+                  </li>
+                  <li>
+                    <Button id="button-navbar" className=" mt-6">
+                      <Link to="/staff">
+                        <img
+                          src={staffIcon}
                           className="flex-shrink-0 w-[auto] h-6"
                         />
                       </Link>
