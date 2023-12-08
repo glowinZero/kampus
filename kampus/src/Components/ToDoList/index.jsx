@@ -80,14 +80,12 @@ function Tasks() {
       const updatedTask = {
         title: updatedTitle,
       };
-
-      await axios.put(`${API_URL}/api/tasks/${taskId}`, updatedTask);
-
-      const updatedResponse = await axios.get(
-        `${API_URL}/api/tasks?userId=${user._id}`
-      );
+  
+      await axios.put(`${API_URL}/api/tasks/${taskId}?userId=${user._id}`, updatedTask);
+  
+      const updatedResponse = await axios.get(`${API_URL}/api/tasks/${user._id}`);
       setTasks(updatedResponse.data);
-
+  
       setEditedTasks((prevEditedTasks) => {
         const newEditedTasks = [...prevEditedTasks];
         newEditedTasks[index] = false;
@@ -97,51 +95,40 @@ function Tasks() {
       console.error("Error updating Task:", error);
     }
   };
-
+  
   const deleteTask = (taskId) => {
     axios
       .delete(`${API_URL}/api/tasks/${taskId}`)
       .then(() => {
         console.log("Task deleted");
-        fetchData();
+        axios.get(
+          `${API_URL}/api/tasks/${user._id}`
+        ).then((response)=>{
+          setTasks(response.data);
+        })
       })
       .catch((error) => {
         console.error("Error deleting Task:", error);
       });
   };
-
-  const fetchData = async () => {
-    try {
-      const responseTasks = await axios.get(`${API_URL}/api/tasks/${user._id}`);
-      console.log("tasks", responseTasks.data);
-      setTasks(responseTasks.data);
-      setEditedTasksTitle(Array(responseTasks.data.length).fill(false));
-      setEditedTasks(Array(responseTasks.data.length).fill(false));
-      setStatuses(Array(responseTasks.data.length).fill("To do"));
-    } catch (error) {
-      console.error("Error fetching tasks:", error);
-    }
-  };
-
+  
   const changeTaskStatus = async (taskId, index) => {
     try {
       const updatedTask = {
         status: statuses[index] === "To do" ? "Done" : "To do",
       };
-
-      await axios.put(`${API_URL}/api/tasks/${taskId}`, updatedTask);
-
-      const updatedResponse = await axios.get(
-        `${API_URL}/api/tasks?userId=${user._id}`
-      );
+  
+      await axios.put(`${API_URL}/api/tasks/${taskId}?userId=${user._id}`, updatedTask);
+  
+      const updatedResponse = await axios.get(`${API_URL}/api/tasks/${user._id}`);
       setTasks(updatedResponse.data);
-
+  
       setStatuses((prevStatuses) => {
         const newStatuses = [...prevStatuses];
         newStatuses[index] = updatedTask.status;
         return newStatuses;
       });
-
+  
       setEditedTasks((prevEditedTasks) => {
         const newEditedTasks = [...prevEditedTasks];
         newEditedTasks[index] = false;

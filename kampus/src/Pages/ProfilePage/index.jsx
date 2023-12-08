@@ -24,9 +24,9 @@ function ProfilePage() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { isLoggedIn, user } = useContext(AuthContext);
   const [loggedUser, setLoggedUser] = useState();
-  const [email, setEmail] = useState();
-  const [firstName, setFirstName] = useState();
-  const [lastName, setLastName] = useState();
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -59,79 +59,58 @@ function ProfilePage() {
     fetchData();
   }, [user, isLoggedIn]);
 
-  const editUser = (userEdit) => {
-    const isStudent = false;
+  const editUser = () => {
+    const isStudent = loggedUser && loggedUser.isStudent !== undefined ? loggedUser.isStudent : false;
     const password = loggedUser.password;
     const cohort = loggedUser.cohort;
     const campus = loggedUser.campus;
-    const manager = "";
-    const teacher = "";
-
+    const manager = loggedUser.manager;
+    const teacher = loggedUser.teacher;
+    const role = loggedUser.role;
+  
     const updatedFields = {
-      ...(email !== undefined && {
-        email: email !== "" ? email : loggedUser.email,
-      }),
+      ...(email !== undefined && email !== "" ? { email } : { email: loggedUser.email }),
       password,
-      ...(firstName !== undefined && {
-        firstName: firstName !== "" ? firstName : loggedUser.firstName,
-      }),
-      ...(lastName !== undefined && {
-        lastName: lastName !== "" ? lastName : loggedUser.lastName,
-      }),
+      ...(firstName !== undefined && { firstName: firstName !== "" ? firstName : loggedUser.firstName }),
+      ...(lastName !== undefined && { lastName: lastName !== "" ? lastName : loggedUser.lastName }),
+      ...(role !== undefined && { role: role !== "" ? role : loggedUser.role }),
       cohort,
       campus,
       manager,
       teacher,
       isStudent,
     };
-
+  
+    console.log("Updated fields:", updatedFields);
     if (Object.keys(updatedFields).length === 0) {
       alert("No fields to update");
       return;
     }
-
+  
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     if (!emailRegex.test(updatedFields.email)) {
       alert("Provide a valid email");
       return;
     }
-
+  
     axios
-      .put(`${API_URL}/auth/users/${userEdit._id}`, updatedFields)
+      .put(`${API_URL}/auth/users/${loggedUser._id}`, updatedFields)
       .then(() => {
-        navigate(`/dashboard`);
+        alert("User updated successfully");
+       navigate(`/dashboard`);
       })
       .catch((error) => {
-        console.error("Error creating task:", error);
-        alert("Failed to create task. Please try again.");
+        console.error("Error updating user:", error);
+        alert("Failed to update user. Please try again.");
       });
-
-    const fetchData = async () => {
-      const getToken = localStorage.getItem("authToken");
-
-      if (getToken && user) {
-        try {
-          const idUser = user._id;
-          const responseUser = await axios.get(
-            `${API_URL}/auth/users/${idUser}`
-          );
-          console.log(responseUser.data.isStudent);
-          setLoggedUser(responseUser.data);
-        } catch (error) {
-          console.error("Error fetching user details:", error);
-        }
-      }
     };
-
-    fetchData();
-  };
-  const colors = ["#d4d4d4"];
+  
+  
   const resetProfile = () => {
     const idUser = user._id;
     axios
       .get(`${API_URL}/auth/users/${idUser}`)
       .then((response) => {
-        console.log(response.data.isStudent);
         setLoggedUser(response.data);
       })
       .catch((error) => {
@@ -271,7 +250,7 @@ function ProfilePage() {
                   Cancel
                 </Button>
                 <Spacer x={5} />
-                <Button color="primary" onClick={editUser}>
+                <Button color="primary" onClick={()=>{editUser(user)}}>
                   Save changes
                 </Button>
               </div>

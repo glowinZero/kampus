@@ -80,7 +80,7 @@ function DashboardPage() {
     fetchData();
   }, [user, isLoggedIn]);
 
-  const addStudent = () => {
+  const addStudent = async () => {
     setType(true);
     const isStudent = type;
     const request = {
@@ -94,7 +94,7 @@ function DashboardPage() {
       teacher,
       isStudent,
     };
-
+  
     if (
       email === "" ||
       password === "" ||
@@ -107,14 +107,15 @@ function DashboardPage() {
       isStudent === ""
     ) {
       alert("Provide all fields in order to create a new Student");
+      return;
     }
-
+  
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     if (!emailRegex.test(email)) {
       alert("Provide a valid email");
       return;
     }
-
+  
     const passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
     if (!passwordRegex.test(password)) {
       alert(
@@ -122,39 +123,26 @@ function DashboardPage() {
       );
       return;
     }
-
-    axios
-      .post(`${API_URL}/auth/signup`, request)
-      .then(() => {
-        navigate(`/dashboard`);
-      })
-      .catch(() => {
-        alert("Failed to create a Student. Please try again.");
-      });
-
-    const fetchData = async () => {
-      const getToken = localStorage.getItem("authToken");
-
-      if (getToken && user) {
-        try {
-          const idUser = user._id;
-
-          const responseUser = await axios.get(
-            `${API_URL}/auth/users/${idUser}`
-          );
-          setIsStudents(responseUser.data.isStudents);
-          setLoggedUser(responseUser.data);
-
-          const responseUsers = await axios.get(`${API_URL}/auth/users/`);
-          setUsers(responseUsers.data);
-        } catch (error) {
-          console.error("Error fetching user details:", error);
-        }
-      }
-    };
-
-    fetchData();
+  
+    try {
+      await axios.post(`${API_URL}/auth/signup`, request);
+      alert("Student created successfully");
+  
+      const idUser = user._id;
+      const responseUser = await axios.get(`${API_URL}/auth/users/${idUser}`);
+      setIsStudents(responseUser.data.isStudents);
+      setLoggedUser(responseUser.data);
+  
+      const responseUsers = await axios.get(`${API_URL}/auth/users/`);
+      setUsers(responseUsers.data);
+  
+      navigate(`/dashboard`);
+    } catch (error) {
+      console.error("Error creating student:", error);
+      alert("Failed to create a student. Please try again.");
+    }
   };
+  
 
   const resetInputs = () => {
     setEmail("");
@@ -258,6 +246,7 @@ function DashboardPage() {
     axios
       .put(`${API_URL}/auth/users/${userEdit._id}`, updatedFields)
       .then(() => {
+        setEditingUser({ ...editingUser, ...updatedFields });
         navigate(`/dashboard`);
       })
       .catch((error) => {

@@ -62,6 +62,7 @@ function NotePad() {
       setNotes(updatedResponse.data);
       setEditedNotesTitle(updatedResponse.data.map(() => false));
       setEditedNotesBody(updatedResponse.data.map(() => false));
+      fetchData();
     } catch (error) {
       console.error("Error creating task:", error);
     }
@@ -125,17 +126,16 @@ function NotePad() {
         fetchData();
       })
       .catch((error) => {
-        console.error("Error deleting Student:", error);
+        console.error("Error deleting Note:", error);
       });
   };
-
+  
   const fetchData = async () => {
     try {
-      const responseNotes = await axios.get(`${API_URL}/api/notes/`);
-      console.log("users", responseNotes.data);
+      const responseNotes = await axios.get(`${API_URL}/api/notes/${user._id}`);
       setNotes(responseNotes.data);
     } catch (error) {
-      console.error("Error fetching user details:", error);
+      console.error("Error fetching user notes:", error);
     }
   };
 
